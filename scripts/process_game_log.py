@@ -54,10 +54,10 @@ for line in sys.stdin.read().splitlines():
     elif event == "ig":
         assert len(line[1:]) == 5, "Invalid in-game set: {}".format(line[1:])
         in_game = line[1:]
-    elif event in ("fgm", "ftm"):
+    elif event in ("3fgm", "fgm", "ftm"):
         player = line[1]
         stats[player][event] += 1
-        delta_score = ((2 if event == "fgm" else 1) *
+        delta_score = ((3 if event == "3fgm" else 2 if event == "fgm" else 1) *
                        (-1 if player == "o" else 1))
         for player_in_game in in_game:
             stats[player_in_game]["pm"] += delta_score
@@ -85,9 +85,12 @@ for line in sys.stdin.read().splitlines():
 
 g_stats = defaultdict(int)
 for player in stats:
-    stats[player]["p"] = 2 * stats[player]["fgm"] + stats[player]["ftm"]
+    stats[player]["p"] = (3 * stats[player]["3fgm"] +
+                          2 * stats[player]["fgm"] +
+                          1 * stats[player]["ftm"])
     stats[player]["r"] = stats[player]["or"] + stats[player]["dr"]
-    stats[player]["fga"] += stats[player]["fgm"]
+    stats[player]["fgm"] += stats[player]["3fgm"]
+    stats[player]["fga"] += stats[player]["3fgm"] + stats[player]["fgm"]
     stats[player]["fta"] += stats[player]["ftm"]
     if player != "o":
         for stat in stats[player]:
