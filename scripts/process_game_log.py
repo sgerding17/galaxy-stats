@@ -102,5 +102,6 @@ print_header()
 for player in sorted(stats, key=lambda x:int(x) if x.isdigit() else 100):
     if player in ("g", "o"): continue
     print_stats(player, stats[player])
+print("-")
 print_stats("g", stats["g"])
 print_stats("o", stats["o"])
