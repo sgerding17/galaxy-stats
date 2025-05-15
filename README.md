@@ -1,6 +1,6 @@
 ## 2025-05-04 - Galaxy vs. Mighty Musubis - FOR Silver Championship
 ```
-Player    MIN    FG    FT    OREB  DREB  REB  AST  STL  BLK  TO  +/-  PTS
+PLAYER    MIN    FG    FT    OREB  DREB  REB  AST  STL  BLK  TO  +/-  PTS
 Laurel    14:30  0-1   0-0   0     0     0    0    0    0    0   -5   0
 Gerding   29:45  0-4   0-0   2     0     2    0    3    0    0   +0   0
 Iwai      36:00  1-4   0-2   1     2     3    1    2    0    3   +6   2
@@ -14,7 +14,7 @@ Opponent  -      3-34  5-12  14    20    34   -    -    -    -   -    11
 ```
 ## 2025-05-03 - Galaxy vs. PB Musubis - FOR Silver Pool Play
 ```
-Player    MIN    FG     FT    OREB  DREB  REB  AST  STL  BLK  TO  +/-  PTS
+PLAYER    MIN    FG     FT    OREB  DREB  REB  AST  STL  BLK  TO  +/-  PTS
 Laurel    25:15  0-2    0-0   1     3     4    2    0    0    0   +4   0
 Gerding   31:00  1-6    0-0   0     2     2    3    2    1    2   +10  2
 Iwai      29:45  2-6    1-4   3     3     6    5    1    1    5   +22  5
@@ -28,7 +28,7 @@ Opponent  -      12-61  4-9   19    12    31   -    -    -    -   -    28
 ```
 ## 2025-05-02 - Galaxy vs. Red Phoenix - FOR Silver Pool Play
 ```
-Player    MIN    FG    FT   OREB  DREB  REB  AST  STL  BLK  TO  +/-  PTS
+PLAYER    MIN    FG    FT   OREB  DREB  REB  AST  STL  BLK  TO  +/-  PTS
 Long      27:45  0-0   0-0  0     1     1    0    1    1    1   +0   0
 Laurel    25:15  0-3   0-2  2     3     5    0    0    0    0   +2   0
 Gerding   28:30  1-12  0-0  0     1     1    0    3    0    1   -2   2
@@ -43,9 +43,9 @@ Opponent  -      5-51  4-8  22    20    42   -    -    -    -   -    15
 ```
 ## 2025-04-27 - Galaxy vs. Sakura - WLA White Pool Play
 ```
-Player    MIN    FG     FT    OREB  DREB  REB  AST  STL  BLK  TO  +/-  PTS
+PLAYER    MIN    FG     FT    OREB  DREB  REB  AST  STL  BLK  TO  +/-  PTS
 Long      32:45  0-1    0-2   1     0     1    0    0    0    3   +17  0
-Laurel    5:00   0-0    0-0   0     0     0    0    0    0    1   -6   0
+Laurel    05:00  0-0    0-0   0     0     0    0    0    0    1   -6   0
 Gerding   33:00  0-5    2-2   1     1     2    2    1    2    7   +10  2
 Iwai      36:00  0-2    0-2   0     3     3    3    3    0    1   +14  0
 Saito     23:15  0-0    0-0   0     1     1    0    0    0    3   -6   0

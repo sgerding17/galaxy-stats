@@ -22,7 +22,7 @@ def format_time(seconds):
     return f"{int(seconds / 60):02d}:{int(seconds % 60):02d}"
 
 def print_header():
-    print("Player MIN FG FT OREB DREB REB AST STL BLK TO +/- PTS") 
+    print("PLAYER MIN FG FT OREB DREB REB AST STL BLK TO +/- PTS") 
 
 def print_stats(p, s):
     if p == "o":
