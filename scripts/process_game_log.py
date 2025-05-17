@@ -77,6 +77,8 @@ for line in sys.stdin.read().splitlines():
         stat = rebound_type(player, last_line)
         stats[player][stat] += 1
     elif event in ("fga", "fta", "a", "s", "b", "to", "oj", "dj"):
+        if event == "a":
+            assert last_line[0] in ("fgm", "3fgm"), "Assist did not follow a made shot (last_line = {})".format(last_line)
         player = line[1]
         stats[player][event] += 1
     else:
