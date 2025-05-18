@@ -69,3 +69,17 @@ Yosy      29:00  1-2    0-0  0     1     1    0    0    0    1   +10  2
 Galaxy    -      11-47  1-4  20    35    55   5    5    9    21  -    23
 Opponent  -      2-55   2-8  21    17    38   -    -    -    -   -    6
 ```
+## 2025-04-26 - Galaxy vs. PB Musubis - WLA White Pool Play
+```
+PLAYER    MIN    FG     FT   OREB  DREB  REB  AST  STL  BLK  TO  +/-  PTS
+Long      20:15  0-1    0-0  0     0     0    0    0    0    2   -3   0
+Laurel    37:45  0-9    1-2  5     6     11   0    0    0    5   -3   1
+Gerding   31:00  0-1    0-0  1     4     5    0    1    1    11  -3   0
+Iwai      37:45  0-5    0-0  2     2     4    2    1    2    3   +4   0
+Saito     11:15  0-0    0-0  0     2     2    1    0    0    4   +0   0
+Demarti   33:00  8-16   3-7  11    6     17   1    3    4    0   +0   19
+Yosy      29:00  1-3    0-0  0     0     0    0    0    0    0   -5   2
+-
+Galaxy    -      9-35   4-9  21    24    45   4    5    7    25  -    22
+Opponent  -      12-59  0-2  24    7     31   -    -    -    -   -    24
+```
