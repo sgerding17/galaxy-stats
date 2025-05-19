@@ -1,0 +1,86 @@
+from collections import defaultdict
+
+def parse_timestamp(timestamp):
+    assert len(timestamp) == 4, f"Invalid timestamp: {timestamp}"
+    minutes = int(timestamp[:2])
+    seconds = int(timestamp[2:])
+    return 60 * minutes + seconds
+
+def get_delta_score(event_type, shooter):
+    assert event_type in ("3fgm", "fgm", "ftm"), "Invalid scoring event type: {}".format(event_type)
+    point_value = (3 if event_type == "3fgm" else 2 if event_type == "fgm" else 1)
+    sign = (-1 if shooter == "o" else 1)
+    return sign * point_value
+
+def get_rebound_type(rebounder, last_event):
+    def on_same_team(p1, p2): return (p1 == "o") == (p2 == "o")
+    if last_event[0] == "b":
+        blocker = last_event[1]
+        return "dr" if on_same_team(rebounder, blocker) else "or"
+    elif last_event[0] in ("fga", "fta"):
+        shooter = last_event[1]
+        return "or" if on_same_team(rebounder, shooter) else "dr"
+    else:
+        assert False, "Rebound did not follow a shot attempt or block (last_event = {})".format(last_event)
+
+def count_stats(events):
+    assert events[0][0] == "c", "The first event must be a clock"
+
+    stats = defaultdict(lambda: defaultdict(int))
+
+    clock = 0
+    in_game = []
+    last_event = []
+
+    for event in events:
+        event = event.split()
+        event_type = event[0]
+
+        if event_type == "c":
+            timestamp = event[1]
+            new_clock = parse_timestamp(timestamp)
+            delta_clock = (0 if clock == 0 else clock - new_clock)
+            assert delta_clock >= 0, "Backwards clock jump detected (clock = {}, timestamp = {})".format(clock, timestamp)
+            for player_in_game in in_game:
+                stats[player_in_game]["sec"] += delta_clock
+            clock = new_clock
+
+        elif event_type == "ig":
+            in_game = event[1:]
+            assert len(in_game) == 5, "Invalid in-game set: {}".format(in_game)
+
+        elif event_type in ("3fgm", "fgm", "ftm", "fga", "fta", "r", "a", "s", "b", "to", "oj", "dj"):
+            stat = event_type
+            player = event[1]
+            if event_type in ("3fgm", "fgm", "ftm"):
+                delta_score = get_delta_score(event_type, player)
+                for player_in_game in in_game:
+                    stats[player_in_game]["pm"] += delta_score
+            elif event_type == "r":
+                stat = get_rebound_type(player, last_event)
+            elif event_type == "a":
+                assert last_event[0] in ("fgm", "3fgm"), "Assist did not follow a made shot (last_event = {})".format(last_event)
+            stats[player][stat] += 1
+
+        else:
+            assert False, "Unknown event type: {}".format(event_type)
+        last_event = event
+    return stats
+
+def rollup_stats(stats):
+    g_stats = defaultdict(int)
+    for player in stats:
+        stats[player]["p"] = (3 * stats[player]["3fgm"] +
+                              2 * stats[player]["fgm"] +
+                              1 * stats[player]["ftm"])
+        stats[player]["r"] = stats[player]["or"] + stats[player]["dr"]
+        stats[player]["fgm"] += stats[player]["3fgm"]
+        stats[player]["fga"] += stats[player]["fgm"]
+        stats[player]["fta"] += stats[player]["ftm"]
+    #    stats[player]["s"]  += stats[player]["dj"] / 2
+    #    stats[player]["to"] += stats[player]["oj"] / 2
+        if player != "o":
+            for stat in stats[player]:
+                g_stats[stat] += stats[player][stat]
+    assert g_stats['sec'] == 60 * 40 * 5, "Unexpected total seconds: {}".format(g_stats['sec'])
+    stats["g"] = g_stats
