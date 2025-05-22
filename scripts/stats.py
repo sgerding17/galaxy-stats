@@ -23,11 +23,14 @@ def get_rebound_type(rebounder, last_event):
     else:
         assert False, "Rebound did not follow a shot attempt or block (last_event = {})".format(last_event)
 
+def opposite_team(team): return "g" if team == "o" else "o"
+
 def count_stats(events):
     stats = defaultdict(lambda: defaultdict(int))
 
     clock = 0
     in_game = []
+    pos = ""
     last_event = []
 
     assert events[0][0] == "c", "The first event must be a clock"
@@ -42,13 +45,28 @@ def count_stats(events):
             assert delta_clock >= 0, "Backwards clock jump detected (clock = {}, timestamp = {})".format(clock, timestamp)
             for player_in_game in in_game:
                 stats[player_in_game]["sec"] += delta_clock
+            if new_clock == 0:
+                pos = opposite_team(pos)
             clock = new_clock
 
         elif event_type == "ig":
             in_game = event[1:]
             assert len(in_game) == 5, "Invalid in-game set: {}".format(in_game)
 
-        elif event_type in ("3fgm", "fgm", "ftm", "fga", "fta", "r", "a", "s", "b", "to", "oj", "dj"):
+        elif event_type == "t":
+            team = event[1]
+            pos = opposite_team(team)
+
+        elif event_type in ("oj", "dj"):
+            player = event[1]
+            assert pos in ("g", "o")
+            if event_type == "oj" and pos == "o":
+                stats[player]["to"] += 1
+            elif event_type == "dj" and pos == "g":
+                stats[player]["s"] += 1
+            pos = opposite_team(pos)
+
+        elif event_type in ("3fgm", "fgm", "ftm", "fga", "fta", "r", "a", "s", "b", "to"):
             stat = event_type
             player = event[1]
             if event_type in ("3fgm", "fgm", "ftm"):
