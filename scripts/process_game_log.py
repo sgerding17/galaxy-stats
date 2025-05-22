@@ -16,10 +16,10 @@ def print_stats(row, s):
     columns = [
         ( "<9", "PLAYER", f"{row}",                 f"Galaxy",                f"Opponent"              ),
         ( ">5", "MIN",    f"{s['min']}",            f"-",                     f"-"                     ),
-        ( ">6", "FG",     f"{s['fgm']}-{s['fga']}", f"{s['fgm']}-{s['fga']}", f"{s['fgm']}-{s['fga']}" ),
+        ( ">7", "FG",     f"{s['fgm']}-{s['fga']}", f"{s['fgm']}-{s['fga']}", f"{s['fgm']}-{s['fga']}" ),
         ( ">6", "FT",     f"{s['ftm']}-{s['fta']}", f"{s['ftm']}-{s['fta']}", f"{s['ftm']}-{s['fta']}" ),
-        ( ">5", "OREB",   f"{s['or']}",             f"{s['or']}",             f"{s['or']}"             ),
-        ( ">5", "DREB",   f"{s['dr']}",             f"{s['dr']}",             f"{s['dr']}"             ),
+        ( ">6", "OREB",   f"{s['or']}",             f"{s['or']}",             f"{s['or']}"             ),
+        ( ">6", "DREB",   f"{s['dr']}",             f"{s['dr']}",             f"{s['dr']}"             ),
         ( ">5", "REB",    f"{s['r']}",              f"{s['r']}",              f"{s['r']}"              ),
         ( ">5", "AST",    f"{s['a']}",              f"{s['a']}",              f"-"                     ),
         ( ">5", "STL",    f"{s['s']}",              f"{s['s']}",              f"-"                     ),
