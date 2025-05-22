@@ -24,14 +24,13 @@ def get_rebound_type(rebounder, last_event):
         assert False, "Rebound did not follow a shot attempt or block (last_event = {})".format(last_event)
 
 def count_stats(events):
-    assert events[0][0] == "c", "The first event must be a clock"
-
     stats = defaultdict(lambda: defaultdict(int))
 
     clock = 0
     in_game = []
     last_event = []
 
+    assert events[0][0] == "c", "The first event must be a clock"
     for event in events:
         event = event.split()
         event_type = event[0]
@@ -69,7 +68,10 @@ def count_stats(events):
 
 def rollup_stats(stats):
     g_stats = defaultdict(int)
+
     for player in stats:
+        stats[player]["gp"] = 1
+        stats[player]["min"] = round(stats[player]["sec"] / 60)
         stats[player]["p"] = (3 * stats[player]["3fgm"] +
                               2 * stats[player]["fgm"] +
                               1 * stats[player]["ftm"])
@@ -77,10 +79,32 @@ def rollup_stats(stats):
         stats[player]["fgm"] += stats[player]["3fgm"]
         stats[player]["fga"] += stats[player]["fgm"]
         stats[player]["fta"] += stats[player]["ftm"]
-    #    stats[player]["s"]  += stats[player]["dj"] / 2
-    #    stats[player]["to"] += stats[player]["oj"] / 2
         if player != "o":
             for stat in stats[player]:
                 g_stats[stat] += stats[player][stat]
-    assert g_stats['sec'] == 60 * 40 * 5, "Unexpected total seconds: {}".format(g_stats['sec'])
+
+    assert g_stats["sec"] == 60 * 40 * 5, "Unexpected total seconds: {}".format(g_stats["sec"])
+    g_stats["gp"] = 1
     stats["g"] = g_stats
+
+def accumulate_stats(all_stats):
+    cum_stats = defaultdict(lambda: defaultdict(int))
+
+    for stats in all_stats:
+        for player in stats:
+            for stat in stats[player]:
+                cum_stats[player][stat] += stats[player][stat]
+
+    def quantize(x): return round(x * 10) / 10
+    for player in cum_stats:
+        gp = float(cum_stats[player]["gp"])
+        for stat in cum_stats[player]:
+            if stat in ("gp", "pm"): continue
+            cum_stats[player][stat] = quantize(cum_stats[player][stat] / gp)
+
+        cum_stats[player]["fgp"] = quantize(100 * cum_stats[player]["fgm"] /
+                                                  cum_stats[player]["fga"])
+        cum_stats[player]["ftp"] = quantize(100 * cum_stats[player]["ftm"] /
+                                                  cum_stats[player]["fta"])
+
+    return cum_stats

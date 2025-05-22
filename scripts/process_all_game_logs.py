@@ -1,18 +1,31 @@
 import os
 import subprocess
 
-box_score = {}
-for log in sorted(os.listdir("game_logs"), reverse=True):
-    process = subprocess.run(f"cat game_logs/{log} | python3 scripts/process_game_log.py | column -t", shell=True, capture_output=True, text=True)
-    assert process.stderr == "", "Error processing {}:\n{}".format(log, process.stderr)
-    box_score[log] = process.stdout
+game_logs = ["game_logs/" + l for l in sorted(os.listdir("game_logs"), reverse=True)]
 
-for log in box_score:
-    (date, venue, opponent) = log.split(".")
+box_scores = {}
+for log in game_logs:
+    process = subprocess.run(f"python3 scripts/process_game_log.py {log}",
+                             shell=True, capture_output=True, text=True)
+    assert process.stderr == "", "Error processing {}:\n{}".format(log, process.stderr)
+    box_scores[log] = process.stdout
+
+for log in box_scores:
+    (date, venue, opponent) = log.split("/")[1].split(".")
     date = f"{date[:4]}-{date[4:6]}-{date[6:]}"
     opponent = opponent.replace("_", " ")
     venue = venue.replace("_", " ")
     print(f"## {date} - Galaxy vs. {opponent} - {venue}")
     print("```")
-    print(box_score[log], end="")
+    print(box_scores[log], end="")
     print("```")
+
+process = subprocess.run(f"python3 scripts/process_cumulative_stats.py {' '.join(game_logs)}",
+                         shell=True, capture_output=True, text=True)
+assert process.stderr == "", "Error processing cumulative stats:\n{}".format(process.stderr)
+cumulative_stats = process.stdout
+
+print(f"## Cumulative")
+print("```")
+print(cumulative_stats, end="")
+print("```")
