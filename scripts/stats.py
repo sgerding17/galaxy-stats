@@ -57,8 +57,8 @@ def count_stats(events):
             team = event[1]
             pos = opposite_team(team)
 
-        elif event_type in ("oj", "dj"):
-            player = event[1]
+        elif event_type in ("oj", "dj", "j"):
+            player = event[1] if len(event) == 2 else None
             assert pos in ("g", "o")
             if event_type == "oj" and pos == "o":
                 stats[player]["to"] += 1
