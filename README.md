@@ -71,7 +71,7 @@ Yosy        20    0-6   0-0     1     1    2    0    2    1    3   -3    0
 Galaxy       -   6-40   4-9    17    24   41    2    9    4   20    -   16
 Opponent     -   5-50   4-8    22    20   42    -    -    -    -    -   15
 ```
-## 2025-04-27 - Galaxy vs. Sakura - WLA White Pool Play
+## 2025-04-27 - Galaxy vs. Sakura - WLA White Round Robin
 ```
 PLAYER     MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
 Long        33    0-1   0-2     1     0    1    0    0    0    3  +17    0
@@ -85,7 +85,7 @@ Yosy        31    1-7   1-3     1     0    1    0    1    0    4  +15    3
 Galaxy       -  17-38  4-10    13    23   36    5    8    7   20    -   38
 Opponent     -  11-45  5-16    15    12   27    -    -    -    -    -   27
 ```
-## 2025-04-26 - Galaxy vs. Red Phoenix - WLA White Pool Play
+## 2025-04-26 - Galaxy vs. Red Phoenix - WLA White Round Robin
 ```
 PLAYER     MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
 Long        24    0-0   0-0     0     0    0    0    1    0    1   +7    0
@@ -99,7 +99,7 @@ Yosy        29    1-2   0-0     0     1    1    0    0    0    1  +10    2
 Galaxy       -  11-47   1-4    20    35   55    5    7    9   24    -   23
 Opponent     -   2-55   2-8    21    17   38    -    -    -    -    -    6
 ```
-## 2025-04-26 - Galaxy vs. PB Musubis - WLA White Pool Play
+## 2025-04-26 - Galaxy vs. PB Musubis - WLA White Round Robin
 ```
 PLAYER     MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
 Long        20    0-1   0-0     0     0    0    0    0    0    3   -3    0
