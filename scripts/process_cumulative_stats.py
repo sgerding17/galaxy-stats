@@ -31,7 +31,6 @@ def print_stats(row, s):
         ( ">6",  "STL",    f"{s['s']}",     f"{s['s']}",    f"-"          ),
         ( ">6",  "BLK",    f"{s['b']}",     f"{s['b']}",    f"-"          ),
         ( ">6",  "TO",     f"{s['to']}",    f"{s['to']}",   f"-"          ),
-        ( ">6",  "+/-",    f"{s['pm']:+d}", f"-",           f"-"          ),
         ( ">10", "PLAYER", f"{row}",        f"Galaxy",      f"Opponent"   ),
         ]
 

@@ -117,7 +117,7 @@ def accumulate_stats(all_stats):
     for player in cum_stats:
         gp = float(cum_stats[player]["gp"])
         for stat in cum_stats[player]:
-            if stat in ("gp", "pm"): continue
+            if stat == "gp": continue
             cum_stats[player][stat] = quantize(cum_stats[player][stat] / gp)
 
         cum_stats[player]["fgp"] = quantize(100 * cum_stats[player]["fgm"] /
