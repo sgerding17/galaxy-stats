@@ -113,7 +113,7 @@ Yosy        29    1-3   0-0     0     0    0    0    0    0    0   -5    2
 Galaxy       -   9-35   4-9    21    24   45    4    7    7   32    -   22
 Opponent     -  12-59   0-2    24     7   31    -    -    -    -    -   24
 ```
-## 2025-03-23 - Galaxy vs. Saberettes Sparks - JAO League Play
+## 2025-03-23 - Galaxy vs. Sparks - JAO League Play
 ```
 PLAYER     MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
 Long        22    0-3   0-0     0     1    1    1    1    0    4  -11    0
