@@ -1,18 +1,3 @@
-## 2025-05-25 - Galaxy vs. Sparks - Tigers Bronze Pool Play
-```
-PLAYER     MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
-Long        17    0-0   0-0     1     0    1    0    0    0    1  +15    0
-Laurel      20    1-2   0-0     2     0    2    0    0    0    1   +8    2
-Gerding     21    1-2   0-0     0     2    2    2    3    1    4   +7    2
-Iwai        34    1-3   0-1     2     3    5    3    3    2    7   +9    2
-Li          27    1-5   0-2     1     4    5    1    2    0    4  +11    2
-Saito       22    1-5   0-0     1     1    2    0    0    0    4   +5    2
-DeMarti     36   7-14   1-6     4     7   11    0    8    4    3  +15   15
-Yosy        22    0-1   0-0     0     0    0    0    0    0    1   +5    0
-
-Galaxy       -  12-32   1-9    12    17   29    6   16    7   25    -   25
-Opponent     -   4-31   2-7    10    10   20    -    -    -    -    -   10
-```
 ## 2025-05-25 - Galaxy vs. Sakura - Tigers Bronze Championship
 ```
 PLAYER     MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
@@ -27,6 +12,21 @@ Yosy        34    1-6   0-0     0     3    3    1    4    0    1   +8    2
 
 Galaxy       -  15-52   1-6    13    15   28    9   14    5   11    -   31
 Opponent     -   8-44  6-10    20    21   41    -    -    -    -    -   22
+```
+## 2025-05-25 - Galaxy vs. Sparks - Tigers Bronze Pool Play
+```
+PLAYER     MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+Long        17    0-0   0-0     1     0    1    0    0    0    1  +15    0
+Laurel      20    1-2   0-0     2     0    2    0    0    0    1   +8    2
+Gerding     21    1-2   0-0     0     2    2    2    3    1    4   +7    2
+Iwai        34    1-3   0-1     2     3    5    3    3    2    7   +9    2
+Li          27    1-5   0-2     1     4    5    1    2    0    4  +11    2
+Saito       22    1-5   0-0     1     1    2    0    0    0    4   +5    2
+DeMarti     36   7-14   1-6     4     7   11    0    8    4    3  +15   15
+Yosy        22    0-1   0-0     0     0    0    0    0    0    1   +5    0
+
+Galaxy       -  12-32   1-9    12    17   29    6   16    7   25    -   25
+Opponent     -   4-31   2-7    10    10   20    -    -    -    -    -   10
 ```
 ## 2025-05-24 - Galaxy vs. Red Phoenix - Tigers Bronze Pool Play
 ```
