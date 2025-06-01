@@ -58,8 +58,10 @@ def count_stats(events):
             pos = opposite_team(team)
 
         elif event_type in ("oj", "dj", "j"):
-            player = event[1] if len(event) == 2 else None
+            player = event[1] if len(event) >= 2 else None
+            awarded_to = event[-1] if len(event) >= 2 and event[-2] == "->" else None
             assert pos in ("g", "o")
+            assert awarded_to == pos or not awarded_to
             if event_type == "oj" and pos == "o":
                 stats[player]["to"] += 1
             elif event_type == "dj" and pos == "g":
@@ -68,6 +70,7 @@ def count_stats(events):
 
         elif event_type in ("3fgm", "fgm", "ftm", "fga", "fta", "r", "a", "s", "b", "to"):
             stat = event_type
+            assert len(event) == 2, "Invalid event: {}".format(" ".join(event))
             player = event[1]
             if event_type in ("3fgm", "fgm", "ftm"):
                 delta_score = get_delta_score(event_type, player)
