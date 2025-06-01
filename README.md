@@ -170,7 +170,7 @@ Opponent      -  11-70   1-1    33     9   42    -    -    -    -    -   23
 Galaxy        -   5-34   1-9    12    14   26    0    9    8   11    -   11
 Opponent      -   9-44   2-6    20    16   36    -    -    -    -    -   20
 ```
-## Cumulative
+## Cumulative Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO    PLAYER
 Long       10  22.1   0.1   0.0   0.6   0.0   0.1   0.3  33.3   0.6   0.3   0.9   0.1   0.6   0.1   1.9      Long
@@ -184,4 +184,124 @@ Yosy       11  28.1   1.2   0.5   4.5  11.1   0.1   0.6  16.7   1.0   0.6   1.6 
 
 Galaxy     12     -  23.5  10.5  40.7  25.8   2.5   8.8  28.4  17.3  22.1  39.4   4.9  10.2   6.7  21.4    Galaxy
 Opponent   12     -  19.2   8.0  47.8  16.7   2.9   7.7  37.7  18.8  14.6  33.3     -     -     -     -  Opponent
+```
+##  1 Long - Game Log
+```
+DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-05-25  Sakura          W 31-22   18    0-0   0-0     0     0    0    0    2    0    1   +4    0
+2025-05-25  Sparks          W 25-10   17    0-0   0-0     1     0    1    0    0    0    1  +15    0
+2025-05-24  Red Phoenix     W 23-21   12    0-0   0-0     1     0    1    0    0    0    1   -1    0
+2025-05-02  Red Phoenix     W 16-15   28    0-0   0-0     0     1    1    0    1    1    1   +0    0
+2025-04-27  Sakura          W 38-27   33    0-1   0-2     1     0    1    0    0    0    3  +17    0
+2025-04-26  Red Phoenix     W 23-6    24    0-0   0-0     0     0    0    0    1    0    1   +7    0
+2025-04-26  PB Musubis      L 22-24   20    0-1   0-0     0     0    0    0    0    0    3   -3    0
+2025-03-23  Sparks          L 17-23   22    0-3   0-0     0     1    1    1    1    0    4  -11    0
+2025-03-16  Dolphins        L 15-23   24    0-1   0-0     0     0    0    0    0    0    3   -5    0
+2025-03-09  Mighty Musubis  L 11-20   23    0-0   1-1     3     1    4    0    1    0    1   +4    1
+```
+##  2 Laurel - Game Log
+```
+DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-05-25  Sakura          W 31-22   14    0-0   0-0     0     0    0    1    0    0    2   +0    0
+2025-05-25  Sparks          W 25-10   20    1-2   0-0     2     0    2    0    0    0    1   +8    2
+2025-05-24  Red Phoenix     W 23-21   12    0-2   0-0     0     1    1    0    0    0    0   +0    0
+2025-05-04  Mighty Musubis  W 14-11   14    0-1   0-0     0     0    0    0    0    0    0   -5    0
+2025-05-03  PB Musubis      W 47-28   25    0-2   0-0     1     3    4    2    0    0    0   +4    0
+2025-05-02  Red Phoenix     W 16-15   25    0-3   0-2     2     3    5    0    0    0    0   +2    0
+2025-04-27  Sakura          W 38-27    5    0-0   0-0     0     0    0    0    0    0    1   -6    0
+2025-04-26  Red Phoenix     W 23-6    32    1-6   0-0     1     8    9    1    1    1    3   +9    2
+2025-04-26  PB Musubis      L 22-24   38    0-9   1-2     5     6   11    0    2    0    8   -3    1
+2025-03-23  Sparks          L 17-23   32    0-2   1-2     3     1    4    0    0    1    2   -4    1
+2025-03-16  Dolphins        L 15-23   31    0-0   0-0     2     4    6    0    1    0    5  -10    0
+2025-03-09  Mighty Musubis  L 11-20   33    1-2   0-0     2     0    2    0    1    2    1   -5    2
+```
+##  3 Gerding - Game Log
+```
+DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-05-25  Sakura          W 31-22   24    1-6   0-0     1     2    3    1    3    0    2   +6    2
+2025-05-25  Sparks          W 25-10   21    1-2   0-0     0     2    2    2    3    1    4   +7    2
+2025-05-24  Red Phoenix     W 23-21   26    3-6   0-0     0     1    1    1    2    1    3   -1    6
+2025-05-04  Mighty Musubis  W 14-11   30    0-4   0-0     2     0    2    0    4    0    1   +0    0
+2025-05-03  PB Musubis      W 47-28   31    1-6   0-0     0     2    2    3    2    1    2  +10    2
+2025-05-02  Red Phoenix     W 16-15   28   1-12   0-0     0     1    1    0    3    0    2   -2    2
+2025-04-27  Sakura          W 38-27   33    0-5   2-2     1     1    2    2    1    2    7  +10    2
+2025-04-26  Red Phoenix     W 23-6    29    1-5   0-0     1     1    2    0    4    1    3  +10    2
+2025-04-26  PB Musubis      L 22-24   31    0-1   0-0     1     4    5    0    1    1   12   -3    0
+2025-03-23  Sparks          L 17-23   27    0-8   0-0     4     2    6    1    6    0    6   +3    0
+2025-03-16  Dolphins        L 15-23   30    0-1   0-0     1     9   10    2    3    0   11   -7    0
+2025-03-09  Mighty Musubis  L 11-20   23    0-6   0-0     1     0    1    0    3    0    1  -11    0
+```
+##  5 Iwai - Game Log
+```
+DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-05-25  Sakura          W 31-22   28    1-4   1-2     2     0    2    3    2    0    2   +8    3
+2025-05-25  Sparks          W 25-10   34    1-3   0-1     2     3    5    3    3    2    7   +9    2
+2025-05-24  Red Phoenix     W 23-21   36   4-12   0-0     2     0    2    2    0    2    1   +2    8
+2025-05-04  Mighty Musubis  W 14-11   36    1-4   0-2     1     2    3    1    2    0    3   +6    2
+2025-05-03  PB Musubis      W 47-28   30    2-6   1-4     3     3    6    5    2    1    5  +22    5
+2025-05-02  Red Phoenix     W 16-15   27    1-5   0-0     2     0    2    1    0    1    5   +2    2
+2025-04-27  Sakura          W 38-27   36    0-2   0-2     0     3    3    3    3    0    1  +14    0
+2025-04-26  Red Phoenix     W 23-6    30   1-10   0-0     4     8   12    1    1    4    7  +14    2
+2025-04-26  PB Musubis      L 22-24   38    0-5   0-0     2     2    4    2    1    2    3   +4    0
+2025-03-23  Sparks          L 17-23   30    0-2   1-2     2     5    7    1    4    0    6  -12    1
+2025-03-16  Dolphins        L 15-23   28    1-7   0-0     1     4    5    0    1    0    5   -1    2
+2025-03-09  Mighty Musubis  L 11-20   33   2-12   0-0     2     4    6    0    0    2    4  -12    4
+```
+## 14 Li - Game Log
+```
+DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-05-25  Sakura          W 31-22   30   4-13   0-0     0     1    1    0    0    1    1  +12    8
+2025-05-25  Sparks          W 25-10   27    1-5   0-2     1     4    5    1    2    0    4  +11    2
+2025-05-24  Red Phoenix     W 23-21   31    0-5   2-6     4     0    4    1    1    0    3   +2    2
+2025-05-04  Mighty Musubis  W 14-11   25    0-9   2-8     1     1    2    0    1    3    0   +0    2
+2025-05-03  PB Musubis      W 47-28   28    2-7   0-2     0     3    3    3    2    1    3  +11    4
+2025-05-02  Red Phoenix     W 16-15   12    0-2   0-0     0     0    0    0    0    0    1   +1    0
+2025-03-23  Sparks          L 17-23   30    0-1   0-0     2     2    4    0    1    3    3   -6    0
+```
+## 21 Saito - Game Log
+```
+DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-05-25  Sakura          W 31-22   17    0-2   0-0     1     0    1    1    0    0    1   -3    0
+2025-05-25  Sparks          W 25-10   22    1-5   0-0     1     1    2    0    0    0    4   +5    2
+2025-05-24  Red Phoenix     W 23-21   21    2-4   0-0     0     0    0    0    0    0    1   +2    4
+2025-05-04  Mighty Musubis  W 14-11   31    0-3   0-0     2     2    4    0    0    0    3   +2    0
+2025-05-03  PB Musubis      W 47-28   24    1-3   0-0     3     2    5    1    1    1    3  +11    2
+2025-05-02  Red Phoenix     W 16-15   20    0-4   0-0     0     1    1    0    0    0    3   +2    0
+2025-04-27  Sakura          W 38-27   23    0-0   0-0     0     1    1    0    0    0    3   -6    0
+2025-04-26  Red Phoenix     W 23-6    26    0-1   1-2     0     0    0    0    0    0    3  +17    1
+2025-04-26  PB Musubis      L 22-24   11    0-0   0-0     0     2    2    1    0    0    4   +0    0
+2025-03-23  Sparks          L 17-23   22    1-3   0-0     1     0    1    1    0    0    3   +6    2
+2025-03-16  Dolphins        L 15-23   22    1-2   0-0     0     0    0    0    2    0    6   -1    2
+2025-03-09  Mighty Musubis  L 11-20   26    1-4   0-0     0     1    1    0    0    0    2   -5    2
+```
+## 22 DeMarti - Game Log
+```
+DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-05-25  Sakura          W 31-22   36   8-21   0-4     3     9   12    2    3    4    1  +10   16
+2025-05-25  Sparks          W 25-10   36   7-14   1-6     4     7   11    0    8    4    3  +15   15
+2025-05-24  Red Phoenix     W 23-21   36    1-4   1-8     6     9   15    2    6    5    4   +1    3
+2025-05-04  Mighty Musubis  W 14-11   34   4-14   0-0    13    12   25    0    1    1    3   +4    8
+2025-05-03  PB Musubis      W 47-28   32  16-30   2-4    18    15   33    0    0    2    6  +21   34
+2025-05-02  Red Phoenix     W 16-15   39    4-8   4-7    10    12   22    1    3    1    5   +3   12
+2025-04-27  Sakura          W 38-27   39  16-23   1-1     8    13   21    0    3    5    1  +11   33
+2025-04-26  Red Phoenix     W 23-6    32   7-23   0-2    14    13   27    3    0    3    6  +18   14
+2025-04-26  PB Musubis      L 22-24   33   8-16   3-7    11     6   17    1    3    4    2   +0   19
+2025-03-23  Sparks          L 17-23   37   5-24   3-8     6     9   15    0    3    4    3   -6   13
+2025-03-16  Dolphins        L 15-23   36   4-15   1-2     5     8   13    0    1    7    4   -8    9
+2025-03-09  Mighty Musubis  L 11-20   33    1-5   0-6     0     4    4    0    2    4    0   -5    2
+```
+## 25 Yosy - Game Log
+```
+DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-05-25  Sakura          W 31-22   34    1-6   0-0     0     3    3    1    4    0    1   +8    2
+2025-05-25  Sparks          W 25-10   22    0-1   0-0     0     0    0    0    0    0    1   +5    0
+2025-05-24  Red Phoenix     W 23-21   26    0-4   0-0     2     1    3    1    2    0    3   +5    0
+2025-05-04  Mighty Musubis  W 14-11   30    1-8   0-2     1     0    1    0    1    0    3   +8    2
+2025-05-03  PB Musubis      W 47-28   30    0-6   0-0     3     0    3    0    2    0    1  +16    0
+2025-05-02  Red Phoenix     W 16-15   20    0-6   0-0     1     1    2    0    2    1    3   -3    0
+2025-04-27  Sakura          W 38-27   31    1-7   1-3     1     0    1    0    1    0    4  +15    3
+2025-04-26  Red Phoenix     W 23-6    29    1-2   0-0     0     1    1    0    0    0    1  +10    2
+2025-04-26  PB Musubis      L 22-24   29    1-3   0-0     0     0    0    0    0    0    0   -5    2
+2025-03-16  Dolphins        L 15-23   29    1-1   0-0     1     0    1    0    1    0    4   -8    2
+2025-03-09  Mighty Musubis  L 11-20   29    0-5   0-2     2     1    3    0    2    0    2  -11    0
 ```
