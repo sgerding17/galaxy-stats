@@ -50,10 +50,12 @@ players = {
     "21": "Saito",
     "22": "DeMarti",
     "25": "Yosy",
+
+    "g": "Galaxy",
 }
 
 for (number, name) in players.items():
-    player = f"{number:>2} {name}"
+    player = f"{number:>2} {name}" if number != "g" else "Galaxy"
     print(f"## {player} - Game Log")
     print("```")
     print(f"{'DATE':<10}  {'OPPONENT':<{max_opp_len}}  {'RESULT':<7}  ", end="")
