@@ -199,20 +199,34 @@ Opponent      -   8-67   0-2    24    10   34    -    -    -    -    -   16
 Galaxy        -   7-37  5-12    19    24   43    2   14    6   24    -   19
 Opponent      -   4-44   0-7    19    12   31    -    -    -    -    -    8
 ```
+## 2025-02-02 - Galaxy vs. Sakura - JAO League Play
+```
+            MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+ 1 Long      20    0-0   0-0     0     0    0    0    0    0    0   -3    0
+ 2 Laurel    29    0-1   0-0     1     0    1    0    0    0    1   -5    0
+ 3 Gerding   27    1-5   0-0     2     1    3    1    2    0    6   -1    2
+14 Li        35    0-6   0-0     0     3    3    0    0    0    2   -4    0
+21 Saito     25    1-2   0-2     1     0    1    0    1    0    2   -4    2
+22 DeMarti   40   4-18  1-11    12     7   19    1    7    5    3   -4    9
+25 Yosy      23    0-1   0-0     0     0    0    0    0    0    2   +1    0
+
+Galaxy        -   6-33  1-13    16    11   27    2   10    5   16    -   13
+Opponent      -   8-41   1-3    18    12   30    -    -    -    -    -   17
+```
 ## Cumulative Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO    PLAYER
-Long       12  21.4   0.1   0.0   0.6   0.0   0.1   0.2  50.0   0.8   0.4   1.2   0.2   0.7   0.1   2.0      Long
-Laurel     14  24.1   0.6   0.2   2.5   8.0   0.1   0.4  25.0   1.4   2.1   3.5   0.3   0.5   0.3   1.9    Laurel
-Gerding    14  28.2   1.4   0.6   5.4  11.1   0.1   0.1 100.0   1.5   2.1   3.6   0.9   3.1   0.6   4.6   Gerding
+Long       13  21.3   0.1   0.0   0.5   0.0   0.1   0.2  50.0   0.8   0.4   1.2   0.2   0.6   0.1   1.8      Long
+Laurel     15  24.4   0.5   0.2   2.4   8.3   0.1   0.4  25.0   1.3   2.0   3.3   0.3   0.5   0.3   1.9    Laurel
+Gerding    15  28.1   1.5   0.7   5.4  13.0   0.1   0.1 100.0   1.5   2.1   3.6   0.9   3.0   0.5   4.7   Gerding
 Iwai       14  32.3   2.4   1.0   5.8  17.2   0.4   1.2  33.3   1.9   2.8   4.6   1.8   1.4   1.0   4.4      Iwai
-Li          9  26.2   2.4   0.9   5.7  15.8   0.7   2.4  29.2   1.3   2.2   3.6   0.6   1.0   1.1   3.4        Li
-Saito      13  22.1   1.2   0.5   2.5  20.0   0.1   0.2  50.0   0.6   0.9   1.5   0.3   0.3   0.1   3.2     Saito
-DeMarti    14  34.6  14.4   6.6  15.9  41.5   1.3   4.4  29.5   7.6   9.3  16.9   0.6   2.6   3.9   3.3   DeMarti
-Yosy       13  27.2   1.0   0.5   3.9  12.8   0.1   0.8  12.5   1.0   0.7   1.7   0.2   1.3   0.1   2.1      Yosy
+Li         10  27.1   2.2   0.8   5.7  14.0   0.6   2.2  27.3   1.2   2.3   3.5   0.5   0.9   1.0   3.3        Li
+Saito      14  22.3   1.2   0.6   2.5  24.0   0.1   0.3  33.3   0.6   0.9   1.5   0.3   0.4   0.1   3.1     Saito
+DeMarti    15  34.9  14.1   6.4  16.1  39.8   1.3   4.8  27.1   7.9   9.1  17.0   0.7   2.9   3.9   3.3   DeMarti
+Yosy       14  26.9   0.9   0.4   3.7  10.8   0.1   0.8  12.5   0.9   0.6   1.6   0.1   1.2   0.1   2.1      Yosy
 
-Galaxy     14     -  22.5   9.9  39.8  24.9   2.6   8.9  29.2  17.4  22.8  40.2   4.6  10.4   6.6  23.0    Galaxy
-Opponent   14     -  18.1   7.7  48.9  15.7   2.5   7.2  34.7  19.1  14.1  33.2     -     -     -     -  Opponent
+Galaxy     15     -  21.9   9.7  39.3  24.7   2.5   9.1  27.5  17.3  22.0  39.3   4.5  10.3   6.5  22.5    Galaxy
+Opponent   15     -  18.1   7.7  48.3  15.9   2.4   6.9  34.8  19.1  13.9  33.0     -     -     -     -  Opponent
 ```
 ##  1 Long - Game Log
 ```
@@ -229,6 +243,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-09  Mighty Musubis  L 11-20   23    0-0   1-1     3     1    4    0    1    0    1   +4    1
 2025-03-02  PB Musubis      L 14-16   12    0-0   0-0     0     1    1    1    1    0    3   +2    0
 2025-02-23  Storm           W 19-8    24    0-1   0-0     4     1    5    1    1    0    2  +11    0
+2025-02-02  Sakura          L 13-17   20    0-0   0-0     0     0    0    0    0    0    0   -3    0
 ```
 ##  2 Laurel - Game Log
 ```
@@ -247,6 +262,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-09  Mighty Musubis  L 11-20   33    1-2   0-0     2     0    2    0    1    2    1   -5    2
 2025-03-02  PB Musubis      L 14-16   34    0-5   0-0     1     3    4    0    2    0    4   -2    0
 2025-02-23  Storm           W 19-8    22    0-1   0-0     0     1    1    0    0    0    0   -2    0
+2025-02-02  Sakura          L 13-17   29    0-1   0-0     1     0    1    0    0    0    1   -5    0
 ```
 ##  3 Gerding - Game Log
 ```
@@ -265,6 +281,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-09  Mighty Musubis  L 11-20   23    0-6   0-0     1     0    1    0    3    0    1  -11    0
 2025-03-02  PB Musubis      L 14-16   26    0-4   0-0     6     2    8    1    2    0    7   +2    0
 2025-02-23  Storm           W 19-8    36   1-10   0-0     3     3    6    0    6    1    4  +11    2
+2025-02-02  Sakura          L 13-17   27    1-5   0-0     2     1    3    1    2    0    6   -1    2
 ```
 ##  5 Iwai - Game Log
 ```
@@ -296,6 +313,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-23  Sparks          L 17-23   30    0-1   0-0     2     2    4    0    1    3    3   -6    0
 2025-03-02  PB Musubis      L 14-16   22    0-1   0-0     1     3    4    0    0    1    7   -6    0
 2025-02-23  Storm           W 19-8    31    1-8   2-4     3     6    9    0    2    1    9  +14    4
+2025-02-02  Sakura          L 13-17   35    0-6   0-0     0     3    3    0    0    0    2   -4    0
 ```
 ## 21 Saito - Game Log
 ```
@@ -313,6 +331,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-16  Dolphins        L 15-23   22    1-2   0-0     0     0    0    0    2    0    6   -1    2
 2025-03-09  Mighty Musubis  L 11-20   26    1-4   0-0     0     1    1    0    0    0    2   -5    2
 2025-03-02  PB Musubis      L 14-16   22    0-2   0-0     0     2    2    0    1    0    5   +2    0
+2025-02-02  Sakura          L 13-17   25    1-2   0-2     1     0    1    0    1    0    2   -4    2
 ```
 ## 22 DeMarti - Game Log
 ```
@@ -331,6 +350,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-09  Mighty Musubis  L 11-20   33    1-5   0-6     0     4    4    0    2    4    0   -5    2
 2025-03-02  PB Musubis      L 14-16   31   6-14   0-2     3     8   11    0    1    6    4   +0   12
 2025-02-23  Storm           W 19-8    30   5-12   2-4     5     5   10    0    3    4    4  +12   12
+2025-02-02  Sakura          L 13-17   40   4-18  1-11    12     7   19    1    7    5    3   -4    9
 ```
 ## 25 Yosy - Game Log
 ```
@@ -348,6 +368,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-09  Mighty Musubis  L 11-20   29    0-5   0-2     2     1    3    0    2    0    2  -11    0
 2025-03-02  PB Musubis      L 14-16   20    0-2   0-2     1     1    2    0    0    0    3   -6    0
 2025-02-23  Storm           W 19-8    24    0-0   0-2     1     1    2    0    2    0    1   +0    0
+2025-02-02  Sakura          L 13-17   23    0-1   0-0     0     0    0    0    0    0    2   +1    0
 ```
 ## Galaxy - Game Log
 ```
@@ -366,4 +387,5 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-09  Mighty Musubis  L 11-20    -   5-34   1-9    12    14   26    0    9    8   11    -   11
 2025-03-02  PB Musubis      L 14-16    -   6-32   2-6    17    30   47    4    8    7   41    -   14
 2025-02-23  Storm           W 19-8     -   7-37  5-12    19    24   43    2   14    6   24    -   19
+2025-02-02  Sakura          L 13-17    -   6-33  1-13    16    11   27    2   10    5   16    -   13
 ```
