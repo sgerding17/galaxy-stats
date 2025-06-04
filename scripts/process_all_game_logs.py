@@ -2,7 +2,7 @@ import os
 import subprocess
 from collections import defaultdict
 
-game_logs = ["game_logs/" + l for l in sorted(os.listdir("game_logs"), reverse=True)]
+game_logs = ["game_logs/" + l for l in sorted(os.listdir("game_logs"), reverse=True) if not l.startswith(".")]
 
 box_scores = {}
 for log in game_logs:
