@@ -213,20 +213,35 @@ Opponent      -   4-44   0-7    19    12   31    -    -    -    -    -    8
 Galaxy        -   6-33  1-13    16    11   27    2   10    5   16    -   13
 Opponent      -   8-41   1-3    18    12   30    -    -    -    -    -   17
 ```
+## 2025-01-19 - Galaxy vs. Shooting Stars - JAO League Play
+```
+            MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+ 1 Long      23    1-1   0-0     0     1    1    1    0    0    2   -4    2
+ 2 Laurel    19    0-0   0-0     0     0    0    1    0    0    0  -14    0
+ 3 Gerding   31    2-3   0-0     1     4    5    1    2    0    3   -9    4
+ 5 Iwai      26    0-3   0-0     0     0    0    0    0    0    0   -3    0
+14 Li        22    0-5   1-2     0     0    0    0    0    1    4  -21    1
+21 Saito     29    0-1   0-0     0     2    2    0    2    0    6  -14    0
+22 DeMarti   31    1-9   3-5     0     5    5    1    0    4    5  -13    5
+25 Yosy      19    0-0   0-0     2     0    2    0    0    0    7  -17    0
+
+Galaxy        -   4-22   4-7     3    18   21    4    4    5   27    -   12
+Opponent      -  14-52  3-16    20    13   33    -    -    -    -    -   31
+```
 ## Cumulative Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO    PLAYER
-Long       13  21.3   0.1   0.0   0.5   0.0   0.1   0.2  50.0   0.8   0.4   1.2   0.2   0.6   0.1   1.8      Long
-Laurel     15  24.4   0.5   0.2   2.4   8.3   0.1   0.4  25.0   1.3   2.0   3.3   0.3   0.5   0.3   1.9    Laurel
-Gerding    15  28.1   1.5   0.7   5.4  13.0   0.1   0.1 100.0   1.5   2.1   3.6   0.9   3.0   0.5   4.7   Gerding
-Iwai       14  32.3   2.4   1.0   5.8  17.2   0.4   1.2  33.3   1.9   2.8   4.6   1.8   1.4   1.0   4.4      Iwai
-Li         10  27.1   2.2   0.8   5.7  14.0   0.6   2.2  27.3   1.2   2.3   3.5   0.5   0.9   1.0   3.3        Li
-Saito      14  22.3   1.2   0.6   2.5  24.0   0.1   0.3  33.3   0.6   0.9   1.5   0.3   0.4   0.1   3.1     Saito
-DeMarti    15  34.9  14.1   6.4  16.1  39.8   1.3   4.8  27.1   7.9   9.1  17.0   0.7   2.9   3.9   3.3   DeMarti
-Yosy       14  26.9   0.9   0.4   3.7  10.8   0.1   0.8  12.5   0.9   0.6   1.6   0.1   1.2   0.1   2.1      Yosy
+Long       14  21.4   0.2   0.1   0.6  16.7   0.1   0.2  50.0   0.7   0.4   1.1   0.3   0.6   0.1   1.9      Long
+Laurel     16  24.1   0.5   0.2   2.2   9.1   0.1   0.4  25.0   1.2   1.9   3.1   0.3   0.4   0.2   1.8    Laurel
+Gerding    16  28.3   1.6   0.8   5.2  15.4   0.1   0.1 100.0   1.5   2.2   3.7   0.9   2.9   0.5   4.6   Gerding
+Iwai       15  31.9   2.3   0.9   5.6  16.1   0.4   1.1  36.4   1.7   2.6   4.3   1.7   1.3   0.9   4.1      Iwai
+Li         11  26.6   2.1   0.7   5.6  12.5   0.6   2.2  27.3   1.1   2.1   3.2   0.5   0.8   1.0   3.4        Li
+Saito      15  22.7   1.1   0.5   2.4  20.8   0.1   0.3  33.3   0.6   0.9   1.5   0.3   0.5   0.1   3.3     Saito
+DeMarti    16  34.7  13.5   6.1  15.6  39.1   1.4   4.8  29.2   7.4   8.9  16.2   0.7   2.8   3.9   3.4   DeMarti
+Yosy       15  26.3   0.9   0.4   3.5  11.4   0.1   0.7  14.3   1.0   0.6   1.6   0.1   1.1   0.1   2.4      Yosy
 
-Galaxy     15     -  21.9   9.7  39.3  24.7   2.5   9.1  27.5  17.3  22.0  39.3   4.5  10.3   6.5  22.5    Galaxy
-Opponent   15     -  18.1   7.7  48.3  15.9   2.4   6.9  34.8  19.1  13.9  33.0     -     -     -     -  Opponent
+Galaxy     16     -  21.2   9.3  38.2  24.3   2.6   9.0  28.9  16.4  21.8  38.2   4.4   9.9   6.4  22.8    Galaxy
+Opponent   16     -  18.9   8.1  48.6  16.7   2.4   7.5  32.0  19.1  13.9  33.0     -     -     -     -  Opponent
 ```
 ##  1 Long - Game Log
 ```
@@ -244,6 +259,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-02  PB Musubis      L 14-16   12    0-0   0-0     0     1    1    1    1    0    3   +2    0
 2025-02-23  Storm           W 19-8    24    0-1   0-0     4     1    5    1    1    0    2  +11    0
 2025-02-02  Sakura          L 13-17   20    0-0   0-0     0     0    0    0    0    0    0   -3    0
+2025-01-19  Shooting Stars  L 12-31   23    1-1   0-0     0     1    1    1    0    0    2   -4    2
 ```
 ##  2 Laurel - Game Log
 ```
@@ -263,6 +279,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-02  PB Musubis      L 14-16   34    0-5   0-0     1     3    4    0    2    0    4   -2    0
 2025-02-23  Storm           W 19-8    22    0-1   0-0     0     1    1    0    0    0    0   -2    0
 2025-02-02  Sakura          L 13-17   29    0-1   0-0     1     0    1    0    0    0    1   -5    0
+2025-01-19  Shooting Stars  L 12-31   19    0-0   0-0     0     0    0    1    0    0    0  -14    0
 ```
 ##  3 Gerding - Game Log
 ```
@@ -282,6 +299,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-02  PB Musubis      L 14-16   26    0-4   0-0     6     2    8    1    2    0    7   +2    0
 2025-02-23  Storm           W 19-8    36   1-10   0-0     3     3    6    0    6    1    4  +11    2
 2025-02-02  Sakura          L 13-17   27    1-5   0-0     2     1    3    1    2    0    6   -1    2
+2025-01-19  Shooting Stars  L 12-31   31    2-3   0-0     1     4    5    1    2    0    3   -9    4
 ```
 ##  5 Iwai - Game Log
 ```
@@ -300,6 +318,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-09  Mighty Musubis  L 11-20   33   2-12   0-0     2     4    6    0    0    2    4  -12    4
 2025-03-02  PB Musubis      L 14-16   34    0-4   2-2     2     3    5    2    1    0    8   -2    2
 2025-02-23  Storm           W 19-8    32    0-5   1-2     1     2    3    1    0    0    4   +9    1
+2025-01-19  Shooting Stars  L 12-31   26    0-3   0-0     0     0    0    0    0    0    0   -3    0
 ```
 ## 14 Li - Game Log
 ```
@@ -314,6 +333,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-02  PB Musubis      L 14-16   22    0-1   0-0     1     3    4    0    0    1    7   -6    0
 2025-02-23  Storm           W 19-8    31    1-8   2-4     3     6    9    0    2    1    9  +14    4
 2025-02-02  Sakura          L 13-17   35    0-6   0-0     0     3    3    0    0    0    2   -4    0
+2025-01-19  Shooting Stars  L 12-31   22    0-5   1-2     0     0    0    0    0    1    4  -21    1
 ```
 ## 21 Saito - Game Log
 ```
@@ -332,6 +352,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-09  Mighty Musubis  L 11-20   26    1-4   0-0     0     1    1    0    0    0    2   -5    2
 2025-03-02  PB Musubis      L 14-16   22    0-2   0-0     0     2    2    0    1    0    5   +2    0
 2025-02-02  Sakura          L 13-17   25    1-2   0-2     1     0    1    0    1    0    2   -4    2
+2025-01-19  Shooting Stars  L 12-31   29    0-1   0-0     0     2    2    0    2    0    6  -14    0
 ```
 ## 22 DeMarti - Game Log
 ```
@@ -351,6 +372,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-02  PB Musubis      L 14-16   31   6-14   0-2     3     8   11    0    1    6    4   +0   12
 2025-02-23  Storm           W 19-8    30   5-12   2-4     5     5   10    0    3    4    4  +12   12
 2025-02-02  Sakura          L 13-17   40   4-18  1-11    12     7   19    1    7    5    3   -4    9
+2025-01-19  Shooting Stars  L 12-31   31    1-9   3-5     0     5    5    1    0    4    5  -13    5
 ```
 ## 25 Yosy - Game Log
 ```
@@ -369,6 +391,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-02  PB Musubis      L 14-16   20    0-2   0-2     1     1    2    0    0    0    3   -6    0
 2025-02-23  Storm           W 19-8    24    0-0   0-2     1     1    2    0    2    0    1   +0    0
 2025-02-02  Sakura          L 13-17   23    0-1   0-0     0     0    0    0    0    0    2   +1    0
+2025-01-19  Shooting Stars  L 12-31   19    0-0   0-0     2     0    2    0    0    0    7  -17    0
 ```
 ## Galaxy - Game Log
 ```
@@ -388,4 +411,5 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 2025-03-02  PB Musubis      L 14-16    -   6-32   2-6    17    30   47    4    8    7   41    -   14
 2025-02-23  Storm           W 19-8     -   7-37  5-12    19    24   43    2   14    6   24    -   19
 2025-02-02  Sakura          L 13-17    -   6-33  1-13    16    11   27    2   10    5   16    -   13
+2025-01-19  Shooting Stars  L 12-31    -   4-22   4-7     3    18   21    4    4    5   27    -   12
 ```
