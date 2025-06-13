@@ -1,5 +1,7 @@
 from collections import defaultdict
 
+LINE = 1
+
 def parse_timestamp(timestamp):
     assert len(timestamp) == 4, f"Invalid timestamp: {timestamp}"
     minutes = int(timestamp[:2])
@@ -21,11 +23,12 @@ def get_rebound_type(rebounder, last_event):
         shooter = last_event[1]
         return "or" if on_same_team(rebounder, shooter) else "dr"
     else:
-        assert False, "Rebound did not follow a shot attempt or block (last_event = {})".format(last_event)
+        assert False, "LINE {}: Rebound did not follow a shot attempt or block (last_event = {})".format(LINE, " ".join(last_event))
 
 def opposite_team(team): return "g" if team == "o" else "o"
 
 def count_stats(events):
+    global LINE
     stats = defaultdict(lambda: defaultdict(int))
 
     clock = 0
@@ -33,8 +36,9 @@ def count_stats(events):
     pos = ""
     last_event = []
 
-    assert events[0][0] == "c", "The first event must be a clock"
-    for event in events:
+    assert events[0][0] == "c", "LINE {}: The first event must be a clock".format(LINE)
+    for (line, event) in enumerate(events):
+        LINE = line + 1
         event = event.split()
         event_type = event[0]
 
@@ -42,7 +46,7 @@ def count_stats(events):
             timestamp = event[1]
             new_clock = parse_timestamp(timestamp)
             delta_clock = (0 if clock == 0 else clock - new_clock)
-            assert delta_clock >= 0, "Backwards clock jump detected (clock = {}, timestamp = {})".format(clock, timestamp)
+            assert delta_clock >= 0, "LINE {}: Backwards clock jump detected (clock = {}, timestamp = {})".format(LINE, clock, timestamp)
             for player_in_game in in_game:
                 stats[player_in_game]["sec"] += delta_clock
             if new_clock == 0:
@@ -51,7 +55,7 @@ def count_stats(events):
 
         elif event_type == "ig":
             in_game = event[1:]
-            assert len(in_game) == 5, "Invalid in-game set: {}".format(in_game)
+            assert len(in_game) == 5, "LINE {}: Invalid in-game set: {}".format(LINE, in_game)
 
         elif event_type == "t":
             team = event[1]
@@ -60,8 +64,8 @@ def count_stats(events):
         elif event_type in ("oj", "dj", "j"):
             player = event[1] if len(event) >= 2 else None
             awarded_to = event[-1] if len(event) >= 2 and event[-2] == "->" else None
-            assert pos in ("g", "o")
-            assert awarded_to == pos or not awarded_to
+            assert pos in ("g", "o"), "LINE {}: Possession not initialized for jump ball".format(LINE)
+            assert awarded_to == pos or not awarded_to, "LINE {}: Possession ({}) does not match awarded-to ({})".format(LINE, pos, awarded_to)
             if event_type == "oj" and pos == "o":
                 stats[player]["to"] += 1
             elif event_type == "dj" and pos == "g":
@@ -70,7 +74,7 @@ def count_stats(events):
 
         elif event_type in ("3fgm", "fgm", "ftm", "fga", "fta", "r", "a", "s", "b", "to"):
             stat = event_type
-            assert len(event) == 2, "Invalid event: {}".format(" ".join(event))
+            assert len(event) == 2, "LINE {}: Invalid event: {}".format(LINE, " ".join(event))
             player = event[1]
             if event_type in ("3fgm", "fgm", "ftm"):
                 delta_score = get_delta_score(event_type, player)
@@ -79,11 +83,11 @@ def count_stats(events):
             elif event_type == "r":
                 stat = get_rebound_type(player, last_event)
             elif event_type == "a":
-                assert last_event[0] in ("fgm", "3fgm"), "Assist did not follow a made shot (last_event = {})".format(last_event)
+                assert last_event[0] in ("fgm", "3fgm"), "LINE {}: Assist did not follow a made shot (last_event = {})".format(LINE, " ".join(last_event))
             stats[player][stat] += 1
 
         else:
-            assert False, "Unknown event type: {}".format(event_type)
+            assert False, "LINE {}: Unknown event type: {}".format(LINE, event_type)
         last_event = event
     return stats
 
