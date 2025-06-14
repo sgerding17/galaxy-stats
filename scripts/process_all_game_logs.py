@@ -28,6 +28,11 @@ process = subprocess.run(f"python3 scripts/print_cumulative_stats.py {' '.join(g
 assert process.stderr == "", "Error processing cumulative stats:\n{}".format(process.stderr)
 cumulative_stats = process.stdout
 
+process = subprocess.run(f"python3 scripts/print_cumulative_stats.py --per-game {' '.join(game_logs)}",
+                         shell=True, capture_output=True, text=True)
+assert process.stderr == "", "Error processing per-game stats:\n{}".format(process.stderr)
+per_game_stats = process.stdout
+
 for log in box_scores:
     print(f"## {game_info[log]['date']} - "
           f"Galaxy vs. {game_info[log]['opp']} - "
@@ -39,6 +44,11 @@ for log in box_scores:
 print(f"## Cumulative Stats")
 print("```")
 print(cumulative_stats, end="")
+print("```")
+
+print(f"## Per-Game Stats")
+print("```")
+print(per_game_stats, end="")
 print("```")
 
 players = {

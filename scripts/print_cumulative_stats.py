@@ -39,14 +39,16 @@ def print_stats(row, s):
 
 all_stats = []
 assert len(sys.argv) >= 2
-for log in sys.argv[1:]:
+per_game = (sys.argv[1] == "--per-game")
+first_log_pos = 2 if per_game else 1
+for log in sys.argv[first_log_pos:]:
     with open(f"{log}") as file:
         events = file.read().splitlines()
     stats = count_stats(events)
     rollup_stats(stats)
     all_stats.append(stats)
 
-cum_stats = accumulate_stats(all_stats)
+cum_stats = accumulate_stats(all_stats, per_game)
 
 print_stats("header", cum_stats["g"])
 for player in sorted(cum_stats, key=lambda x:int(x) if x.isdigit() else 100):

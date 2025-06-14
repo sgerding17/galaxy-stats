@@ -112,7 +112,7 @@ def rollup_stats(stats):
     g_stats["gp"] = 1
     stats["g"] = g_stats
 
-def accumulate_stats(all_stats):
+def accumulate_stats(all_stats, per_game):
     cum_stats = defaultdict(lambda: defaultdict(int))
 
     for stats in all_stats:
@@ -122,14 +122,15 @@ def accumulate_stats(all_stats):
 
     def quantize(x): return round(x * 10) / 10
     for player in cum_stats:
-        gp = float(cum_stats[player]["gp"])
-        for stat in cum_stats[player]:
-            if stat == "gp": continue
-            cum_stats[player][stat] = quantize(cum_stats[player][stat] / gp)
-
         cum_stats[player]["fgp"] = quantize(100 * cum_stats[player]["fgm"] /
                                                   cum_stats[player]["fga"])
         cum_stats[player]["ftp"] = quantize(100 * cum_stats[player]["ftm"] /
                                                   cum_stats[player]["fta"])
+
+        if per_game:
+            gp = float(cum_stats[player]["gp"])
+            for stat in cum_stats[player]:
+                if stat in ("gp", "fgp", "ftp"): continue
+                cum_stats[player][stat] = quantize(cum_stats[player][stat] / gp)
 
     return cum_stats
