@@ -33,6 +33,11 @@ process = subprocess.run(f"python3 scripts/print_cumulative_stats.py --per-game 
 assert process.stderr == "", "Error processing per-game stats:\n{}".format(process.stderr)
 per_game_stats = process.stdout
 
+print("[Box Scores](#box-scores) &bull; [Aggregate Stats](#aggregate-stats) &bull; [Player Game Logs](#player-game-logs)")
+
+print("---")
+print("# Box Scores")
+
 for log in box_scores:
     print(f"## {game_info[log]['date']} - "
           f"Galaxy vs. {game_info[log]['opp']} - "
@@ -40,6 +45,9 @@ for log in box_scores:
     print("```")
     print(box_scores[log], end="")
     print("```")
+
+print("---")
+print("# Aggregate Stats")
 
 print(f"## Cumulative Stats")
 print("```")
@@ -63,6 +71,9 @@ players = {
 
     "g": "Galaxy",
 }
+
+print("---")
+print("# Player Game Logs")
 
 for (number, name) in players.items():
     player = f"{number:>2} {name}" if number != "g" else "Galaxy"

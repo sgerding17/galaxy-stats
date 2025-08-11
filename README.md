@@ -1,5 +1,4 @@
 [Box Scores](#box-scores) &bull; [Aggregate Stats](#aggregate-stats) &bull; [Player Game Logs](#player-game-logs)
-
 ---
 # Box Scores
 ## 2025-05-25 - Galaxy vs. Sakura - Tigers Bronze Championship
@@ -247,7 +246,6 @@ Opponent      -  14-52  3-16    20    13   33    -    -    -    -    -   31
 Galaxy        -   0-16   2-4     7    21   28    0    6    4   31    -    2
 Opponent      -   2-35  5-22    19    10   29    -    -    -    -    -    9
 ```
-
 ---
 # Aggregate Stats
 ## Cumulative Stats
@@ -280,7 +278,6 @@ Yosy       16  26.3   0.8   0.4   3.4  11.1   0.1   0.7   9.1   0.9   0.6   1.6 
 Galaxy     17     -  20.1   8.8  36.9  23.7   2.6   8.7  29.7  15.9  21.7  37.6   4.2   9.7   6.3  23.3    Galaxy
 Opponent   17     -  18.3   7.8  47.8  16.3   2.6   8.4  31.0  19.1  13.6  32.8     -     -     -     -  Opponent
 ```
-
 ---
 # Player Game Logs
 ##  1 Long - Game Log
