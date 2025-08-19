@@ -1,6 +1,21 @@
 [Box Scores](#box-scores) &bull; [Aggregate Stats](#aggregate-stats) &bull; [Player Game Logs](#player-game-logs)
 ---
 # Box Scores
+## 2025-08-09 - Galaxy vs. PB Musubis - HDLVI Pool B Pool Play
+```
+            MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+ 1 Long      27    0-3   0-0     0     0    0    0    3    0    4   -3    0
+ 2 Laurel    23    0-2   0-0     2     1    3    0    2    0    3   -2    0
+ 3 Gerding   25    1-4   0-0     0     0    0    1    2    1    3   +1    2
+ 5 Iwai      25    1-5   1-2     2     5    7    1    1    1    8   +1    3
+14 Li        14    0-0   0-0     1     3    4    1    0    2    2   +0    0
+21 Saito     15    1-2   0-2     0     2    2    0    0    0    6   -2    2
+22 DeMarti   36   4-16   0-0     9     9   18    1    4    2    5   +7    8
+25 Yosy      36    2-9   0-0     4     1    5    1    2    1    5   +3    4
+
+Galaxy        -   9-41   1-4    20    25   45    5   14    7   36    -   19
+Opponent      -   9-59   0-0    21     5   26    -    -    -    -    -   18
+```
 ## 2025-08-09 - Galaxy vs. Cheetahs - HDLVI Pool B Pool Play
 ```
             MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
@@ -266,38 +281,39 @@ Opponent      -   2-35  5-22    19    10   29    -    -    -    -    -    9
 ## Cumulative Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO    PLAYER
-Long       16   339     3     1     9  11.1     1     3  33.3    12     9    21     4     8     1    29      Long
-Laurel     18   429     8     3    38   7.9     2     6  33.3    20    32    52     5     8     5    29    Laurel
-Gerding    18   497    30    14    94  14.9     2     2 100.0    26    44    70    15    50     8    83   Gerding
-Iwai       17   536    36    15    96  15.6     6    17  35.3    27    41    68    27    24    14    67      Iwai
-Li         13   335    25     9    73  12.3     7    24  29.2    13    26    39     6    13    13    44        Li
-Saito      17   392    17     8    41  19.5     1     4  25.0    12    15    27     4     7     1    56     Saito
-DeMarti    18   619   231   103   272  37.9    25    82  30.5   131   157   288    12    50    68    58   DeMarti
-Yosy       17   450    17     8    61  13.1     1    11   9.1    18    10    28     2    19     1    44      Yosy
+Long       17   366     3     1    12   8.3     1     3  33.3    12     9    21     4    11     1    33      Long
+Laurel     19   452     8     3    40   7.5     2     6  33.3    22    33    55     5    10     5    32    Laurel
+Gerding    19   522    32    15    98  15.3     2     2 100.0    26    44    70    16    52     9    86   Gerding
+Iwai       18   561    39    16   101  15.8     7    19  36.8    29    46    75    28    25    15    75      Iwai
+Li         14   349    25     9    73  12.3     7    24  29.2    14    29    43     7    13    15    46        Li
+Saito      18   407    19     9    43  20.9     1     6  16.7    12    17    29     4     7     1    62     Saito
+DeMarti    19   655   239   107   288  37.2    25    82  30.5   140   166   306    13    54    70    63   DeMarti
+Yosy       18   486    21    10    70  14.3     1    11   9.1    22    11    33     3    21     2    49      Yosy
 
-Galaxy     18     -   367   161   684  23.5    45   149  30.2   292   390   682    75   179   111   410    Galaxy
-Opponent   18     -   319   136   847  16.1    44   146  30.1   336   252   588     -     -     -     -  Opponent
+Galaxy     19     -   386   170   725  23.4    46   153  30.1   312   415   727    80   193   118   446    Galaxy
+Opponent   19     -   337   145   906  16.0    44   146  30.1   357   257   614     -     -     -     -  Opponent
 ```
 ## Per-Game Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO    PLAYER
-Long       16  21.2   0.2   0.1   0.6  11.1   0.1   0.2  33.3   0.8   0.6   1.3   0.2   0.5   0.1   1.8      Long
-Laurel     18  23.8   0.4   0.2   2.1   7.9   0.1   0.3  33.3   1.1   1.8   2.9   0.3   0.4   0.3   1.6    Laurel
-Gerding    18  27.6   1.7   0.8   5.2  14.9   0.1   0.1 100.0   1.4   2.4   3.9   0.8   2.8   0.4   4.6   Gerding
-Iwai       17  31.5   2.1   0.9   5.6  15.6   0.4   1.0  35.3   1.6   2.4   4.0   1.6   1.4   0.8   3.9      Iwai
-Li         13  25.8   1.9   0.7   5.6  12.3   0.5   1.8  29.2   1.0   2.0   3.0   0.5   1.0   1.0   3.4        Li
-Saito      17  23.1   1.0   0.5   2.4  19.5   0.1   0.2  25.0   0.7   0.9   1.6   0.2   0.4   0.1   3.3     Saito
-DeMarti    18  34.4  12.8   5.7  15.1  37.9   1.4   4.6  30.5   7.3   8.7  16.0   0.7   2.8   3.8   3.2   DeMarti
-Yosy       17  26.5   1.0   0.5   3.6  13.1   0.1   0.6   9.1   1.1   0.6   1.6   0.1   1.1   0.1   2.6      Yosy
+Long       17  21.5   0.2   0.1   0.7   8.3   0.1   0.2  33.3   0.7   0.5   1.2   0.2   0.6   0.1   1.9      Long
+Laurel     19  23.8   0.4   0.2   2.1   7.5   0.1   0.3  33.3   1.2   1.7   2.9   0.3   0.5   0.3   1.7    Laurel
+Gerding    19  27.5   1.7   0.8   5.2  15.3   0.1   0.1 100.0   1.4   2.3   3.7   0.8   2.7   0.5   4.5   Gerding
+Iwai       18  31.2   2.2   0.9   5.6  15.8   0.4   1.1  36.8   1.6   2.6   4.2   1.6   1.4   0.8   4.2      Iwai
+Li         14  24.9   1.8   0.6   5.2  12.3   0.5   1.7  29.2   1.0   2.1   3.1   0.5   0.9   1.1   3.3        Li
+Saito      18  22.6   1.1   0.5   2.4  20.9   0.1   0.3  16.7   0.7   0.9   1.6   0.2   0.4   0.1   3.4     Saito
+DeMarti    19  34.5  12.6   5.6  15.2  37.2   1.3   4.3  30.5   7.4   8.7  16.1   0.7   2.8   3.7   3.3   DeMarti
+Yosy       18  27.0   1.2   0.6   3.9  14.3   0.1   0.6   9.1   1.2   0.6   1.8   0.2   1.2   0.1   2.7      Yosy
 
-Galaxy     18     -  20.4   8.9  38.0  23.5   2.5   8.3  30.2  16.2  21.7  37.9   4.2   9.9   6.2  22.8    Galaxy
-Opponent   18     -  17.7   7.6  47.1  16.1   2.4   8.1  30.1  18.7  14.0  32.7     -     -     -     -  Opponent
+Galaxy     19     -  20.3   8.9  38.2  23.4   2.4   8.1  30.1  16.4  21.8  38.3   4.2  10.2   6.2  23.5    Galaxy
+Opponent   19     -  17.7   7.6  47.7  16.0   2.3   7.7  30.1  18.8  13.5  32.3     -     -     -     -  Opponent
 ```
 ---
 # Player Game Logs
 ##  1 Long - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-08-09  PB Musubis      W 19-18   27    0-3   0-0     0     0    0    0    3    0    4   -3    0
 2025-08-09  Cheetahs        W 25-8    25    0-1   0-0     2     1    3    0    0    0    3  +10    0
 2025-05-25  Sakura          W 31-22   18    0-0   0-0     0     0    0    0    2    0    1   +4    0
 2025-05-25  Sparks          W 25-10   17    0-0   0-0     1     0    1    0    0    0    1  +15    0
@@ -318,6 +334,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ##  2 Laurel - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-08-09  PB Musubis      W 19-18   23    0-2   0-0     2     1    3    0    2    0    3   -2    0
 2025-08-09  Cheetahs        W 25-8    27    0-2   0-0     0     1    1    0    1    1    0  +17    0
 2025-05-25  Sakura          W 31-22   14    0-0   0-0     0     0    0    1    0    0    2   +0    0
 2025-05-25  Sparks          W 25-10   20    1-2   0-0     2     0    2    0    0    0    1   +8    2
@@ -340,6 +357,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ##  3 Gerding - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-08-09  PB Musubis      W 19-18   25    1-4   0-0     0     0    0    1    2    1    3   +1    2
 2025-08-09  Cheetahs        W 25-8    18    2-8   0-0     1     2    3    0    1    0    3   +8    4
 2025-05-25  Sakura          W 31-22   24    1-6   0-0     1     2    3    1    3    0    2   +6    2
 2025-05-25  Sparks          W 25-10   21    1-2   0-0     0     2    2    2    3    1    4   +7    2
@@ -362,6 +380,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ##  5 Iwai - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-08-09  PB Musubis      W 19-18   25    1-5   1-2     2     5    7    1    1    1    8   +1    3
 2025-08-09  Cheetahs        W 25-8    22    1-7   0-0     1     1    2    2    4    0    2   +6    2
 2025-05-25  Sakura          W 31-22   28    1-4   1-2     2     0    2    3    2    0    2   +8    3
 2025-05-25  Sparks          W 25-10   34    1-3   0-1     2     3    5    3    3    2    7   +9    2
@@ -383,6 +402,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 14 Li - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-08-09  PB Musubis      W 19-18   14    0-0   0-0     1     3    4    1    0    2    2   +0    0
 2025-08-09  Cheetahs        W 25-8    20    1-7   0-0     1     2    3    1    3    0    2   +9    2
 2025-05-25  Sakura          W 31-22   30   4-13   0-0     0     1    1    0    0    1    1  +12    8
 2025-05-25  Sparks          W 25-10   27    1-5   0-2     1     4    5    1    2    0    4  +11    2
@@ -400,6 +420,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 21 Saito - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-08-09  PB Musubis      W 19-18   15    1-2   0-2     0     2    2    0    0    0    6   -2    2
 2025-08-09  Cheetahs        W 25-8    25    0-5   0-0     3     1    4    0    0    0    1   +9    0
 2025-05-25  Sakura          W 31-22   17    0-2   0-0     1     0    1    1    0    0    1   -3    0
 2025-05-25  Sparks          W 25-10   22    1-5   0-0     1     1    2    0    0    0    4   +5    2
@@ -421,6 +442,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 22 DeMarti - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-08-09  PB Musubis      W 19-18   36   4-16   0-0     9     9   18    1    4    2    5   +7    8
 2025-08-09  Cheetahs        W 25-8    32   6-19   1-1     9    10   19    1    4    3    2  +13   13
 2025-05-25  Sakura          W 31-22   36   8-21   0-4     3     9   12    2    3    4    1  +10   16
 2025-05-25  Sparks          W 25-10   36   7-14   1-6     4     7   11    0    8    4    3  +15   15
@@ -443,6 +465,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 25 Yosy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-08-09  PB Musubis      W 19-18   36    2-9   0-0     4     1    5    1    2    1    5   +3    4
 2025-08-09  Cheetahs        W 25-8    29    2-7   0-0     3     0    3    0    1    0    1  +13    4
 2025-05-25  Sakura          W 31-22   34    1-6   0-0     0     3    3    1    4    0    1   +8    2
 2025-05-25  Sparks          W 25-10   22    0-1   0-0     0     0    0    0    0    0    1   +5    0
@@ -464,6 +487,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## Galaxy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-08-09  PB Musubis      W 19-18    -   9-41   1-4    20    25   45    5   14    7   36    -   19
 2025-08-09  Cheetahs        W 25-8     -  12-56   1-1    22    21   43    4   14    4   14    -   25
 2025-05-25  Sakura          W 31-22    -  15-52   1-6    13    15   28    9   14    5   11    -   31
 2025-05-25  Sparks          W 25-10    -  12-32   1-9    12    17   29    6   16    7   25    -   25
