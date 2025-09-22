@@ -1,6 +1,20 @@
 [Box Scores](#box-scores) &bull; [Aggregate Stats](#aggregate-stats) &bull; [Player Game Logs](#player-game-logs)
 ---
 # Box Scores
+## 2025-09-21 - Galaxy vs. Shooting Stars - SBYB League Play
+```
+            MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+ 1 Long      26    0-1   0-0     1     1    2    0    2    0    5   +7    0
+ 2 Laurel    28    0-1   0-1     1     5    6    0    1    0    0   +7    0
+ 3 Gerding   28    2-3   0-0     0     0    0    0    2    0    3  +10    4
+14 Li        36    1-5   0-0     0     3    3    4    0    3    3  +11    2
+21 Saito     25    2-4   0-0     1     1    2    1    1    0    3   +7    4
+22 DeMarti   32    5-9  9-12     3     9   12    2    2    4    8  +14   19
+25 Yosy      25    1-3   0-0     0     0    0    0    1    0    6   -1    2
+
+Galaxy        -  11-26  9-13     7    21   28    7    9    7   28    -   31
+Opponent      -   9-40  2-10    11     7   18    -    -    -    -    -   20
+```
 ## 2025-09-14 - Galaxy vs. Dolphins - SBYB League Play
 ```
             MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
@@ -311,38 +325,39 @@ Opponent      -   2-35  5-22    19    10   29    -    -    -    -    -    9
 ## Cumulative Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO    PLAYER
-Long       19   416     3     1    16   6.2     1     3  33.3    14     9    23     5    13     1    36      Long
-Laurel     21   500    10     4    47   8.5     2     6  33.3    27    38    65     5    11     5    34    Laurel
-Gerding    21   566    32    15   103  14.6     2     2 100.0    28    46    74    17    58    14    96   Gerding
+Long       20   442     3     1    17   5.9     1     3  33.3    15    10    25     5    15     1    41      Long
+Laurel     22   528    10     4    48   8.3     2     7  28.6    28    43    71     5    12     5    34    Laurel
+Gerding    22   594    36    17   106  16.0     2     2 100.0    28    46    74    17    60    14    99   Gerding
 Iwai       20   609    39    16   107  15.0     7    21  33.3    33    56    89    30    27    15    89      Iwai
-Li         16   385    26     9    79  11.4     8    26  30.8    18    30    48     7    16    15    50        Li
-Saito      20   459    19     9    51  17.6     1     6  16.7    13    21    34     4     8     1    69     Saito
-DeMarti    21   725   261   114   320  35.6    32    98  32.7   152   180   332    13    60    78    69   DeMarti
-Yosy       20   537    23    11    79  13.9     1    13   7.7    26    12    38     3    22     2    51      Yosy
+Li         17   421    28    10    84  11.9     8    26  30.8    18    33    51    11    16    18    53        Li
+Saito      21   484    23    11    55  20.0     1     6  16.7    14    22    36     5     9     1    72     Saito
+DeMarti    22   757   280   119   329  36.2    41   110  37.3   155   189   344    15    62    82    77   DeMarti
+Yosy       21   562    25    12    82  14.6     1    13   7.7    26    12    38     3    23     2    57      Yosy
 
-Galaxy     21     -   413   179   802  22.3    54   175  30.9   350   454   804    84   215   131   494    Galaxy
-Opponent   21     -   379   163   989  16.5    49   156  31.4   382   285   667     -     -     -     -  Opponent
+Galaxy     22     -   444   190   828  22.9    63   188  33.5   357   475   832    91   224   138   522    Galaxy
+Opponent   22     -   399   172  1029  16.7    51   166  30.7   393   292   685     -     -     -     -  Opponent
 ```
 ## Per-Game Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO    PLAYER
-Long       19  21.9   0.2   0.1   0.8   6.2   0.1   0.2  33.3   0.7   0.5   1.2   0.3   0.7   0.1   1.9      Long
-Laurel     21  23.8   0.5   0.2   2.2   8.5   0.1   0.3  33.3   1.3   1.8   3.1   0.2   0.5   0.2   1.6    Laurel
-Gerding    21  27.0   1.5   0.7   4.9  14.6   0.1   0.1 100.0   1.3   2.2   3.5   0.8   2.8   0.7   4.6   Gerding
+Long       20  22.1   0.2   0.0   0.8   5.9   0.0   0.2  33.3   0.8   0.5   1.2   0.2   0.8   0.0   2.0      Long
+Laurel     22  24.0   0.5   0.2   2.2   8.3   0.1   0.3  28.6   1.3   2.0   3.2   0.2   0.5   0.2   1.5    Laurel
+Gerding    22  27.0   1.6   0.8   4.8  16.0   0.1   0.1 100.0   1.3   2.1   3.4   0.8   2.7   0.6   4.5   Gerding
 Iwai       20  30.4   2.0   0.8   5.4  15.0   0.4   1.0  33.3   1.6   2.8   4.4   1.5   1.4   0.8   4.4      Iwai
-Li         16  24.1   1.6   0.6   4.9  11.4   0.5   1.6  30.8   1.1   1.9   3.0   0.4   1.0   0.9   3.1        Li
-Saito      20  23.0   1.0   0.4   2.6  17.6   0.0   0.3  16.7   0.6   1.0   1.7   0.2   0.4   0.0   3.4     Saito
-DeMarti    21  34.5  12.4   5.4  15.2  35.6   1.5   4.7  32.7   7.2   8.6  15.8   0.6   2.9   3.7   3.3   DeMarti
-Yosy       20  26.8   1.2   0.6   4.0  13.9   0.0   0.6   7.7   1.3   0.6   1.9   0.2   1.1   0.1   2.6      Yosy
+Li         17  24.8   1.6   0.6   4.9  11.9   0.5   1.5  30.8   1.1   1.9   3.0   0.6   0.9   1.1   3.1        Li
+Saito      21  23.0   1.1   0.5   2.6  20.0   0.0   0.3  16.7   0.7   1.0   1.7   0.2   0.4   0.0   3.4     Saito
+DeMarti    22  34.4  12.7   5.4  15.0  36.2   1.9   5.0  37.3   7.0   8.6  15.6   0.7   2.8   3.7   3.5   DeMarti
+Yosy       21  26.8   1.2   0.6   3.9  14.6   0.0   0.6   7.7   1.2   0.6   1.8   0.1   1.1   0.1   2.7      Yosy
 
-Galaxy     21     -  19.7   8.5  38.2  22.3   2.6   8.3  30.9  16.7  21.6  38.3   4.0  10.2   6.2  23.5    Galaxy
-Opponent   21     -  18.0   7.8  47.1  16.5   2.3   7.4  31.4  18.2  13.6  31.8     -     -     -     -  Opponent
+Galaxy     22     -  20.2   8.6  37.6  22.9   2.9   8.5  33.5  16.2  21.6  37.8   4.1  10.2   6.3  23.7    Galaxy
+Opponent   22     -  18.1   7.8  46.8  16.7   2.3   7.5  30.7  17.9  13.3  31.1     -     -     -     -  Opponent
 ```
 ---
 # Player Game Logs
 ##  1 Long - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-09-21  Shooting Stars  W 31-20   26    0-1   0-0     1     1    2    0    2    0    5   +7    0
 2025-09-14  Dolphins        L 20-23   22    0-3   0-0     2     0    2    1    0    0    1   -1    0
 2025-08-10  Royals          L 7-19    28    0-1   0-0     0     0    0    0    2    0    2   -7    0
 2025-08-09  PB Musubis      W 19-18   27    0-3   0-0     0     0    0    0    3    0    4   -3    0
@@ -366,6 +381,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ##  2 Laurel - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-09-21  Shooting Stars  W 31-20   28    0-1   0-1     1     5    6    0    1    0    0   +7    0
 2025-09-14  Dolphins        L 20-23   30    1-6   0-0     4     4    8    0    0    0    2   -4    2
 2025-08-10  Royals          L 7-19    18    0-1   0-0     1     1    2    0    1    0    0   -6    0
 2025-08-09  PB Musubis      W 19-18   23    0-2   0-0     2     1    3    0    2    0    3   -2    0
@@ -391,6 +407,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ##  3 Gerding - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-09-21  Shooting Stars  W 31-20   28    2-3   0-0     0     0    0    0    2    0    3  +10    4
 2025-09-14  Dolphins        L 20-23   25    0-1   0-0     0     1    1    1    3    3    6   -2    0
 2025-08-10  Royals          L 7-19    19    0-4   0-0     2     1    3    0    3    2    4   -9    0
 2025-08-09  PB Musubis      W 19-18   25    1-4   0-0     0     0    0    1    2    1    3   +1    2
@@ -440,6 +457,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 14 Li - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-09-21  Shooting Stars  W 31-20   36    1-5   0-0     0     3    3    4    0    3    3  +11    2
 2025-09-14  Dolphins        L 20-23   17    0-5   0-0     3     1    4    0    1    0    2  +13    0
 2025-08-10  Royals          L 7-19    19    0-1   1-2     1     0    1    0    2    0    2   -4    1
 2025-08-09  PB Musubis      W 19-18   14    0-0   0-0     1     3    4    1    0    2    2   +0    0
@@ -460,6 +478,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 21 Saito - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-09-21  Shooting Stars  W 31-20   25    2-4   0-0     1     1    2    1    1    0    3   +7    4
 2025-09-14  Dolphins        L 20-23   31    0-7   0-0     1     1    2    0    1    0    5   -5    0
 2025-08-10  Royals          L 7-19    21    0-1   0-0     0     3    3    0    0    0    2   -9    0
 2025-08-09  PB Musubis      W 19-18   15    1-2   0-2     0     2    2    0    0    0    6   -2    2
@@ -484,6 +503,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 22 DeMarti - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-09-21  Shooting Stars  W 31-20   32    5-9  9-12     3     9   12    2    2    4    8  +14   19
 2025-09-14  Dolphins        L 20-23   34   6-14  5-10     7     5   12    0    5    2    3   -1   18
 2025-08-10  Royals          L 7-19    36   1-18   2-6     5     9   14    0    1    6    3   -8    4
 2025-08-09  PB Musubis      W 19-18   36   4-16   0-0     9     9   18    1    4    2    5   +7    8
@@ -509,6 +529,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 25 Yosy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-09-21  Shooting Stars  W 31-20   25    1-3   0-0     0     0    0    0    1    0    6   -1    2
 2025-09-14  Dolphins        L 20-23   17    0-3   0-0     1     0    1    0    0    0    0  -10    0
 2025-08-10  Royals          L 7-19    34    1-6   0-2     3     1    4    0    1    0    2   -8    2
 2025-08-09  PB Musubis      W 19-18   36    2-9   0-0     4     1    5    1    2    1    5   +3    4
@@ -533,6 +554,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## Galaxy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2025-09-21  Shooting Stars  W 31-20    -  11-26  9-13     7    21   28    7    9    7   28    -   31
 2025-09-14  Dolphins        L 20-23    -   7-42  5-10    21    19   40    4   12    5   25    -   20
 2025-08-10  Royals          L 7-19     -   2-35  3-12    17    20   37    0   10    8   23    -    7
 2025-08-09  PB Musubis      W 19-18    -   9-41   1-4    20    25   45    5   14    7   36    -   19
