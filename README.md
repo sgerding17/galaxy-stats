@@ -89,7 +89,7 @@ Opponent      -   9-40  2-10    11     7   18    -    -    -    -    -   20
 Galaxy        -   7-42  5-10    21    19   40    4   12    5   25    -   20
 Opponent      -  10-48   2-2    17    12   29    -    -    -    -    -   23
 ```
-## 2025-08-10 - Galaxy vs. Royals - HDLVI Pool B Pool Play
+## 2025-08-10 - Galaxy vs. Royals - HDLVI Pool B Championship
 ```
             MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
  1 Long      28    0-1   0-0     0     0    0    0    2    0    2   -7    0
