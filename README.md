@@ -1,7 +1,7 @@
 [Box Scores](#box-scores) &bull; [Aggregate Stats](#aggregate-stats) &bull; [Player Game Logs](#player-game-logs)
 ---
 # Box Scores
-## 2025-10-18 - Galaxy vs. Mighty Musubis - VFW Losers Bracket
+## 2025-10-18 - Galaxy vs. Mighty Musubis - VFW Silver Losers Bracket
 ```
             MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
  1 Long      22    0-0   0-0     0     2    2    1    0    0    0   -3    0
@@ -16,7 +16,7 @@
 Galaxy        -   9-40  1-15    14    17   31    4    6    2    9    -   19
 Opponent      -   9-59   3-7    28    22   50    -    -    -    -    -   25
 ```
-## 2025-10-18 - Galaxy vs. Royals - VFW Quarterfinals
+## 2025-10-18 - Galaxy vs. Royals - VFW Silver Quarterfinals
 ```
             MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
  1 Long       9    0-0   0-0     1     0    1    0    0    0    0   -3    0
