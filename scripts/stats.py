@@ -131,17 +131,25 @@ def accumulate_stats(all_stats, per_game):
             for stat in stats[player]:
                 cum_stats[player][stat] += stats[player][stat]
 
-    def quantize(x): return round(x * 10) / 10
+    def quantize1(x): return round(x * 10) / 10
+    def quantize2(x): return round(x * 100) / 100
     for player in cum_stats:
-        cum_stats[player]["fgp"] = quantize(100 * cum_stats[player]["fgm"] /
-                                                  cum_stats[player]["fga"]) if cum_stats[player]["fga"] else 0.0
-        cum_stats[player]["ftp"] = quantize(100 * cum_stats[player]["ftm"] /
-                                                  cum_stats[player]["fta"]) if cum_stats[player]["fta"] else 0.0
+        if cum_stats[player]["fga"]:
+            cum_stats[player]["fgp"] = quantize1(100 * cum_stats[player]["fgm"] /
+                                                       cum_stats[player]["fga"])
+
+        if cum_stats[player]["fta"]:
+            cum_stats[player]["ftp"] = quantize1(100 * cum_stats[player]["ftm"] /
+                                                       cum_stats[player]["fta"])
+
+        if cum_stats[player]["to"]:
+            cum_stats[player]["ator"] = quantize2(cum_stats[player]["a"] /
+                                                  cum_stats[player]["to"])
 
         if per_game:
             gp = float(cum_stats[player]["gp"])
             for stat in cum_stats[player]:
-                if stat in ("gp", "fgp", "ftp"): continue
-                cum_stats[player][stat] = quantize(cum_stats[player][stat] / gp)
+                if stat in ("gp", "fgp", "ftp", "ator"): continue
+                cum_stats[player][stat] = quantize1(cum_stats[player][stat] / gp)
 
     return cum_stats
