@@ -15,8 +15,8 @@ from stats import count_stats, rollup_stats, accumulate_stats
 players = {
     "22": "DeMarti",
     "3": "Gerding",
-    "5": "Iwai",
     "14": "Li",
+    "5": "Iwai",
     "1": "Long",
     "25": "Yosy",
     "21": "Saito",
@@ -24,10 +24,9 @@ players = {
 }
 
 def name(player):
-    if player in players: return players[player]
     name = " "
     for num in players:
-        if f"|{num}|" in player:
+        if num == player or f"|{num}|" in player:
             name += players[num] + " "
         else:
             name += " " * len(players[num]) + " "
@@ -58,17 +57,13 @@ for log in sys.argv[first_log_pos:]:
 
 cum_stats = accumulate_stats(all_stats, per_game)
 
-print_stats("header", cum_stats["g"])
-for player in sorted(cum_stats, key=lambda p:cum_stats[p]["pm"], reverse=True):
-    if player.count("|") == 3:
+for cardinality in range(1, 6):
+    print(f"{cardinality}-man Combinations")
+    print_stats("header", cum_stats["g"])
+    for player in sorted(cum_stats, key=lambda p:cum_stats[p]["pm"], reverse=True):
+        if player in ("g", "o"): continue
+        if player.count("|") != (0 if cardinality == 1 else cardinality + 1): continue
+        if cum_stats[player]["min"] < 10: continue
         print("-" * 48 + "+" + "-" * (4 + 6 + 6))
         print_stats(name(player), cum_stats[player])
-
-print()
-print()
-
-print_stats("header", cum_stats["g"])
-for player in sorted(cum_stats, key=lambda p:cum_stats[p]["pm"], reverse=True):
-    if player.count("|") == 6 and cum_stats[player]["min"] > 20:
-        print("-" * 48 + "+" + "-" * (4 + 6 + 6))
-        print_stats(name(player), cum_stats[player])
+    print()

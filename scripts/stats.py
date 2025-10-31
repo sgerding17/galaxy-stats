@@ -28,7 +28,18 @@ def get_rebound_type(rebounder, last_event):
 def opposite_team(team): return "g" if team == "o" else "o"
 
 def combo(players):
-    return "c|" + "|".join(sorted(players, key=lambda x: int(x))) + "|"
+    if len(players) == 1: return players[0]
+    return "c|" + "|".join(players) + "|"
+
+def all_combos(players):
+    combos = []
+    for combo_mask in range(1, 2**len(players)):
+        combo_players = []
+        for index in range(len(players)):
+            if combo_mask & 2**index:
+                combo_players.append(players[index])
+        combos.append(combo(combo_players))
+    return combos
 
 def count_stats(events):
     global LINE
@@ -50,18 +61,14 @@ def count_stats(events):
             new_clock = parse_timestamp(timestamp)
             delta_clock = (0 if clock == 0 else clock - new_clock)
             assert delta_clock >= 0, "LINE {}: Backwards clock jump detected (clock = {}, timestamp = {})".format(LINE, clock, timestamp)
-            for player_in_game in in_game:
-                stats[player_in_game]["sec"] += delta_clock
-                for other_player_in_game in in_game:
-                    if other_player_in_game == player_in_game: continue
-                    stats[combo([player_in_game, other_player_in_game])]["sec"] += delta_clock
-            if in_game: stats[combo(in_game)]["sec"] += delta_clock
+            for combo in all_combos(in_game):
+                stats[combo]["sec"] += delta_clock
             if new_clock == 0:
                 pos = opposite_team(pos)
             clock = new_clock
 
         elif event_type == "ig":
-            in_game = event[1:]
+            in_game = sorted(event[1:], key=lambda x:int(x))
             assert len(in_game) == 5, "LINE {}: Invalid in-game set: {}".format(LINE, in_game)
 
         elif event_type == "t":
@@ -85,12 +92,8 @@ def count_stats(events):
             player = event[1]
             if event_type in ("3fgm", "fgm", "ftm"):
                 delta_score = get_delta_score(event_type, player)
-                for player_in_game in in_game:
-                    stats[player_in_game]["pm"] += delta_score
-                    for other_player_in_game in in_game:
-                        if other_player_in_game == player_in_game: continue
-                        stats[combo([player_in_game, other_player_in_game])]["pm"] += delta_score
-                if in_game: stats[combo(in_game)]["pm"] += delta_score
+                for combo in all_combos(in_game):
+                    stats[combo]["pm"] += delta_score
             elif event_type == "r":
                 stat = get_rebound_type(player, last_event)
             elif event_type == "a":
