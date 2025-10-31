@@ -27,6 +27,9 @@ def get_rebound_type(rebounder, last_event):
 
 def opposite_team(team): return "g" if team == "o" else "o"
 
+def combo(players):
+    return "c|" + "|".join(sorted(players, key=lambda x: int(x))) + "|"
+
 def count_stats(events):
     global LINE
     stats = defaultdict(lambda: defaultdict(int))
@@ -49,6 +52,10 @@ def count_stats(events):
             assert delta_clock >= 0, "LINE {}: Backwards clock jump detected (clock = {}, timestamp = {})".format(LINE, clock, timestamp)
             for player_in_game in in_game:
                 stats[player_in_game]["sec"] += delta_clock
+                for other_player_in_game in in_game:
+                    if other_player_in_game == player_in_game: continue
+                    stats[combo([player_in_game, other_player_in_game])]["sec"] += delta_clock
+            if in_game: stats[combo(in_game)]["sec"] += delta_clock
             if new_clock == 0:
                 pos = opposite_team(pos)
             clock = new_clock
@@ -80,6 +87,10 @@ def count_stats(events):
                 delta_score = get_delta_score(event_type, player)
                 for player_in_game in in_game:
                     stats[player_in_game]["pm"] += delta_score
+                    for other_player_in_game in in_game:
+                        if other_player_in_game == player_in_game: continue
+                        stats[combo([player_in_game, other_player_in_game])]["pm"] += delta_score
+                if in_game: stats[combo(in_game)]["pm"] += delta_score
             elif event_type == "r":
                 stat = get_rebound_type(player, last_event)
             elif event_type == "a":
@@ -104,7 +115,7 @@ def rollup_stats(stats):
         stats[player]["fgm"] += stats[player]["3fgm"]
         stats[player]["fga"] += stats[player]["fgm"]
         stats[player]["fta"] += stats[player]["ftm"]
-        if player != "o":
+        if player[0] not in ("o", "c"):
             for stat in stats[player]:
                 g_stats[stat] += stats[player][stat]
 
@@ -123,9 +134,9 @@ def accumulate_stats(all_stats, per_game):
     def quantize(x): return round(x * 10) / 10
     for player in cum_stats:
         cum_stats[player]["fgp"] = quantize(100 * cum_stats[player]["fgm"] /
-                                                  cum_stats[player]["fga"])
+                                                  cum_stats[player]["fga"]) if cum_stats[player]["fga"] else 0.0
         cum_stats[player]["ftp"] = quantize(100 * cum_stats[player]["ftm"] /
-                                                  cum_stats[player]["fta"])
+                                                  cum_stats[player]["fta"]) if cum_stats[player]["fta"] else 0.0
 
         if per_game:
             gp = float(cum_stats[player]["gp"])

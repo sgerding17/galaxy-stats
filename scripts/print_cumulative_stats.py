@@ -53,7 +53,7 @@ cum_stats = accumulate_stats(all_stats, per_game)
 
 print_stats("header", cum_stats["g"])
 for player in sorted(cum_stats, key=lambda x:int(x) if x.isdigit() else 100):
-    if player in ("g", "o"): continue
+    if player[0] in ("g", "o", "c"): continue
     print_stats(players[player], cum_stats[player])
 print()
 print_stats("g", cum_stats["g"])

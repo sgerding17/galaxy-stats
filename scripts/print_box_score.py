@@ -40,7 +40,7 @@ rollup_stats(stats)
 
 print_stats("header", stats["g"])
 for player in sorted(stats, key=lambda x:int(x) if x.isdigit() else 100):
-    if player in ("g", "o"): continue
+    if player[0] in ("g", "o", "c"): continue
     print_stats(f"{player:>2} {players[player]}", stats[player])
 print()
 print_stats("g", stats["g"])
