@@ -47,7 +47,9 @@ def count_stats(events):
 
     clock = 0
     in_game = []
-    pos = ""
+    possession = ""
+    last_pos = ""
+    pos_arrow = ""
     last_event = []
 
     assert events[0][0] == "c", "LINE {}: The first event must be a clock".format(LINE)
@@ -55,6 +57,11 @@ def count_stats(events):
         LINE = line + 1
         event = event.split()
         event_type = event[0]
+
+        next_event = events[line + 1].split() if (line + 1) < len(events) else ["end"]
+        next_next_event = events[line + 2].split() if (line + 2) < len(events) else ["end"]
+        next_next_next_event = events[line + 3].split() if (line + 3) < len(events) else ["end"]
+        missing_opp_turnover = False
 
         if event_type == "c":
             timestamp = event[1]
@@ -64,7 +71,8 @@ def count_stats(events):
             for combo in all_combos(in_game):
                 stats[combo]["sec"] += delta_clock
             if new_clock == 0:
-                pos = opposite_team(pos)
+                possession = pos_arrow
+                pos_arrow = opposite_team(pos_arrow)
             clock = new_clock
 
         elif event_type == "ig":
@@ -73,18 +81,27 @@ def count_stats(events):
 
         elif event_type == "t":
             team = event[1]
-            pos = opposite_team(team)
+            possession = team
+            pos_arrow = opposite_team(team)
+
+        elif event_type == "pae":
+            pos_arrow = opposite_team(pos_arrow)
 
         elif event_type in ("oj", "dj", "j"):
             player = event[1] if len(event) >= 2 else None
             awarded_to = event[-1] if len(event) >= 2 and event[-2] == "->" else None
-            assert pos in ("g", "o"), "LINE {}: Possession not initialized for jump ball".format(LINE)
-            assert awarded_to == pos or not awarded_to, "LINE {}: Possession ({}) does not match awarded-to ({})".format(LINE, pos, awarded_to)
-            if event_type == "oj" and pos == "o":
+            assert pos_arrow in ("g", "o"), "LINE {}: Possession arrow not initialized for jump ball".format(LINE)
+            assert awarded_to == pos_arrow or not awarded_to, "LINE {}: Possession arrow ({}) does not match awarded-to ({})".format(LINE, pos_arrow, awarded_to)
+            if event_type == "oj" and pos_arrow == "o":
                 stats[player]["to"] += 1
-            elif event_type == "dj" and pos == "g":
+            elif event_type == "dj" and pos_arrow == "g":
                 stats[player]["s"] += 1
-            pos = opposite_team(pos)
+            if event_type == "oj":
+                if possession != "g": missing_opp_turnover = True
+            elif event_type == "dj":
+                assert possession == "o", "LINE {}: Defensive tie-up without opponent possession".format(LINE)
+            possession = pos_arrow
+            pos_arrow = opposite_team(pos_arrow)
 
         elif event_type in ("3fgm", "fgm", "ftm", "fga", "fta", "r", "a", "s", "b", "to"):
             stat = event_type
@@ -94,15 +111,55 @@ def count_stats(events):
                 delta_score = get_delta_score(event_type, player)
                 for combo in all_combos(in_game):
                     stats[combo]["pm"] += delta_score
+                if player == "o":
+                    assert possession == "o", "LINE {}: Opponent shot without possession".format(LINE)
+                else:
+                    if possession != "g": missing_opp_turnover = True
+                upcoming_freethrow = (next_event == ["fta", player] or
+                                      next_event == ["ftm", player] or
+                                      next_event[0] in ("c", "ig") and (
+                                          next_next_event == ["fta", player] or
+                                          next_next_event == ["ftm", player] or
+                                          next_next_event[0] in ("c", "ig") and (
+                                              next_next_next_event == ["fta", player] or
+                                              next_next_next_event == ["ftm", player])))
+                if not upcoming_freethrow:
+                    possession = "g" if player == "o" else "o"
+            elif event_type in ("fga", "fta"):
+                if player == "o":
+                    assert possession == "o", "LINE {}: Opponent shot without possession".format(LINE)
+                else:
+                    if possession != "g": missing_opp_turnover = True
             elif event_type == "r":
                 stat = get_rebound_type(player, last_event)
+                possession = "o" if player == "o" else "g"
             elif event_type == "a":
                 assert last_event[0] in ("fgm", "3fgm"), "LINE {}: Assist did not follow a made shot (last_event = {})".format(LINE, " ".join(last_event))
+            elif event_type == "s":
+                assert possession == "o", "LINE {}: Galaxy steal without opponent possession".format(LINE)
+                stats["o"]["to"] += 1
+                possession = "g"
+            elif event_type == "to":
+                if possession != "g": missing_opp_turnover = True
+                possession = "o"
             stats[player][stat] += 1
 
         else:
             assert False, "LINE {}: Unknown event type: {}".format(LINE, event_type)
+
+        if missing_opp_turnover:
+            stats["o"]["to"] += 1
+            for combo in all_combos(in_game):
+                stats[combo]["opos"] += 1
+            last_pos = "g"
+        if possession != last_pos:
+            stat = "dpos" if possession == "o" else "opos"
+            for combo in all_combos(in_game):
+                stats[combo][stat] += 1
+        last_pos = possession
+
         last_event = event
+
     return stats
 
 def rollup_stats(stats):

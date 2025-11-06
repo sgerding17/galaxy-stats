@@ -158,17 +158,18 @@ s 5
 to 5
 c 1315
 ig 2 3 22 25 5
-dj 3
-dj 3
+dj 3 -> o
+dj 3 -> g
 to 3
-dj 3
+dj 3 -> o
+pae
 fga o
 r o
 fga o
 r 3
 fgm 22
 a 3
-dj 5
+dj 5 -> o
 s 3
 fga 3
 r o
@@ -197,7 +198,7 @@ ig 3 21 22 5 14
 oj 21
 c 0445
 ftm o
-fga o
+fta o
 r 3
 oj 3
 to 5

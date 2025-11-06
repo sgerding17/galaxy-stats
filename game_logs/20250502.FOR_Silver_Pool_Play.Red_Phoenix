@@ -25,12 +25,11 @@ r o
 s 22
 fgm 5
 a 22
-dj 22
+dj 22 -> g
 c 1700
 fga 3
 r o
-to 5
-dj 3
+oj 5 -> o
 c 1530
 ig 3 1 25 5 22
 fga o
@@ -69,7 +68,7 @@ c 1100
 fga 25
 r o
 fga o
-r g
+j -> g
 fga 14
 r 22
 fga 25
@@ -86,8 +85,7 @@ fgm o
 fga 2
 r o
 fga o
-r 2
-oj 2
+j -> o
 fga o
 r 25
 to 25

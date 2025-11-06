@@ -67,7 +67,7 @@ r o
 ftm o
 c 0700
 ig 22 25 3 2 1
-fga o
+fta o
 r 22
 to 25
 c 0630
@@ -120,7 +120,8 @@ r 25
 fga 21
 r 14
 c 0000
-c 2000 yt1945
+c 2000 -> g
+pae
 ig 5 21 14 22 25
 fgm 5
 a 22
@@ -141,8 +142,8 @@ fga o
 b 22
 r o
 fga 5
-j
-oj 5
+j -> g
+oj 5 -> o
 c 1630
 s 22
 ftm 22

@@ -1,12 +1,12 @@
 c 2000
 ig 22 3 25 21 5
 t g
-oj 3
+oj 3 -> o
 c 1930
 s 25
 fga 25
 r 3
-oj 3
+oj 3 -> g
 fga 22
 r o
 c 1815
@@ -27,14 +27,14 @@ r o
 fga o
 r 5
 c 1715
-oj 25
+oj 25 -> o
 c 1630
 ig 3 5 14 21 25
 fgm o
 c 1600
 fga 21
 r 14
-oj 3
+oj 3 -> g
 fga 14
 r o
 c 1500
@@ -47,7 +47,8 @@ b 14
 r o
 fga o
 r o
-dj 3
+dj 3 -> o
+pae
 fga o
 r o
 fga o
@@ -78,8 +79,7 @@ r 22
 fga 2
 r 22
 fga 22
-r 3
-oj 3
+j -> o
 c 0900
 ftm o
 ftm o
@@ -119,7 +119,8 @@ r o
 c 0330
 fga 14
 r o
-dj 3
+dj 3 -> o
+pae
 fga o
 r 14
 c 0300
@@ -142,7 +143,7 @@ s 3
 fga 5
 r o
 c 0000
-c 2000
+c 2000 -> o
 ig 3 5 25 21 22
 fta o
 ftm o
@@ -264,19 +265,18 @@ fta 14
 r 22
 fgm 22
 c 0200
-dj 21
+s 21
 c 0130
 fga 14
 r 22
 fga 22
 r 21
 fga 21
-r 22
-oj 22
+j -> o
+pae
 s 22
 fga 14
-r o
-dj 22
+j -> o
 c 0100
 fga o
 r o

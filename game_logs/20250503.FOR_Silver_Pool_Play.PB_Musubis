@@ -132,8 +132,8 @@ c 0530
 fga o
 r o
 fga o
-r o
-dj 22
+j -> o
+pae
 c 0515
 ig 3 14 25 21 5
 fga o
@@ -152,7 +152,7 @@ r o
 fga o
 r 5
 c 0400
-oj 14
+oj 14 -> o
 c 0330
 ig 2 3 5 14 25
 s 3

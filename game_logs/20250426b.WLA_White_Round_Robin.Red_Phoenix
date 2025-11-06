@@ -69,9 +69,10 @@ to 22
 to 21
 s 1
 ftm 21
-fta 21
 c 0915
 ig 3 5 1 21 25
+fta 21
+r o
 fga o
 r 5
 fga 5
@@ -112,8 +113,7 @@ fga 22
 r o
 c 0400
 fga o
-r o
-dj 3
+j -> g
 fga 22
 r 22
 fga 3
@@ -127,27 +127,26 @@ fgm 2
 a 22
 fga o
 r 22
-oj 3
+oj 3 -> o
 fga o
 r 2
 fga 22
 r 22
 fga 22
-r o
-dj 3
+j -> g
 fga 22
 r o
 fga o
 r 2
-to 22
+pae
 c 0000
-c 2000
+c 2000 -> g
 ig 1 21 22 5 25
 fgm 22
 a 5
 fga o
 r 5
-oj 25
+oj 25 -> o
 fga o
 r 5
 fga 21
@@ -206,7 +205,6 @@ r o
 fga o
 b 2
 r 22
-oj 21
 fgm 3
 fga o
 r 22
@@ -233,7 +231,7 @@ c 0800
 ig 5 21 1 2 3
 fta o
 r 5
-oj 5
+oj 5 -> g
 to 5
 ftm o
 fta o
@@ -248,7 +246,7 @@ fga 2
 r o
 fga o
 r 3
-oj 3
+oj 3 -> o
 c 0415
 ig 5 22 2 1 25
 fga o

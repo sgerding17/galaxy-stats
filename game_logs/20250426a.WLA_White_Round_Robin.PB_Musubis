@@ -3,11 +3,11 @@ ig 25 3 22 5 2
 t o
 fga o
 r 3
-oj 3
+oj 3 -> g
 fga 2
 r 22
 fgm 22
-oj 22
+to 22
 fga o
 r o
 s 22
@@ -19,7 +19,7 @@ fgm o
 to 2
 fga o
 r g
-oj 25
+oj 25 -> o
 fga o
 b 5
 r 3
@@ -29,7 +29,7 @@ fga 22
 r 3
 fga 2
 r 2
-oj 2
+oj 2 -> g
 c 1530
 fga 22
 r 5
@@ -44,6 +44,7 @@ r 22
 ftm 22
 c 1345
 fta 22
+r o
 fga o
 r 22
 fga 3
