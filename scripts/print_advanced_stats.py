@@ -16,8 +16,8 @@ players = {
     "22": "DeMarti",
     "3": "Gerding",
     "14": "Li",
-    "5": "Iwai",
     "1": "Long",
+    "5": "Iwai",
     "25": "Yosy",
     "21": "Saito",
     "2": "Laurel",
@@ -34,11 +34,19 @@ def name(player):
 
 def print_stats(row, s):
     columns = [
-        ( "<48",  "COMBINATION",  f"{row}",        f"Galaxy",      f"Opponent"   ),
-        ( ">1",   "|",            "|",             "|",            "|"           ),
-        ( ">4",   "GP",           f"{s['gp']}",    f"{s['gp']}",   f"{s['gp']}"  ),
-        ( ">6",   "MIN",          f"{s['min']}",   f"-",           f"-"          ),
-        ( ">6",   "+/-",          f"{s['pm']:+}",  f"-",           f"-"          ),
+        ( "<48",  "COMBINATION",  f"{row}",          f"Galaxy",      f"Opponent"   ),
+        ( ">1",   "|",            "|",               "|",            "|"           ),
+        ( ">4",   "GP",           f"{s['gp']}",      f"{s['gp']}",   f"{s['gp']}"  ),
+        ( ">6",   "MIN",          f"{s['min']}",     f"-",           f"-"          ),
+        ( ">6",   "+/-",          f"{s['pm']:+}",    f"-",           f"-"          ),
+        ( ">6",   "OPOS",         f"{s['opos']}",    f"-",           f"-"          ),
+        ( ">6",   "DPOS",         f"{s['dpos']}",    f"-",           f"-"          ),
+        ( ">6",   "POS",          f"{s['pos']}",     f"-",           f"-"          ),
+        ( ">6",   "PF",           f"{s['pf']}",      f"-",           f"-"          ),
+        ( ">6",   "PA",           f"{s['pa']}",      f"-",           f"-"          ),
+        ( ">6",   "ORTG",         f"{s['ortg']}",    f"-",           f"-"          ),
+        ( ">6",   "DRTG",         f"{s['drtg']}",    f"-",           f"-"          ),
+        ( ">7",   "NRTG",         f"{s['nrtg']:+}",  f"-",           f"-"          ),
         ]
 
     i = 1 if row =="header" else 3 if row == "g" else 4 if row == "o" else 2
@@ -60,10 +68,9 @@ cum_stats = accumulate_stats(all_stats, per_game)
 for cardinality in range(1, 6):
     print(f"{cardinality}-man Combinations")
     print_stats("header", cum_stats["g"])
-    for player in sorted(cum_stats, key=lambda p:cum_stats[p]["pm"], reverse=True):
+    for player in sorted(cum_stats, key=lambda p:cum_stats[p]["nrtg"], reverse=True):
         if player in ("g", "o"): continue
         if player.count("|") != (0 if cardinality == 1 else cardinality + 1): continue
         if cum_stats[player]["min"] < 10: continue
-        print("-" * 48 + "+" + "-" * (4 + 6 + 6))
         print_stats(name(player), cum_stats[player])
     print()

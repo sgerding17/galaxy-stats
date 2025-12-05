@@ -111,6 +111,8 @@ def count_stats(events):
                 delta_score = get_delta_score(event_type, player)
                 for combo in all_combos(in_game):
                     stats[combo]["pm"] += delta_score
+                    stats[combo]["pf"] += (delta_score if delta_score > 0 else 0)
+                    stats[combo]["pa"] += (-delta_score if delta_score < 0 else 0)
                 if player == "o":
                     assert possession == "o", "LINE {}: Opponent shot without possession".format(LINE)
                 else:
@@ -175,6 +177,7 @@ def rollup_stats(stats):
         stats[player]["fgm"] += stats[player]["3fgm"]
         stats[player]["fga"] += stats[player]["fgm"]
         stats[player]["fta"] += stats[player]["ftm"]
+        stats[player]["pos"] = stats[player]["opos"] + stats[player]["dpos"]
         if player[0] not in ("o", "c"):
             for stat in stats[player]:
                 g_stats[stat] += stats[player][stat]
@@ -205,6 +208,17 @@ def accumulate_stats(all_stats, per_game):
         if cum_stats[player]["to"]:
             cum_stats[player]["ator"] = quantize2(cum_stats[player]["a"] /
                                                   cum_stats[player]["to"])
+
+        if cum_stats[player]["opos"]:
+            cum_stats[player]["ortg"] = quantize1(100 * cum_stats[player]["pf"] /
+                                                        cum_stats[player]["opos"])
+
+        if cum_stats[player]["dpos"]:
+            cum_stats[player]["drtg"] = quantize1(100 * cum_stats[player]["pa"] /
+                                                        cum_stats[player]["dpos"])
+
+        cum_stats[player]["nrtg"] = quantize1(cum_stats[player]["ortg"] -
+                                              cum_stats[player]["drtg"])
 
         if per_game:
             gp = float(cum_stats[player]["gp"])
