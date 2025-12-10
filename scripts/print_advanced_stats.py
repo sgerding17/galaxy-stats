@@ -1,16 +1,6 @@
 import sys
+from collections import defaultdict
 from stats import count_stats, rollup_stats, accumulate_stats
-
-#players = {
-#    "1": "Long",
-#    "2": "Laurel",
-#    "3": "Gerding",
-#    "5": "Iwai",
-#    "14": "Li",
-#    "21": "Saito",
-#    "22": "DeMarti",
-#    "25": "Yosy",
-#}
 
 players = {
     "22": "DeMarti",
@@ -23,54 +13,50 @@ players = {
     "2": "Laurel",
 }
 
-def name(player):
-    name = " "
-    for num in players:
-        if num == player or f"|{num}|" in player:
-            name += players[num] + " "
+def combo_name(combo):
+    name = ""
+    for player in players:
+        if player == combo or f"|{player}|" in combo:
+            name += players[player] + " "
         else:
-            name += " " * len(players[num]) + " "
+            name += " " * len(players[player]) + " "
     return name
 
 def print_stats(row, s):
     columns = [
-        ( "<48",  "COMBINATION",  f"{row}",          f"Galaxy",      f"Opponent"   ),
-        ( ">1",   "|",            "|",               "|",            "|"           ),
-        ( ">4",   "GP",           f"{s['gp']}",      f"{s['gp']}",   f"{s['gp']}"  ),
-        ( ">6",   "MIN",          f"{s['min']}",     f"-",           f"-"          ),
-        ( ">6",   "+/-",          f"{s['pm']:+}",    f"-",           f"-"          ),
-        ( ">6",   "OPOS",         f"{s['opos']}",    f"-",           f"-"          ),
-        ( ">6",   "DPOS",         f"{s['dpos']}",    f"-",           f"-"          ),
-        ( ">6",   "POS",          f"{s['pos']}",     f"-",           f"-"          ),
-        ( ">6",   "PF",           f"{s['pf']}",      f"-",           f"-"          ),
-        ( ">6",   "PA",           f"{s['pa']}",      f"-",           f"-"          ),
-        ( ">6",   "ORTG",         f"{s['ortg']}",    f"-",           f"-"          ),
-        ( ">6",   "DRTG",         f"{s['drtg']}",    f"-",           f"-"          ),
-        ( ">7",   "NRTG",         f"{s['nrtg']:+}",  f"-",           f"-"          ),
+        ( "<48",  f"{s['card']}-MAN COMBINATION",  f"{row}",         ),
+        ( ">1",   "|",                             "|",              ),
+        ( ">4",   "GP",                            f"{s['gp']}",     ),
+        ( ">6",   "MIN",                           f"{s['min']}",    ),
+        ( ">6",   "+/-",                           f"{s['pm']:+}",   ),
+        ( ">6",   "OPOS",                          f"{s['opos']}",   ),
+        ( ">6",   "DPOS",                          f"{s['dpos']}",   ),
+        ( ">6",   "POS",                           f"{s['pos']}",    ),
+        ( ">5",   "PF",                            f"{s['pf']}",     ),
+        ( ">5",   "PA",                            f"{s['pa']}",     ),
+        ( ">6",   "ORTG",                          f"{s['ortg']}",   ),
+        ( ">6",   "DRTG",                          f"{s['drtg']}",   ),
+        ( ">8",   "NETRTG",                        f"{s['nrtg']:+}", ),
         ]
 
-    i = 1 if row =="header" else 3 if row == "g" else 4 if row == "o" else 2
+    i = 1 if row =="header" else 2
     print("".join([f"{c[i]:{c[0]}}" for c in columns]))
 
 all_stats = []
 assert len(sys.argv) >= 2
-per_game = (sys.argv[1] == "--per-game")
-first_log_pos = 2 if per_game else 1
-for log in sys.argv[first_log_pos:]:
+for log in sys.argv[1:]:
     with open(f"{log}") as file:
         events = file.read().splitlines()
     stats = count_stats(events)
     rollup_stats(stats)
     all_stats.append(stats)
 
-cum_stats = accumulate_stats(all_stats, per_game)
+cum_stats = accumulate_stats(all_stats, per_game=False)
 
 for cardinality in range(1, 6):
-    print(f"{cardinality}-man Combinations")
-    print_stats("header", cum_stats["g"])
-    for player in sorted(cum_stats, key=lambda p:cum_stats[p]["nrtg"], reverse=True):
-        if player in ("g", "o"): continue
-        if player.count("|") != (0 if cardinality == 1 else cardinality + 1): continue
-        if cum_stats[player]["min"] < 10: continue
-        print_stats(name(player), cum_stats[player])
+    print_stats("header", defaultdict(lambda: 0, {"card": cardinality}))
+    for combo in sorted(cum_stats, key=lambda p:cum_stats[p]["nrtg"], reverse=True):
+        if combo.count("|") != (0 if cardinality == 1 else cardinality + 1): continue
+        if cum_stats[combo]["pos"] < 100: continue
+        print_stats(combo_name(combo), cum_stats[combo])
     print()
