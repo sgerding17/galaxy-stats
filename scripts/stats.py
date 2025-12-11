@@ -19,7 +19,7 @@ def get_rebound_type(rebounder, last_event):
     if last_event[0] == "b":
         blocker = last_event[1]
         return "dr" if on_same_team(rebounder, blocker) else "or"
-    elif last_event[0] in ("fga", "fta"):
+    elif last_event[0] in ("3fga", "fga", "fta"):
         shooter = last_event[1]
         return "or" if on_same_team(rebounder, shooter) else "dr"
     else:
@@ -103,7 +103,7 @@ def count_stats(events):
             possession = pos_arrow
             pos_arrow = opposite_team(pos_arrow)
 
-        elif event_type in ("3fgm", "fgm", "ftm", "fga", "fta", "r", "a", "s", "b", "to"):
+        elif event_type in ("3fgm", "fgm", "ftm", "3fga", "fga", "fta", "r", "a", "s", "b", "to"):
             stat = event_type
             assert len(event) == 2, "LINE {}: Invalid event: {}".format(LINE, " ".join(event))
             player = event[1]
@@ -127,7 +127,7 @@ def count_stats(events):
                                               next_next_next_event == ["ftm", player])))
                 if not upcoming_freethrow:
                     possession = "g" if player == "o" else "o"
-            elif event_type in ("fga", "fta"):
+            elif event_type in ("3fga", "fga", "fta"):
                 if player == "o":
                     assert possession == "o", "LINE {}: Opponent shot without possession".format(LINE)
                 else:
@@ -174,9 +174,16 @@ def rollup_stats(stats):
                               2 * stats[player]["fgm"] +
                               1 * stats[player]["ftm"])
         stats[player]["r"] = stats[player]["or"] + stats[player]["dr"]
-        stats[player]["fgm"] += stats[player]["3fgm"]
+
+	# Makes are also attempts.
+        stats[player]["3fga"] += stats[player]["3fgm"]
         stats[player]["fga"] += stats[player]["fgm"]
         stats[player]["fta"] += stats[player]["ftm"]
+
+	# 3s are also field goals. Do not swap order with above.
+        stats[player]["fga"] += stats[player]["3fga"]
+        stats[player]["fgm"] += stats[player]["3fgm"]
+
         stats[player]["pos"] = stats[player]["opos"] + stats[player]["dpos"]
         if player[0] not in ("o", "c"):
             for stat in stats[player]:
