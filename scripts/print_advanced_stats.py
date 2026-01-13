@@ -8,8 +8,8 @@ players = {
     "14": "Li",
     "1": "Long",
     "5": "Iwai",
-    "25": "Yosy",
     "21": "Saito",
+    "25": "Yosy",
     "2": "Laurel",
 }
 
@@ -56,7 +56,8 @@ cum_stats = accumulate_stats(all_stats, per_game=False)
 for cardinality in range(1, 6):
     print_stats("header", defaultdict(lambda: 0, {"card": cardinality}))
     for combo in sorted(cum_stats, key=lambda p:cum_stats[p]["nrtg"], reverse=True):
+        if combo in ("g", "o"): continue
         if combo.count("|") != (0 if cardinality == 1 else cardinality + 1): continue
-        if cum_stats[combo]["pos"] < 100: continue
+        if cum_stats[combo]["pos"] < 80: continue
         print_stats(combo_name(combo), cum_stats[combo])
     print()
