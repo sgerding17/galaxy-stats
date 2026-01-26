@@ -175,12 +175,12 @@ def rollup_stats(stats):
                               1 * stats[player]["ftm"])
         stats[player]["r"] = stats[player]["or"] + stats[player]["dr"]
 
-	# Makes are also attempts.
+        # Makes are also attempts.
         stats[player]["3fga"] += stats[player]["3fgm"]
         stats[player]["fga"] += stats[player]["fgm"]
         stats[player]["fta"] += stats[player]["ftm"]
 
-	# 3s are also field goals. Do not swap order with above.
+        # 3s are also field goals. Do not swap order with above.
         stats[player]["fga"] += stats[player]["3fga"]
         stats[player]["fgm"] += stats[player]["3fgm"]
 
