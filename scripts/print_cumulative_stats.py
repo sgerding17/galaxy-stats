@@ -1,16 +1,5 @@
 import sys
-from stats import count_stats, rollup_stats, accumulate_stats
-
-players = {
-    "1": "Long",
-    "2": "Laurel",
-    "3": "Gerding",
-    "5": "Iwai",
-    "14": "Li",
-    "21": "Saito",
-    "22": "DeMarti",
-    "25": "Yosy",
-}
+from stats import count_stats, rollup_stats, accumulate_stats, players
 
 def print_stats(row, s):
     columns = [
@@ -54,7 +43,7 @@ cum_stats = accumulate_stats(all_stats, per_game)
 
 print_stats("header", cum_stats["g"])
 for player in sorted(cum_stats, key=lambda x:int(x) if x.isdigit() else 100):
-    if player[0] in ("g", "o", "c"): continue
+    if player[0] in ("g", "o", "c", "!"): continue
     print_stats(players[player], cum_stats[player])
 print()
 print_stats("g", cum_stats["g"])

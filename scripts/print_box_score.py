@@ -1,17 +1,6 @@
 import sys
 from collections import defaultdict
-from stats import count_stats, rollup_stats
-
-players = {
-    "1": "Long",
-    "2": "Laurel",
-    "3": "Gerding",
-    "5": "Iwai",
-    "14": "Li",
-    "21": "Saito",
-    "22": "DeMarti",
-    "25": "Yosy",
-}
+from stats import count_stats, rollup_stats, players
 
 def print_stats(row, s):
     columns = [
@@ -42,7 +31,7 @@ delta_stats = defaultdict(lambda: defaultdict(int), {s: stats["g"][s] - stats["o
 
 print_stats("header", stats["g"])
 for player in sorted(stats, key=lambda x:int(x) if x.isdigit() else 100):
-    if player[0] in ("g", "o", "c"): continue
+    if player[0] in ("g", "o", "c", "!"): continue
     print_stats(f"{player:>2} {players[player]}", stats[player])
 print()
 print_stats("g", stats["g"])

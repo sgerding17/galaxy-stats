@@ -1,6 +1,7 @@
 import os
 import subprocess
 from collections import defaultdict
+from stats import players
 
 game_logs = ["game_logs/" + l for l in sorted(os.listdir("game_logs"), reverse=True) if not l.startswith(".")]
 
@@ -59,23 +60,10 @@ print("```")
 print(per_game_stats, end="")
 print("```")
 
-players = {
-    "1": "Long",
-    "2": "Laurel",
-    "3": "Gerding",
-    "5": "Iwai",
-    "14": "Li",
-    "21": "Saito",
-    "22": "DeMarti",
-    "25": "Yosy",
-
-    "g": "Galaxy",
-}
-
 print("---")
 print("# Player Game Logs")
 
-for (number, name) in players.items():
+for (number, name) in (players | {'g':'Galaxy'}).items():
     player = f"{number:>2} {name}" if number != "g" else "Galaxy"
     print(f"## {player} - Game Log")
     print("```")

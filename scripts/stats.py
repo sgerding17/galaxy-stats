@@ -1,5 +1,16 @@
 from collections import defaultdict
 
+players = {
+    "1": "Long",
+    "2": "Laurel",
+    "3": "Gerding",
+    "5": "Iwai",
+    "14": "Li",
+    "21": "Saito",
+    "22": "DeMarti",
+    "25": "Yosy",
+}
+
 LINE = 1
 
 def parse_timestamp(timestamp):
@@ -27,18 +38,18 @@ def get_rebound_type(rebounder, last_event):
 
 def opposite_team(team): return "g" if team == "o" else "o"
 
-def combo(players):
-    if len(players) == 1: return players[0]
-    return "c|" + "|".join(players) + "|"
+def all_combos(in_game):
+    def combo_name(in_game):
+        if len(in_game) == 1: return in_game[0]
+        return "c|" + "|".join(in_game) + "|"
 
-def all_combos(players):
-    combos = []
-    for combo_mask in range(1, 2**len(players)):
+    combos = [f"!{p}" for p in players.keys() if p not in in_game]
+    for combo_mask in range(1, 2**len(in_game)):
         combo_players = []
-        for index in range(len(players)):
+        for index in range(len(in_game)):
             if combo_mask & 2**index:
-                combo_players.append(players[index])
-        combos.append(combo(combo_players))
+                combo_players.append(in_game[index])
+        combos.append(combo_name(combo_players))
     return combos
 
 def count_stats(events):
@@ -185,7 +196,7 @@ def rollup_stats(stats):
         stats[player]["fgm"] += stats[player]["3fgm"]
 
         stats[player]["pos"] = stats[player]["opos"] + stats[player]["dpos"]
-        if player[0] not in ("o", "c"):
+        if player[0] not in ("o", "c", "!"):
             for stat in stats[player]:
                 g_stats[stat] += stats[player][stat]
 
@@ -232,5 +243,10 @@ def accumulate_stats(all_stats, per_game):
             for stat in cum_stats[player]:
                 if stat in ("gp", "fgp", "ftp", "ator"): continue
                 cum_stats[player][stat] = quantize1(cum_stats[player][stat] / gp)
+
+    for player in cum_stats:
+        if player[0] in ("g", "o", "c", "!"): continue
+        cum_stats[player]["onoff"] = quantize1(cum_stats[player]["nrtg"] -
+                                               cum_stats[f"!{player}"]["nrtg"])
 
     return cum_stats
