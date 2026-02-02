@@ -1,6 +1,21 @@
 [Box Scores](#box-scores) &bull; [Aggregate Stats](#aggregate-stats) &bull; [Player Game Logs](#player-game-logs)
 ---
 # Box Scores
+## 2026-02-01 - Galaxy vs. Supreme - JAO League Play
+```
+            MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+ 1 Long      23    0-1   0-4     2     2    4    0    1    0    1   +1    0
+ 2 Laurel    19    0-2   0-0     2     3    5    0    0    0    4   -5    0
+ 3 Gerding   27    0-5   2-3     1     1    2    0    1    1    3   +0    2
+ 5 Iwai      26    2-8   0-0     2     2    4    1    1    1    2   +9    4
+14 Li        19    1-3   0-0     0     3    3    2    1    1    1   +2    2
+21 Saito     21    1-4   0-0     1     1    2    1    1    0    3   -4    2
+22 DeMarti   37   8-21   3-7     9     6   15    2    6    1    6   +4   19
+25 Yosy      28    3-5   0-0     1     1    2    0    1    0    2   +8    6
+
+Galaxy        -  15-49  5-14    19    21   40    6   12    4   22    -   35
+Opponent      -  14-48   4-6    11    15   26    -    -    -   14    -   32
+```
 ## 2026-01-25 - Galaxy vs. Storm - JAO League Play
 ```
             MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
@@ -489,38 +504,39 @@ Opponent      -   2-35  5-22    19    10   29    -    -    -   13    -    9
 ## Cumulative Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO   A/TO    PLAYER
-Long       31   680    11     5    36  13.9     1     5  20.0    33    13    46     8    26     2    62   0.13      Long
-Laurel     33   817    39    17   104  16.3     5    15  33.3    39    73   112     9    31     9    60   0.15    Laurel
-Gerding    33   870    66    31   153  20.3     4     7  57.1    48    62   110    28    84    18   122   0.23   Gerding
-Iwai       31   923    73    30   180  16.7     9    28  32.1    50    82   132    44    47    17   124   0.35      Iwai
-Li         28   687    55    23   167  13.8     9    40  22.5    48    54   102    18    36    36    83   0.22        Li
-Saito      32   724    40    19    95  20.0     1     6  16.7    23    30    53     9    17     1    96   0.09     Saito
-DeMarti    32  1048   395   163   439  37.1    68   175  38.9   204   264   468    25   101   106   102   0.25   DeMarti
-Yosy       32   845    44    20   143  14.0     4    36  11.1    41    16    57     8    40     2    86   0.09      Yosy
+Long       32   703    11     5    37  13.5     1     9  11.1    35    15    50     8    27     2    63   0.13      Long
+Laurel     34   836    39    17   106  16.0     5    15  33.3    41    76   117     9    31     9    64   0.14    Laurel
+Gerding    34   897    68    31   158  19.6     6    10  60.0    49    63   112    28    85    19   125   0.22   Gerding
+Iwai       32   949    77    32   188  17.0     9    28  32.1    52    84   136    45    48    18   126   0.36      Iwai
+Li         29   706    57    24   170  14.1     9    40  22.5    48    57   105    20    37    37    84   0.24        Li
+Saito      33   745    42    20    99  20.2     1     6  16.7    24    31    55    10    18     1    99    0.1     Saito
+DeMarti    33  1085   414   171   460  37.2    71   182  39.0   213   270   483    27   107   107   108   0.25   DeMarti
+Yosy       33   873    50    23   148  15.5     4    36  11.1    42    17    59     8    41     2    88   0.09      Yosy
 
-Galaxy     33     -   723   308  1317  23.4   101   312  32.4   553   687  1240   149   382   191   735      -    Galaxy
-Opponent   33     -   590   246  1510  16.3    89   257  34.6   583   478  1061     -     -     -     -      -  Opponent
+Galaxy     34     -   758   323  1366  23.6   106   326  32.5   572   708  1280   155   394   195   757      -    Galaxy
+Opponent   34     -   622   260  1558  16.7    93   263  35.4   594   493  1087     -     -     -     -      -  Opponent
 ```
 ## Per-Game Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO   A/TO    PLAYER
-Long       31  21.9   0.4   0.2   1.2  13.9   0.0   0.2  20.0   1.1   0.4   1.5   0.3   0.8   0.1   2.0   0.13      Long
-Laurel     33  24.8   1.2   0.5   3.2  16.3   0.2   0.5  33.3   1.2   2.2   3.4   0.3   0.9   0.3   1.8   0.15    Laurel
-Gerding    33  26.4   2.0   0.9   4.6  20.3   0.1   0.2  57.1   1.5   1.9   3.3   0.8   2.5   0.5   3.7   0.23   Gerding
-Iwai       31  29.8   2.4   1.0   5.8  16.7   0.3   0.9  32.1   1.6   2.6   4.3   1.4   1.5   0.5   4.0   0.35      Iwai
-Li         28  24.5   2.0   0.8   6.0  13.8   0.3   1.4  22.5   1.7   1.9   3.6   0.6   1.3   1.3   3.0   0.22        Li
-Saito      32  22.6   1.2   0.6   3.0  20.0   0.0   0.2  16.7   0.7   0.9   1.7   0.3   0.5   0.0   3.0   0.09     Saito
-DeMarti    32  32.8  12.3   5.1  13.7  37.1   2.1   5.5  38.9   6.4   8.2  14.6   0.8   3.2   3.3   3.2   0.25   DeMarti
-Yosy       32  26.4   1.4   0.6   4.5  14.0   0.1   1.1  11.1   1.3   0.5   1.8   0.2   1.2   0.1   2.7   0.09      Yosy
+Long       32  22.0   0.3   0.2   1.2  13.5   0.0   0.3  11.1   1.1   0.5   1.6   0.2   0.8   0.1   2.0   0.13      Long
+Laurel     34  24.6   1.1   0.5   3.1  16.0   0.1   0.4  33.3   1.2   2.2   3.4   0.3   0.9   0.3   1.9   0.14    Laurel
+Gerding    34  26.4   2.0   0.9   4.6  19.6   0.2   0.3  60.0   1.4   1.9   3.3   0.8   2.5   0.6   3.7   0.22   Gerding
+Iwai       32  29.7   2.4   1.0   5.9  17.0   0.3   0.9  32.1   1.6   2.6   4.2   1.4   1.5   0.6   3.9   0.36      Iwai
+Li         29  24.3   2.0   0.8   5.9  14.1   0.3   1.4  22.5   1.7   2.0   3.6   0.7   1.3   1.3   2.9   0.24        Li
+Saito      33  22.6   1.3   0.6   3.0  20.2   0.0   0.2  16.7   0.7   0.9   1.7   0.3   0.5   0.0   3.0    0.1     Saito
+DeMarti    33  32.9  12.5   5.2  13.9  37.2   2.2   5.5  39.0   6.5   8.2  14.6   0.8   3.2   3.2   3.3   0.25   DeMarti
+Yosy       33  26.5   1.5   0.7   4.5  15.5   0.1   1.1  11.1   1.3   0.5   1.8   0.2   1.2   0.1   2.7   0.09      Yosy
 
-Galaxy     33     -  21.9   9.3  39.9  23.4   3.1   9.5  32.4  16.8  20.8  37.6   4.5  11.6   5.8  22.3      -    Galaxy
-Opponent   33     -  17.9   7.5  45.8  16.3   2.7   7.8  34.6  17.7  14.5  32.2     -     -     -     -      -  Opponent
+Galaxy     34     -  22.3   9.5  40.2  23.6   3.1   9.6  32.5  16.8  20.8  37.6   4.6  11.6   5.7  22.3      -    Galaxy
+Opponent   34     -  18.3   7.6  45.8  16.7   2.7   7.7  35.4  17.5  14.5  32.0     -     -     -     -      -  Opponent
 ```
 ---
 # Player Game Logs
 ##  1 Long - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2026-02-01  Supreme         W 35-32   23    0-1   0-4     2     2    4    0    1    0    1   +1    0
 2026-01-25  Storm           W 34-17   28    3-5   0-0     4     0    4    0    2    0    2  +10    6
 2026-01-18  Sparks          W 28-4    27    0-2   0-0     4     1    5    0    2    0    3  +18    0
 2026-01-11  Shooting Stars  W 25-14   21    0-2   0-0     2     0    2    1    1    0    2   +7    0
@@ -556,6 +572,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ##  2 Laurel - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2026-02-01  Supreme         W 35-32   19    0-2   0-0     2     3    5    0    0    0    4   -5    0
 2026-01-25  Storm           W 34-17   30    2-4   0-0     1     3    4    1    3    0    2  +15    4
 2026-01-18  Sparks          W 28-4    30   3-10   1-2     3     5    8    1    3    0    3  +14    7
 2026-01-11  Shooting Stars  W 25-14   28    0-2   0-0     2     5    7    0    2    0    3   +1    0
@@ -593,6 +610,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ##  3 Gerding - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2026-02-01  Supreme         W 35-32   27    0-5   2-3     1     1    2    0    1    1    3   +0    2
 2026-01-25  Storm           W 34-17   25   2-10   0-0     3     0    3    2    3    0    3  +12    4
 2026-01-18  Sparks          W 28-4    24    2-7   0-0     3     3    6    0    1    0    3  +13    4
 2026-01-11  Shooting Stars  W 25-14   26    2-5   0-0     3     2    5    0    1    0    3   +8    4
@@ -630,6 +648,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ##  5 Iwai - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2026-02-01  Supreme         W 35-32   26    2-8   0-0     2     2    4    1    1    1    2   +9    4
 2026-01-25  Storm           W 34-17   26   0-12   0-0     4     0    4    1    1    0    0   +8    0
 2026-01-18  Sparks          W 28-4    22    2-6   0-2     2     1    3    1    2    0    1  +16    4
 2026-01-11  Shooting Stars  W 25-14   28   1-10   0-0     0     1    1    1    2    0    2  +12    2
@@ -665,6 +684,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 14 Li - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2026-02-01  Supreme         W 35-32   19    1-3   0-0     0     3    3    2    1    1    1   +2    2
 2026-01-25  Storm           W 34-17   20    0-8   0-2     5     3    8    0    3    0    2   +8    0
 2026-01-18  Sparks          W 28-4    24    1-7   0-0     2     1    3    0    4    2    3  +12    2
 2026-01-11  Shooting Stars  W 25-14   23    2-9   0-2     2     0    2    1    0    0    2   +1    4
@@ -697,6 +717,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 21 Saito - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2026-02-01  Supreme         W 35-32   21    1-4   0-0     1     1    2    1    1    0    3   -4    2
 2026-01-25  Storm           W 34-17   23    1-2   0-0     2     0    2    0    2    0    4   +8    2
 2026-01-18  Sparks          W 28-4    24    0-4   0-0     0     0    0    1    0    0    2  +11    0
 2026-01-11  Shooting Stars  W 25-14   28    2-5   0-0     0     0    0    0    0    0    1   +9    4
@@ -733,6 +754,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 22 DeMarti - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2026-02-01  Supreme         W 35-32   37   8-21   3-7     9     6   15    2    6    1    6   +4   19
 2026-01-25  Storm           W 34-17   22   8-12   0-0     2     1    3    3    5    1    1  +14   16
 2026-01-18  Sparks          W 28-4    19    3-9  5-10     6     6   12    1    3    1    1  +17   11
 2026-01-11  Shooting Stars  W 25-14   27    4-8   2-6     7     8   15    3    5    3    1  +17   10
@@ -769,6 +791,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## 25 Yosy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2026-02-01  Supreme         W 35-32   28    3-5   0-0     1     1    2    0    1    0    2   +8    6
 2026-01-25  Storm           W 34-17   26   1-13   0-0     5     1    6    2    4    0    2  +10    2
 2026-01-18  Sparks          W 28-4    30    0-4   0-0     1     0    1    0    1    0    1  +19    0
 2026-01-11  Shooting Stars  W 25-14   18    0-3   1-4     1     1    2    0    0    0    2   +0    1
@@ -805,6 +828,7 @@ DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL
 ## Galaxy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN     FG    FT  OREB  DREB  REB  AST  STL  BLK   TO  +/-  PTS
+2026-02-01  Supreme         W 35-32    -  15-49  5-14    19    21   40    6   12    4   22    -   35
 2026-01-25  Storm           W 34-17    -  17-66   0-2    26    12   38    9   23    1   16    -   34
 2026-01-18  Sparks          W 28-4     -  11-49  6-14    24    20   44    4   16    3   17    -   28
 2026-01-11  Shooting Stars  W 25-14    -  11-44  3-12    21    18   39    6   11    3   16    -   25
