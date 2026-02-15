@@ -9,7 +9,7 @@ from stats import accumulate_stats, count_stats, players, rollup_stats
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GAME_LOG_DIR = os.path.join(ROOT, "game_logs")
-OUTPUT_DIR = os.path.join(ROOT, "stats")
+OUTPUT_DIR = os.path.join(ROOT, "docs")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "index.html")
 
 PLAYER_ORDER = sorted(players.keys(), key=int)
