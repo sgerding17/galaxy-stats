@@ -305,7 +305,7 @@ def player_game_logs(games):
     return "".join(sections)
 
 
-def render_html(games, cumulative, per_game):
+def render_html(games, season_totals, per_game_averages):
     game_options = "".join(
         [
             f"""<option value="{g['id']}">{g['date']} vs {html.escape(g['opponent'])}</option>"""
@@ -589,8 +589,8 @@ def render_html(games, cumulative, per_game):
       {game_tables}
     </section>
 
-    {cumulative_table("Season Totals", cumulative, "season-totals")}
-    {cumulative_table("Per-Game Averages", per_game, "per-game-averages")}
+    {cumulative_table("Season Totals", season_totals, "season-totals")}
+    {cumulative_table("Per-Game Averages", per_game_averages, "per-game-averages")}
 
     <section id="player-game-logs">
       <h2>Player Game Logs</h2>
@@ -638,9 +638,9 @@ def main():
             }
         )
 
-    cumulative = accumulate_stats(all_stats, per_game=False)
-    per_game = accumulate_stats(all_stats, per_game=True)
-    html_output = render_html(games, cumulative, per_game)
+    season_totals = accumulate_stats(all_stats, per_game=False)
+    per_game_averages = accumulate_stats(all_stats, per_game=True)
+    html_output = render_html(games, season_totals, per_game_averages)
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as file:
