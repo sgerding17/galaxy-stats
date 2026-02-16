@@ -34,6 +34,10 @@ def percent(made, attempts):
     return "-" if attempts == 0 else f"{round(100 * made / attempts, 1):.1f}"
 
 
+def fmt2(value):
+    return "-" if value is None else f"{value:.2f}"
+
+
 def read_game_stats(path):
     with open(path, encoding="utf-8") as file:
         events = file.read().splitlines()
@@ -50,7 +54,7 @@ def box_score_table(game):
         rows.append(
             f"""
             <tr>
-              <td class="sticky">{html.escape(players[player])}</td>
+              <td class="sticky">{players[player]}</td>
               <td>{s['min']}</td>
               <td>{s['fgm']}-{s['fga']}</td>
               <td>{percent(s['fgm'], s['fga'])}</td>
@@ -169,6 +173,7 @@ def cumulative_table(title, stats, section_id):
               <td>{s['s']}</td>
               <td>{s['b']}</td>
               <td>{s['to']}</td>
+              <td>{fmt2(s.get('ator'))}</td>
             </tr>
             """
         )
@@ -196,6 +201,7 @@ def cumulative_table(title, stats, section_id):
               <th>STL</th>
               <th>BLK</th>
               <th>TO</th>
+              <th>A/TO</th>
             </tr>
           </thead>
           <tbody>
@@ -203,7 +209,7 @@ def cumulative_table(title, stats, section_id):
             <tr class="totals">
               <td class="sticky">Galaxy</td>
               <td>{galaxy['gp']}</td>
-              <td>{galaxy['min']}</td>
+              <td>-</td>
               <td>{galaxy['p']}</td>
               <td>{galaxy['fgm']}</td>
               <td>{galaxy['fga']}</td>
@@ -216,6 +222,7 @@ def cumulative_table(title, stats, section_id):
               <td>{galaxy['s']}</td>
               <td>{galaxy['b']}</td>
               <td>{galaxy['to']}</td>
+              <td>{fmt2(galaxy.get('ator'))}</td>
             </tr>
             <tr class="totals opponent">
               <td class="sticky">Opponent</td>
@@ -233,6 +240,7 @@ def cumulative_table(title, stats, section_id):
               <td>-</td>
               <td>-</td>
               <td>{opponent['to']}</td>
+              <td>-</td>
             </tr>
           </tbody>
         </table>
@@ -476,14 +484,14 @@ def render_html(games, cumulative_stats, per_game_stats):
       border-collapse: separate;
       border-spacing: 0;
       width: 100%;
-      min-width: 860px;
       font-size: 0.9rem;
     }}
     th, td {{
       border-bottom: 1px solid #ebeff6;
-      padding: 10px 8px;
+      padding: 5px;
       text-align: right;
       white-space: nowrap;
+      width: 1%;
     }}
     th {{
       background: #f5f8ff;
@@ -557,6 +565,12 @@ def render_html(games, cumulative_stats, per_game_stats):
       .game-header {{
         flex-direction: column;
         align-items: flex-start;
+      }}
+      table {{
+        font-size: 0.8rem;
+      }}
+      th, td {{
+        padding: 5px;
       }}
       .scoreboard {{ width: 100%; min-width: 0; }}
       .scoreboard div {{ width: 100%; }}
