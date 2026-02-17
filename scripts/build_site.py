@@ -46,10 +46,16 @@ def read_game_stats(path):
     return stats
 
 
+def played_in_game(game_stats, player):
+    return game_stats[player]["sec"] > 0
+
+
 def box_score_table(game):
     game_id = game["id"]
     rows = []
     for player in PLAYER_ORDER:
+        if not played_in_game(game["stats"], player):
+            continue
         s = game["stats"][player]
         rows.append(
             f"""
@@ -254,6 +260,8 @@ def player_game_logs(games):
     for player in PLAYER_ORDER:
         rows = []
         for game in games:
+            if not played_in_game(game["stats"], player):
+                continue
             s = game["stats"][player]
             galaxy_score = game["stats"]["g"]["p"]
             opp_score = game["stats"]["o"]["p"]
