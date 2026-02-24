@@ -255,69 +255,80 @@ def cumulative_table(title, stats, section_id):
     """
 
 
+def game_log_row(game, stats_row, min_value, pm_value):
+    galaxy_score = game["stats"]["g"]["p"]
+    opp_score = game["stats"]["o"]["p"]
+    result = "W" if galaxy_score > opp_score else "L" if galaxy_score < opp_score else "T"
+    return f"""
+    <tr>
+      <td class="sticky">{html.escape(game['opponent'])}</td>
+      <td>{game['date']}</td>
+      <td>{result} {galaxy_score}-{opp_score}</td>
+      <td>{min_value}</td>
+      <td>{stats_row['fgm']}-{stats_row['fga']}</td>
+      <td>{stats_row['ftm']}-{stats_row['fta']}</td>
+      <td>{stats_row['or']}</td>
+      <td>{stats_row['dr']}</td>
+      <td>{stats_row['r']}</td>
+      <td>{stats_row['a']}</td>
+      <td>{stats_row['s']}</td>
+      <td>{stats_row['b']}</td>
+      <td>{stats_row['to']}</td>
+      <td>{pm_value}</td>
+      <td>{stats_row['p']}</td>
+    </tr>
+    """
+
+
+def game_log_section(summary, rows):
+    return f"""
+    <details class="player-log">
+      <summary>{summary}</summary>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="sticky">Opponent</th>
+              <th>Date</th>
+              <th>Result</th>
+              <th>MIN</th>
+              <th>FG</th>
+              <th>FT</th>
+              <th>OR</th>
+              <th>DR</th>
+              <th>REB</th>
+              <th>AST</th>
+              <th>STL</th>
+              <th>BLK</th>
+              <th>TO</th>
+              <th>+/-</th>
+              <th>PTS</th>
+            </tr>
+          </thead>
+          <tbody>{''.join(rows)}</tbody>
+        </table>
+      </div>
+    </details>
+    """
+
+
 def player_game_logs(games):
     sections = []
+
+    galaxy_rows = [
+        game_log_row(game, game["stats"]["g"], "-", "-")
+        for game in games
+    ]
+    sections.append(game_log_section("Galaxy", galaxy_rows))
+
     for player in PLAYER_ORDER:
         rows = []
         for game in games:
             if not played_in_game(game["stats"], player):
                 continue
             s = game["stats"][player]
-            galaxy_score = game["stats"]["g"]["p"]
-            opp_score = game["stats"]["o"]["p"]
-            result = "W" if galaxy_score > opp_score else "L" if galaxy_score < opp_score else "T"
-            rows.append(
-                f"""
-                <tr>
-                  <td class="sticky">{game['date']}</td>
-                  <td>{html.escape(game['opponent'])}</td>
-                  <td>{result} {galaxy_score}-{opp_score}</td>
-                  <td>{s['min']}</td>
-                  <td>{s['fgm']}-{s['fga']}</td>
-                  <td>{s['ftm']}-{s['fta']}</td>
-                  <td>{s['or']}</td>
-                  <td>{s['dr']}</td>
-                  <td>{s['r']}</td>
-                  <td>{s['a']}</td>
-                  <td>{s['s']}</td>
-                  <td>{s['b']}</td>
-                  <td>{s['to']}</td>
-                  <td>{s['pm']:+d}</td>
-                  <td>{s['p']}</td>
-                </tr>
-                """
-            )
-        sections.append(
-            f"""
-            <details class="player-log">
-              <summary>{html.escape(players[player])}</summary>
-              <div class="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th class="sticky">Date</th>
-                      <th>Opponent</th>
-                      <th>Result</th>
-                      <th>MIN</th>
-                      <th>FG</th>
-                      <th>FT</th>
-                      <th>OR</th>
-                      <th>DR</th>
-                      <th>REB</th>
-                      <th>AST</th>
-                      <th>STL</th>
-                      <th>BLK</th>
-                      <th>TO</th>
-                      <th>+/-</th>
-                      <th>PTS</th>
-                    </tr>
-                  </thead>
-                  <tbody>{''.join(rows)}</tbody>
-                </table>
-              </div>
-            </details>
-            """
-        )
+            rows.append(game_log_row(game, s, s["min"], f"{s['pm']:+d}"))
+        sections.append(game_log_section(html.escape(players[player]), rows))
     return "".join(sections)
 
 
@@ -521,6 +532,12 @@ def render_html(games, cumulative_stats, per_game_stats):
       z-index: 3;
       background: #f5f8ff;
     }}
+    #player-game-logs table td:nth-child(2),
+    #player-game-logs table th:nth-child(2),
+    #player-game-logs table td:nth-child(3),
+    #player-game-logs table th:nth-child(3) {{
+      text-align: left;
+    }}
     .totals td {{
       font-weight: 700;
       background: #f8fbff;
@@ -597,7 +614,7 @@ def render_html(games, cumulative_stats, per_game_stats):
     <nav class="top-links">
       <a href="#cumulative-stats">Cumulative Stats</a>
       <a href="#per-game-stats">Per-Game Stats</a>
-      <a href="#player-game-logs">Player/Game Logs</a>
+      <a href="#player-game-logs">Player Game Logs</a>
     </nav>
 
     <section class="jump-control">
