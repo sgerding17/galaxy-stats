@@ -52,6 +52,15 @@ def all_combos(in_game):
         combos.append(combo_name(combo_players))
     return combos
 
+def has_upcoming_freethrow(upcoming_events, player):
+    if not upcoming_events:
+        return False
+    if upcoming_events[0] in (["fta", player], ["ftm", player]):
+        return True
+    if upcoming_events[0][0] in ("c", "ig", "a"):
+        return has_upcoming_freethrow(upcoming_events[1:], player)
+    return False
+
 def count_stats(events):
     global LINE
     stats = defaultdict(lambda: defaultdict(int))
@@ -69,9 +78,7 @@ def count_stats(events):
         event = event.split()
         event_type = event[0]
 
-        next_event = events[line + 1].split() if (line + 1) < len(events) else ["end"]
-        next_next_event = events[line + 2].split() if (line + 2) < len(events) else ["end"]
-        next_next_next_event = events[line + 3].split() if (line + 3) < len(events) else ["end"]
+        upcoming_events = [e.split() for e in events[line + 1:]]
         missing_opp_turnover = False
 
         if event_type == "c":
@@ -107,6 +114,7 @@ def count_stats(events):
                 stats[player]["to"] += 1
             elif event_type == "dj" and pos_arrow == "g":
                 stats[player]["s"] += 1
+                stats["o"]["to"] += 1
             if event_type == "oj":
                 if possession != "g": missing_opp_turnover = True
             elif event_type == "dj":
@@ -128,15 +136,7 @@ def count_stats(events):
                     assert possession == "o", "LINE {}: Opponent shot without possession".format(LINE)
                 else:
                     if possession != "g": missing_opp_turnover = True
-                upcoming_freethrow = (next_event == ["fta", player] or
-                                      next_event == ["ftm", player] or
-                                      next_event[0] in ("c", "ig") and (
-                                          next_next_event == ["fta", player] or
-                                          next_next_event == ["ftm", player] or
-                                          next_next_event[0] in ("c", "ig") and (
-                                              next_next_next_event == ["fta", player] or
-                                              next_next_next_event == ["ftm", player])))
-                if not upcoming_freethrow:
+                if not has_upcoming_freethrow(upcoming_events, player):
                     possession = "g" if player == "o" else "o"
             elif event_type in ("3fga", "fga", "fta"):
                 if player == "o":
@@ -241,7 +241,7 @@ def accumulate_stats(all_stats, per_game):
         if per_game:
             gp = float(cum_stats[player]["gp"])
             for stat in cum_stats[player]:
-                if stat in ("gp", "fgp", "ftp", "ator"): continue
+                if stat in ("gp", "fgp", "ftp", "ator", "ortg", "drtg", "nrtg"): continue
                 cum_stats[player][stat] = quantize1(cum_stats[player][stat] / gp)
 
     for player in cum_stats:
