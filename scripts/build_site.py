@@ -73,6 +73,7 @@ def box_score_table(game):
               <td>{s['s']}</td>
               <td>{s['b']}</td>
               <td>{s['to']}</td>
+              <td>-</td>
               <td>{s['pm']:+d}</td>
               <td><strong>{s['p']}</strong></td>
             </tr>
@@ -110,6 +111,7 @@ def box_score_table(game):
               <th>STL</th>
               <th>BLK</th>
               <th>TO</th>
+              <th>POT</th>
               <th>+/-</th>
               <th>PTS</th>
             </tr>
@@ -130,6 +132,7 @@ def box_score_table(game):
               <td>{totals['s']}</td>
               <td>{totals['b']}</td>
               <td>{totals['to']}</td>
+              <td>{totals['pot']}</td>
               <td>-</td>
               <td><strong>{totals['p']}</strong></td>
             </tr>
@@ -147,6 +150,7 @@ def box_score_table(game):
               <td>-</td>
               <td>-</td>
               <td>{opponent['to']}</td>
+              <td>{opponent['pot']}</td>
               <td>-</td>
               <td><strong>{opponent['p']}</strong></td>
             </tr>
