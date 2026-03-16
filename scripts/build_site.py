@@ -64,6 +64,8 @@ def box_score_table(game):
               <td>{s['min']}</td>
               <td>{s['fgm']}-{s['fga']}</td>
               <td>{percent(s['fgm'], s['fga'])}</td>
+              <td>{s['3fgm']}-{s['3fga']}</td>
+              <td>{percent(s['3fgm'], s['3fga'])}</td>
               <td>{s['ftm']}-{s['fta']}</td>
               <td>{percent(s['ftm'], s['fta'])}</td>
               <td>{s['or']}</td>
@@ -101,6 +103,8 @@ def box_score_table(game):
               <th>MIN</th>
               <th>FG</th>
               <th>FG%</th>
+              <th>3FG</th>
+              <th>3FG%</th>
               <th>FT</th>
               <th>FT%</th>
               <th>OR</th>
@@ -121,6 +125,8 @@ def box_score_table(game):
               <td>-</td>
               <td>{totals['fgm']}-{totals['fga']}</td>
               <td>{percent(totals['fgm'], totals['fga'])}</td>
+              <td>{totals['3fgm']}-{totals['3fga']}</td>
+              <td>{percent(totals['3fgm'], totals['3fga'])}</td>
               <td>{totals['ftm']}-{totals['fta']}</td>
               <td>{percent(totals['ftm'], totals['fta'])}</td>
               <td>{totals['or']}</td>
@@ -138,6 +144,8 @@ def box_score_table(game):
               <td>-</td>
               <td>{opponent['fgm']}-{opponent['fga']}</td>
               <td>{percent(opponent['fgm'], opponent['fga'])}</td>
+              <td>{opponent['3fgm']}-{opponent['3fga']}</td>
+              <td>{percent(opponent['3fgm'], opponent['3fga'])}</td>
               <td>{opponent['ftm']}-{opponent['fta']}</td>
               <td>{percent(opponent['ftm'], opponent['fta'])}</td>
               <td>{opponent['or']}</td>
@@ -171,6 +179,9 @@ def cumulative_table(title, stats, section_id):
               <td>{s['fgm']}</td>
               <td>{s['fga']}</td>
               <td>{s['fgp']}</td>
+              <td>{s['3fgm']}</td>
+              <td>{s['3fga']}</td>
+              <td>{s['3fgp']}</td>
               <td>{s['ftm']}</td>
               <td>{s['fta']}</td>
               <td>{s['ftp']}</td>
@@ -199,6 +210,9 @@ def cumulative_table(title, stats, section_id):
               <th>FGM</th>
               <th>FGA</th>
               <th>FG%</th>
+              <th>3FGM</th>
+              <th>3FGA</th>
+              <th>3FG%</th>
               <th>FTM</th>
               <th>FTA</th>
               <th>FT%</th>
@@ -220,6 +234,9 @@ def cumulative_table(title, stats, section_id):
               <td>{galaxy['fgm']}</td>
               <td>{galaxy['fga']}</td>
               <td>{galaxy['fgp']}</td>
+              <td>{galaxy['3fgm']}</td>
+              <td>{galaxy['3fga']}</td>
+              <td>{galaxy['3fgp']}</td>
               <td>{galaxy['ftm']}</td>
               <td>{galaxy['fta']}</td>
               <td>{galaxy['ftp']}</td>
@@ -238,6 +255,9 @@ def cumulative_table(title, stats, section_id):
               <td>{opponent['fgm']}</td>
               <td>{opponent['fga']}</td>
               <td>{opponent['fgp']}</td>
+              <td>{opponent['3fgm']}</td>
+              <td>{opponent['3fga']}</td>
+              <td>{opponent['3fgp']}</td>
               <td>{opponent['ftm']}</td>
               <td>{opponent['fta']}</td>
               <td>{opponent['ftp']}</td>
@@ -266,6 +286,7 @@ def game_log_row(game, stats_row, min_value, pm_value):
       <td>{result} {galaxy_score}-{opp_score}</td>
       <td>{min_value}</td>
       <td>{stats_row['fgm']}-{stats_row['fga']}</td>
+      <td>{stats_row['3fgm']}-{stats_row['3fga']}</td>
       <td>{stats_row['ftm']}-{stats_row['fta']}</td>
       <td>{stats_row['or']}</td>
       <td>{stats_row['dr']}</td>
@@ -293,6 +314,7 @@ def game_log_section(summary, rows):
               <th>Result</th>
               <th>MIN</th>
               <th>FG</th>
+              <th>3FG</th>
               <th>FT</th>
               <th>OR</th>
               <th>DR</th>

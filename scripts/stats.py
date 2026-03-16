@@ -219,6 +219,10 @@ def accumulate_stats(all_stats, per_game):
             cum_stats[player]["fgp"] = quantize1(100 * cum_stats[player]["fgm"] /
                                                        cum_stats[player]["fga"])
 
+        if cum_stats[player]["3fga"]:
+            cum_stats[player]["3fgp"] = quantize1(100 * cum_stats[player]["3fgm"] /
+                                                        cum_stats[player]["3fga"])
+
         if cum_stats[player]["fta"]:
             cum_stats[player]["ftp"] = quantize1(100 * cum_stats[player]["ftm"] /
                                                        cum_stats[player]["fta"])
@@ -241,7 +245,7 @@ def accumulate_stats(all_stats, per_game):
         if per_game:
             gp = float(cum_stats[player]["gp"])
             for stat in cum_stats[player]:
-                if stat in ("gp", "fgp", "ftp", "ator", "ortg", "drtg", "nrtg"): continue
+                if stat in ("gp", "fgp", "3fgp", "ftp", "ator", "ortg", "drtg", "nrtg"): continue
                 cum_stats[player][stat] = quantize1(cum_stats[player][stat] / gp)
 
     for player in cum_stats:
