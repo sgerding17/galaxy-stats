@@ -277,12 +277,211 @@
     <section class="jump-control">
       <select id="jump-to-game" aria-label="Jump to game">
         <option value="">Select a game...</option>
-        <option value="20260315-jao_league_play-mighty_musubis">2026-03-15 vs Mighty Musubis</option><option value="20260301-jao_league_play-sakura">2026-03-01 vs Sakura</option><option value="20260222-jao_league_play-royals">2026-02-22 vs Royals</option><option value="20260201-jao_league_play-supreme">2026-02-01 vs Supreme</option><option value="20260125-jao_league_play-storm">2026-01-25 vs Storm</option><option value="20260118-jao_league_play-sparks">2026-01-18 vs Sparks</option><option value="20260111-jao_league_play-shooting_stars">2026-01-11 vs Shooting Stars</option><option value="20251207-cbo_exhibition-wla_4">2025-12-07 vs WLA 4</option><option value="20251026-sbyb_league_play-mighty_musubis">2025-10-26 vs Mighty Musubis</option><option value="20251019-vfw_silver_friendship_game-pb_musubis">2025-10-19 vs PB Musubis</option><option value="20251018b-vfw_silver_losers_bracket-mighty_musubis">2025-10-18 (B) vs Mighty Musubis</option><option value="20251018a-vfw_silver_quarterfinals-royals">2025-10-18 (A) vs Royals</option><option value="20251012-sbyb_league_play-red_phoenix">2025-10-12 vs Red Phoenix</option><option value="20251005-sbyb_league_play-royals">2025-10-05 vs Royals</option><option value="20250928-sbyb_league_play-sakura">2025-09-28 vs Sakura</option><option value="20250921-sbyb_league_play-shooting_stars">2025-09-21 vs Shooting Stars</option><option value="20250914-sbyb_league_play-dolphins">2025-09-14 vs Dolphins</option><option value="20250810-hdlvi_pool_b_championship-royals">2025-08-10 vs Royals</option><option value="20250809b-hdlvi_pool_b_pool_play-pb_musubis">2025-08-09 (B) vs PB Musubis</option><option value="20250809a-hdlvi_pool_b_pool_play-cheetahs">2025-08-09 (A) vs Cheetahs</option><option value="20250525b-tigers_bronze_championship-sakura">2025-05-25 (B) vs Sakura</option><option value="20250525a-tigers_bronze_pool_play-sparks">2025-05-25 (A) vs Sparks</option><option value="20250524-tigers_bronze_pool_play-red_phoenix">2025-05-24 vs Red Phoenix</option><option value="20250504-for_silver_championship-mighty_musubis">2025-05-04 vs Mighty Musubis</option><option value="20250503-for_silver_pool_play-pb_musubis">2025-05-03 vs PB Musubis</option><option value="20250502-for_silver_pool_play-red_phoenix">2025-05-02 vs Red Phoenix</option><option value="20250427-wla_white_round_robin-sakura">2025-04-27 vs Sakura</option><option value="20250426b-wla_white_round_robin-red_phoenix">2025-04-26 (B) vs Red Phoenix</option><option value="20250426a-wla_white_round_robin-pb_musubis">2025-04-26 (A) vs PB Musubis</option><option value="20250323-jao_league_play-sparks">2025-03-23 vs Sparks</option><option value="20250322-jao_league_play-cheetahs">2025-03-22 vs Cheetahs</option><option value="20250316-jao_league_play-dolphins">2025-03-16 vs Dolphins</option><option value="20250309-jao_league_play-mighty_musubis">2025-03-09 vs Mighty Musubis</option><option value="20250302-jao_league_play-pb_musubis">2025-03-02 vs PB Musubis</option><option value="20250223-jao_league_play-storm">2025-02-23 vs Storm</option><option value="20250202-jao_league_play-sakura">2025-02-02 vs Sakura</option><option value="20250119b-jao_league_play-shooting_stars">2025-01-19 (B) vs Shooting Stars</option><option value="20250119a-jao_league_play-royals">2025-01-19 (A) vs Royals</option>
+        <option value="20260322-jao_league_play-cheetahs">2026-03-22 vs Cheetahs</option><option value="20260315-jao_league_play-mighty_musubis">2026-03-15 vs Mighty Musubis</option><option value="20260301-jao_league_play-sakura">2026-03-01 vs Sakura</option><option value="20260222-jao_league_play-royals">2026-02-22 vs Royals</option><option value="20260201-jao_league_play-supreme">2026-02-01 vs Supreme</option><option value="20260125-jao_league_play-storm">2026-01-25 vs Storm</option><option value="20260118-jao_league_play-sparks">2026-01-18 vs Sparks</option><option value="20260111-jao_league_play-shooting_stars">2026-01-11 vs Shooting Stars</option><option value="20251207-cbo_exhibition-wla_4">2025-12-07 vs WLA 4</option><option value="20251026-sbyb_league_play-mighty_musubis">2025-10-26 vs Mighty Musubis</option><option value="20251019-vfw_silver_friendship_game-pb_musubis">2025-10-19 vs PB Musubis</option><option value="20251018b-vfw_silver_losers_bracket-mighty_musubis">2025-10-18 (B) vs Mighty Musubis</option><option value="20251018a-vfw_silver_quarterfinals-royals">2025-10-18 (A) vs Royals</option><option value="20251012-sbyb_league_play-red_phoenix">2025-10-12 vs Red Phoenix</option><option value="20251005-sbyb_league_play-royals">2025-10-05 vs Royals</option><option value="20250928-sbyb_league_play-sakura">2025-09-28 vs Sakura</option><option value="20250921-sbyb_league_play-shooting_stars">2025-09-21 vs Shooting Stars</option><option value="20250914-sbyb_league_play-dolphins">2025-09-14 vs Dolphins</option><option value="20250810-hdlvi_pool_b_championship-royals">2025-08-10 vs Royals</option><option value="20250809b-hdlvi_pool_b_pool_play-pb_musubis">2025-08-09 (B) vs PB Musubis</option><option value="20250809a-hdlvi_pool_b_pool_play-cheetahs">2025-08-09 (A) vs Cheetahs</option><option value="20250525b-tigers_bronze_championship-sakura">2025-05-25 (B) vs Sakura</option><option value="20250525a-tigers_bronze_pool_play-sparks">2025-05-25 (A) vs Sparks</option><option value="20250524-tigers_bronze_pool_play-red_phoenix">2025-05-24 vs Red Phoenix</option><option value="20250504-for_silver_championship-mighty_musubis">2025-05-04 vs Mighty Musubis</option><option value="20250503-for_silver_pool_play-pb_musubis">2025-05-03 vs PB Musubis</option><option value="20250502-for_silver_pool_play-red_phoenix">2025-05-02 vs Red Phoenix</option><option value="20250427-wla_white_round_robin-sakura">2025-04-27 vs Sakura</option><option value="20250426b-wla_white_round_robin-red_phoenix">2025-04-26 (B) vs Red Phoenix</option><option value="20250426a-wla_white_round_robin-pb_musubis">2025-04-26 (A) vs PB Musubis</option><option value="20250323-jao_league_play-sparks">2025-03-23 vs Sparks</option><option value="20250316-jao_league_play-dolphins">2025-03-16 vs Dolphins</option><option value="20250309-jao_league_play-mighty_musubis">2025-03-09 vs Mighty Musubis</option><option value="20250302-jao_league_play-pb_musubis">2025-03-02 vs PB Musubis</option><option value="20250223-jao_league_play-storm">2025-02-23 vs Storm</option><option value="20250202-jao_league_play-sakura">2025-02-02 vs Sakura</option><option value="20250119b-jao_league_play-shooting_stars">2025-01-19 (B) vs Shooting Stars</option><option value="20250119a-jao_league_play-royals">2025-01-19 (A) vs Royals</option>
       </select>
     </section>
 
     <section>
       
+    <article class="game" id="20260322-jao_league_play-cheetahs">
+      <header class="game-header">
+        <div>
+          <h2>2026-03-22 vs. Cheetahs</h2>
+          <p>JAO League Play</p>
+        </div>
+        <div class="scoreboard">
+          <div><span>Galaxy</span><strong>33</strong></div>
+          <div><span>Cheetahs</span><strong>34</strong></div>
+        </div>
+      </header>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="sticky">Player</th>
+              <th>MIN</th>
+              <th>FG</th>
+              <th>FG%</th>
+              <th>3FG</th>
+              <th>3FG%</th>
+              <th>FT</th>
+              <th>FT%</th>
+              <th>OR</th>
+              <th>DR</th>
+              <th>REB</th>
+              <th>AST</th>
+              <th>STL</th>
+              <th>BLK</th>
+              <th>TO</th>
+              <th>+/-</th>
+              <th>PTS</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td class="sticky">Long</td>
+              <td>30</td>
+              <td>1-7</td>
+              <td>14.3</td>
+              <td>0-0</td>
+              <td>-</td>
+              <td>0-2</td>
+              <td>0.0</td>
+              <td>3</td>
+              <td>2</td>
+              <td>5</td>
+              <td>1</td>
+              <td>3</td>
+              <td>1</td>
+              <td>3</td>
+              <td>-2</td>
+              <td><strong>2</strong></td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Laurel</td>
+              <td>33</td>
+              <td>2-9</td>
+              <td>22.2</td>
+              <td>0-0</td>
+              <td>-</td>
+              <td>0-2</td>
+              <td>0.0</td>
+              <td>1</td>
+              <td>3</td>
+              <td>4</td>
+              <td>0</td>
+              <td>1</td>
+              <td>2</td>
+              <td>2</td>
+              <td>+1</td>
+              <td><strong>4</strong></td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Iwai</td>
+              <td>34</td>
+              <td>3-8</td>
+              <td>37.5</td>
+              <td>1-3</td>
+              <td>33.3</td>
+              <td>0-0</td>
+              <td>-</td>
+              <td>0</td>
+              <td>5</td>
+              <td>5</td>
+              <td>2</td>
+              <td>4</td>
+              <td>1</td>
+              <td>6</td>
+              <td>-1</td>
+              <td><strong>7</strong></td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Saito</td>
+              <td>26</td>
+              <td>1-4</td>
+              <td>25.0</td>
+              <td>0-0</td>
+              <td>-</td>
+              <td>0-0</td>
+              <td>-</td>
+              <td>0</td>
+              <td>2</td>
+              <td>2</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>2</td>
+              <td>+3</td>
+              <td><strong>2</strong></td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">DeMarti</td>
+              <td>39</td>
+              <td>7-13</td>
+              <td>53.8</td>
+              <td>0-1</td>
+              <td>0.0</td>
+              <td>1-1</td>
+              <td>100.0</td>
+              <td>4</td>
+              <td>10</td>
+              <td>14</td>
+              <td>4</td>
+              <td>5</td>
+              <td>4</td>
+              <td>6</td>
+              <td>+1</td>
+              <td><strong>15</strong></td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Yosy</td>
+              <td>38</td>
+              <td>1-9</td>
+              <td>11.1</td>
+              <td>0-0</td>
+              <td>-</td>
+              <td>1-2</td>
+              <td>50.0</td>
+              <td>5</td>
+              <td>1</td>
+              <td>6</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>9</td>
+              <td>-7</td>
+              <td><strong>3</strong></td>
+            </tr>
+            
+            <tr class="totals">
+              <td class="sticky">Galaxy</td>
+              <td>-</td>
+              <td>15-50</td>
+              <td>30.0</td>
+              <td>1-4</td>
+              <td>25.0</td>
+              <td>2-7</td>
+              <td>28.6</td>
+              <td>16</td>
+              <td>25</td>
+              <td>41</td>
+              <td>7</td>
+              <td>14</td>
+              <td>8</td>
+              <td>28</td>
+              <td>-</td>
+              <td><strong>33</strong></td>
+            </tr>
+            <tr class="totals opponent">
+              <td class="sticky">Opponent</td>
+              <td>-</td>
+              <td>16-57</td>
+              <td>28.1</td>
+              <td>2-3</td>
+              <td>66.7</td>
+              <td>0-2</td>
+              <td>0.0</td>
+              <td>17</td>
+              <td>19</td>
+              <td>36</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>22</td>
+              <td>-</td>
+              <td><strong>34</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+    
     <article class="game" id="20260315-jao_league_play-mighty_musubis">
       <header class="game-header">
         <div>
@@ -7193,205 +7392,6 @@
       </div>
     </article>
     
-    <article class="game" id="20250322-jao_league_play-cheetahs">
-      <header class="game-header">
-        <div>
-          <h2>2025-03-22 vs. Cheetahs</h2>
-          <p>JAO League Play</p>
-        </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>33</strong></div>
-          <div><span>Cheetahs</span><strong>34</strong></div>
-        </div>
-      </header>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th class="sticky">Player</th>
-              <th>MIN</th>
-              <th>FG</th>
-              <th>FG%</th>
-              <th>3FG</th>
-              <th>3FG%</th>
-              <th>FT</th>
-              <th>FT%</th>
-              <th>OR</th>
-              <th>DR</th>
-              <th>REB</th>
-              <th>AST</th>
-              <th>STL</th>
-              <th>BLK</th>
-              <th>TO</th>
-              <th>+/-</th>
-              <th>PTS</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr>
-              <td class="sticky">Long</td>
-              <td>30</td>
-              <td>1-7</td>
-              <td>14.3</td>
-              <td>0-0</td>
-              <td>-</td>
-              <td>0-2</td>
-              <td>0.0</td>
-              <td>3</td>
-              <td>2</td>
-              <td>5</td>
-              <td>1</td>
-              <td>3</td>
-              <td>1</td>
-              <td>3</td>
-              <td>-2</td>
-              <td><strong>2</strong></td>
-            </tr>
-            
-            <tr>
-              <td class="sticky">Laurel</td>
-              <td>33</td>
-              <td>2-9</td>
-              <td>22.2</td>
-              <td>0-0</td>
-              <td>-</td>
-              <td>0-2</td>
-              <td>0.0</td>
-              <td>1</td>
-              <td>3</td>
-              <td>4</td>
-              <td>0</td>
-              <td>1</td>
-              <td>2</td>
-              <td>2</td>
-              <td>+1</td>
-              <td><strong>4</strong></td>
-            </tr>
-            
-            <tr>
-              <td class="sticky">Iwai</td>
-              <td>34</td>
-              <td>3-8</td>
-              <td>37.5</td>
-              <td>1-3</td>
-              <td>33.3</td>
-              <td>0-0</td>
-              <td>-</td>
-              <td>0</td>
-              <td>5</td>
-              <td>5</td>
-              <td>2</td>
-              <td>4</td>
-              <td>1</td>
-              <td>6</td>
-              <td>-1</td>
-              <td><strong>7</strong></td>
-            </tr>
-            
-            <tr>
-              <td class="sticky">Saito</td>
-              <td>26</td>
-              <td>1-4</td>
-              <td>25.0</td>
-              <td>0-0</td>
-              <td>-</td>
-              <td>0-0</td>
-              <td>-</td>
-              <td>0</td>
-              <td>2</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>2</td>
-              <td>+3</td>
-              <td><strong>2</strong></td>
-            </tr>
-            
-            <tr>
-              <td class="sticky">DeMarti</td>
-              <td>39</td>
-              <td>7-13</td>
-              <td>53.8</td>
-              <td>0-1</td>
-              <td>0.0</td>
-              <td>1-1</td>
-              <td>100.0</td>
-              <td>4</td>
-              <td>10</td>
-              <td>14</td>
-              <td>4</td>
-              <td>5</td>
-              <td>4</td>
-              <td>6</td>
-              <td>+1</td>
-              <td><strong>15</strong></td>
-            </tr>
-            
-            <tr>
-              <td class="sticky">Yosy</td>
-              <td>38</td>
-              <td>1-9</td>
-              <td>11.1</td>
-              <td>0-0</td>
-              <td>-</td>
-              <td>1-2</td>
-              <td>50.0</td>
-              <td>5</td>
-              <td>1</td>
-              <td>6</td>
-              <td>0</td>
-              <td>1</td>
-              <td>0</td>
-              <td>9</td>
-              <td>-7</td>
-              <td><strong>3</strong></td>
-            </tr>
-            
-            <tr class="totals">
-              <td class="sticky">Galaxy</td>
-              <td>-</td>
-              <td>15-50</td>
-              <td>30.0</td>
-              <td>1-4</td>
-              <td>25.0</td>
-              <td>2-7</td>
-              <td>28.6</td>
-              <td>16</td>
-              <td>25</td>
-              <td>41</td>
-              <td>7</td>
-              <td>14</td>
-              <td>8</td>
-              <td>28</td>
-              <td>-</td>
-              <td><strong>33</strong></td>
-            </tr>
-            <tr class="totals opponent">
-              <td class="sticky">Opponent</td>
-              <td>-</td>
-              <td>16-57</td>
-              <td>28.1</td>
-              <td>2-3</td>
-              <td>66.7</td>
-              <td>0-2</td>
-              <td>0.0</td>
-              <td>17</td>
-              <td>19</td>
-              <td>36</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>22</td>
-              <td>-</td>
-              <td><strong>34</strong></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </article>
-    
     <article class="game" id="20250316-jao_league_play-dolphins">
       <header class="game-header">
         <div>
@@ -9523,6 +9523,25 @@
           </thead>
           <tbody>
     <tr>
+      <td class="sticky">Cheetahs</td>
+      <td>2026-03-22</td>
+      <td>L 33-34</td>
+      <td>-</td>
+      <td>15-50</td>
+      <td>1-4</td>
+      <td>2-7</td>
+      <td>16</td>
+      <td>25</td>
+      <td>41</td>
+      <td>7</td>
+      <td>14</td>
+      <td>8</td>
+      <td>28</td>
+      <td>-</td>
+      <td>33</td>
+    </tr>
+    
+    <tr>
       <td class="sticky">Mighty Musubis</td>
       <td>2026-03-15</td>
       <td>L 26-30</td>
@@ -10093,25 +10112,6 @@
     </tr>
     
     <tr>
-      <td class="sticky">Cheetahs</td>
-      <td>2025-03-22</td>
-      <td>L 33-34</td>
-      <td>-</td>
-      <td>15-50</td>
-      <td>1-4</td>
-      <td>2-7</td>
-      <td>16</td>
-      <td>25</td>
-      <td>41</td>
-      <td>7</td>
-      <td>14</td>
-      <td>8</td>
-      <td>28</td>
-      <td>-</td>
-      <td>33</td>
-    </tr>
-    
-    <tr>
       <td class="sticky">Dolphins</td>
       <td>2025-03-16</td>
       <td>L 15-23</td>
@@ -10273,6 +10273,25 @@
             </tr>
           </thead>
           <tbody>
+    <tr>
+      <td class="sticky">Cheetahs</td>
+      <td>2026-03-22</td>
+      <td>L 33-34</td>
+      <td>30</td>
+      <td>1-7</td>
+      <td>0-0</td>
+      <td>0-2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>-2</td>
+      <td>2</td>
+    </tr>
+    
     <tr>
       <td class="sticky">Mighty Musubis</td>
       <td>2026-03-15</td>
@@ -10806,25 +10825,6 @@
     </tr>
     
     <tr>
-      <td class="sticky">Cheetahs</td>
-      <td>2025-03-22</td>
-      <td>L 33-34</td>
-      <td>30</td>
-      <td>1-7</td>
-      <td>0-0</td>
-      <td>0-2</td>
-      <td>3</td>
-      <td>2</td>
-      <td>5</td>
-      <td>1</td>
-      <td>3</td>
-      <td>1</td>
-      <td>3</td>
-      <td>-2</td>
-      <td>2</td>
-    </tr>
-    
-    <tr>
       <td class="sticky">Dolphins</td>
       <td>2025-03-16</td>
       <td>L 15-23</td>
@@ -10986,6 +10986,25 @@
             </tr>
           </thead>
           <tbody>
+    <tr>
+      <td class="sticky">Cheetahs</td>
+      <td>2026-03-22</td>
+      <td>L 33-34</td>
+      <td>33</td>
+      <td>2-9</td>
+      <td>0-0</td>
+      <td>0-2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+      <td>+1</td>
+      <td>4</td>
+    </tr>
+    
     <tr>
       <td class="sticky">Mighty Musubis</td>
       <td>2026-03-15</td>
@@ -11554,25 +11573,6 @@
       <td>2</td>
       <td>-4</td>
       <td>1</td>
-    </tr>
-    
-    <tr>
-      <td class="sticky">Cheetahs</td>
-      <td>2025-03-22</td>
-      <td>L 33-34</td>
-      <td>33</td>
-      <td>2-9</td>
-      <td>0-0</td>
-      <td>0-2</td>
-      <td>1</td>
-      <td>3</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2</td>
-      <td>+1</td>
-      <td>4</td>
     </tr>
     
     <tr>
@@ -12432,6 +12432,25 @@
           </thead>
           <tbody>
     <tr>
+      <td class="sticky">Cheetahs</td>
+      <td>2026-03-22</td>
+      <td>L 33-34</td>
+      <td>34</td>
+      <td>3-8</td>
+      <td>1-3</td>
+      <td>0-0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>5</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>6</td>
+      <td>-1</td>
+      <td>7</td>
+    </tr>
+    
+    <tr>
       <td class="sticky">Mighty Musubis</td>
       <td>2026-03-15</td>
       <td>L 26-30</td>
@@ -12961,25 +12980,6 @@
       <td>6</td>
       <td>-12</td>
       <td>1</td>
-    </tr>
-    
-    <tr>
-      <td class="sticky">Cheetahs</td>
-      <td>2025-03-22</td>
-      <td>L 33-34</td>
-      <td>34</td>
-      <td>3-8</td>
-      <td>1-3</td>
-      <td>0-0</td>
-      <td>0</td>
-      <td>5</td>
-      <td>5</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>6</td>
-      <td>-1</td>
-      <td>7</td>
     </tr>
     
     <tr>
@@ -13744,6 +13744,25 @@
           </thead>
           <tbody>
     <tr>
+      <td class="sticky">Cheetahs</td>
+      <td>2026-03-22</td>
+      <td>L 33-34</td>
+      <td>26</td>
+      <td>1-4</td>
+      <td>0-0</td>
+      <td>0-0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>+3</td>
+      <td>2</td>
+    </tr>
+    
+    <tr>
       <td class="sticky">Mighty Musubis</td>
       <td>2026-03-15</td>
       <td>L 26-30</td>
@@ -14314,25 +14333,6 @@
     </tr>
     
     <tr>
-      <td class="sticky">Cheetahs</td>
-      <td>2025-03-22</td>
-      <td>L 33-34</td>
-      <td>26</td>
-      <td>1-4</td>
-      <td>0-0</td>
-      <td>0-0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>2</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>+3</td>
-      <td>2</td>
-    </tr>
-    
-    <tr>
       <td class="sticky">Dolphins</td>
       <td>2025-03-16</td>
       <td>L 15-23</td>
@@ -14475,6 +14475,25 @@
             </tr>
           </thead>
           <tbody>
+    <tr>
+      <td class="sticky">Cheetahs</td>
+      <td>2026-03-22</td>
+      <td>L 33-34</td>
+      <td>39</td>
+      <td>7-13</td>
+      <td>0-1</td>
+      <td>1-1</td>
+      <td>4</td>
+      <td>10</td>
+      <td>14</td>
+      <td>4</td>
+      <td>5</td>
+      <td>4</td>
+      <td>6</td>
+      <td>+1</td>
+      <td>15</td>
+    </tr>
+    
     <tr>
       <td class="sticky">Mighty Musubis</td>
       <td>2026-03-15</td>
@@ -15008,25 +15027,6 @@
     </tr>
     
     <tr>
-      <td class="sticky">Cheetahs</td>
-      <td>2025-03-22</td>
-      <td>L 33-34</td>
-      <td>39</td>
-      <td>7-13</td>
-      <td>0-1</td>
-      <td>1-1</td>
-      <td>4</td>
-      <td>10</td>
-      <td>14</td>
-      <td>4</td>
-      <td>5</td>
-      <td>4</td>
-      <td>6</td>
-      <td>+1</td>
-      <td>15</td>
-    </tr>
-    
-    <tr>
       <td class="sticky">Dolphins</td>
       <td>2025-03-16</td>
       <td>L 15-23</td>
@@ -15188,6 +15188,25 @@
             </tr>
           </thead>
           <tbody>
+    <tr>
+      <td class="sticky">Cheetahs</td>
+      <td>2026-03-22</td>
+      <td>L 33-34</td>
+      <td>38</td>
+      <td>1-9</td>
+      <td>0-0</td>
+      <td>1-2</td>
+      <td>5</td>
+      <td>1</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>9</td>
+      <td>-7</td>
+      <td>3</td>
+    </tr>
+    
     <tr>
       <td class="sticky">Mighty Musubis</td>
       <td>2026-03-15</td>
@@ -15737,25 +15756,6 @@
       <td>1</td>
       <td>-5</td>
       <td>2</td>
-    </tr>
-    
-    <tr>
-      <td class="sticky">Cheetahs</td>
-      <td>2025-03-22</td>
-      <td>L 33-34</td>
-      <td>38</td>
-      <td>1-9</td>
-      <td>0-0</td>
-      <td>1-2</td>
-      <td>5</td>
-      <td>1</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>9</td>
-      <td>-7</td>
-      <td>3</td>
     </tr>
     
     <tr>
