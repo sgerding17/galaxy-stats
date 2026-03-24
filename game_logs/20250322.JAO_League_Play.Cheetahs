@@ -1,0 +1,293 @@
+c 2000
+ig 21 25 2 22 5
+t g
+fga 5
+r o
+s 22
+fgm 22
+s 22
+fga 22
+r o
+fgm o
+fga 2
+r o
+fga o
+b 5
+r 22
+3fga 22
+r o
+fga 2
+r o
+fga o
+r o
+fga o
+b 22
+r o
+3fga o
+r 25
+fga 25
+r o
+fgm o
+oj 25 -> o
+fga o
+r 22
+fgm 5
+a 22
+fga o
+r o
+fgm o
+to 22
+s 25
+fga 25
+r o
+fga o
+r o
+fga o
+b 22
+r 22
+fga 21
+r 22
+fga 22
+r 25
+oj 25 -> g
+c 1430
+ig 1 2 5 22 25
+fga 22
+r o
+s 5
+to 22
+fga o
+r o
+3fgm o
+fgm 25
+fgm o
+oj 1 -> o
+s 2
+to 5
+s 5
+c 1145
+ig 1 2 5 22 21
+fga 2
+r g
+fgm 22
+a 5
+fga o
+r 21
+fgm 22
+c 1030
+ig 5 25 2 21 1
+fgm o
+to 25
+fga o
+r 1
+oj 1 -> g
+c 0945
+ig 22 25 1 2 21
+fga 1
+r g
+fga 25
+r 1
+fgm 21
+a 1
+to 22
+s 22
+to 21
+s 1
+fgm 22
+fga o
+b 22
+r 22
+to 25
+fga o
+r 22
+fga 25
+r 1
+fta 1
+c 0615
+ig 5 1 22 25 21
+fta 1
+r 22
+fga 22
+r 25
+fga 25
+r 25
+fga 5
+r o
+fga o
+r 5
+to 5
+s 5
+fga 1
+r 1
+to 1
+fga o
+r o
+fga 21
+r o
+fga o
+r 5
+c 0400
+ig 22 21 5 2 25
+fga 25
+r o
+to 25
+fga o
+r o
+fgm o
+to 5
+s 22
+fgm 22
+ftm 22
+to 25
+fga o
+b 2
+r 22
+fga 21
+r 22
+fgm 22
+fga o
+r 5
+to 5
+fga o
+r 5
+to 22
+c 0030
+ig 1 2 5 22 25
+fga o
+b 2
+r 22
+oj 22 -> o
+fga o
+r o
+s 1
+c 0000
+c 2000 -> g
+ig 5 25 22 2 1
+fga 5
+r o
+fgm o
+fga 25
+j -> o
+fga o
+r o
+fga 2
+j -> g
+fga 22
+j -> o
+fga o
+r 22
+fga 2
+r o
+3fgm o
+3fgm 5
+fga o
+r 1
+to 25
+fgm o
+fga 2
+r o
+c 1445
+ig 1 25 25 21 22
+to 1
+fga 1
+r g
+fga 2
+r o
+fga o
+r 2
+to 2
+fgm o
+c 1230
+ig 1 5 21 22 25
+fgm 1
+a 22
+fga o
+r o
+fta o
+fta o
+r o
+s 1
+fga 1
+r 25
+to 25
+fgm o
+to 25
+fga o
+r 21
+oj 1 -> g
+c 1015
+ig 25 5 21 22 2
+fga 25
+r 2
+fta 2
+fta 2
+r o
+c 0900
+ig 1 2 5 21 22
+fga o
+r 2
+to 2
+dj 2 -> o
+fgm o
+to 5
+s 22
+to 21
+fga o
+b 22
+r o
+fga o
+r o
+c 0645
+ig 1 2 5 22 25
+fga o
+r g
+3fga 5
+r o
+fga o
+r 2
+oj 2 -> g
+3fga 5
+r o
+fgm o
+fgm 22
+a 5
+fga o
+r o
+fga o
+r g
+to 5
+fga o
+r o
+fga o
+b 1
+r 5
+ftm 25
+fta 25
+r 22
+fgm 5
+a 22
+s 5
+fga 1
+r o
+fga o
+r o
+fgm o
+fgm 2
+fga o
+r o
+fga o
+r 22
+fga 1
+r 25
+to 25
+fga o
+r 22
+c 0145
+ig 22 5 1 21 2
+fgm 2
+a 22
+c 0045
+ig 1 2 21 22 25
+fgm o
+oj 22 -> o
+c 0000
