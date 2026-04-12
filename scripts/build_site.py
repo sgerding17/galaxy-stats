@@ -111,6 +111,7 @@ def team_stats_section(game):
         team_stat_row("Rebounds", g['r'], o['r']),
         team_stat_row("Offensive", g['or'], o['or'], indent=True),
         team_stat_row("Defensive", g['dr'], o['dr'], indent=True),
+        team_stat_row("2nd Chance Pts", g['scp'], o['scp']),
         team_stat_row("Assists", g['a'], "-"),
         team_stat_row("Steals", g['s'], "-"),
         team_stat_row("Blocks", g['b'], "-"),

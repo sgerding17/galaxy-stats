@@ -74,6 +74,7 @@ def count_stats(events):
     last_event = []
     period = 1
     pot_for = ""
+    scp_for = ""
 
     assert events[0][0] == "c", "LINE {}: The first event must be a clock".format(LINE)
     for (line, event) in enumerate(events):
@@ -141,6 +142,8 @@ def count_stats(events):
                 scoring_team = "o" if player == "o" else "g"
                 if pot_for == scoring_team or missing_opp_turnover:
                     stats[scoring_team]["pot"] += abs(delta_score)
+                if scp_for == scoring_team:
+                    stats[scoring_team]["scp"] += abs(delta_score)
                 for combo in all_combos(in_game):
                     stats[combo]["pm"] += delta_score
                     stats[combo]["pf"] += (delta_score if delta_score > 0 else 0)
@@ -161,6 +164,8 @@ def count_stats(events):
             elif event_type == "r":
                 stat = get_rebound_type(player, last_event)
                 possession = "o" if player == "o" else "g"
+                if stat == "or":
+                    scp_for = possession
 
             elif event_type == "a":
                 assert last_event[0] in ("fgm", "3fgm"), "LINE {}: Assist did not follow a made shot (last_event = {})".format(LINE, " ".join(last_event))
@@ -194,6 +199,8 @@ def count_stats(events):
 
         if possession != pot_for:
             pot_for = ""
+        if possession != scp_for:
+            scp_for = ""
 
         last_event = event
 
