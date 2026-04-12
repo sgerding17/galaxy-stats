@@ -36,6 +36,8 @@ def compute_game_flow(path):
 
         # Detect half boundary: clock resets (goes up instead of down)
         if prev_clock_sec is not None and c_sec > prev_clock_sec:
+            # Anchor the margin at the end of the previous half
+            points.append(((half + 1) * HALF_MINUTES, margin))
             half += 1
 
         prev_clock_sec = c_sec
