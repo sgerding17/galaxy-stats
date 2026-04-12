@@ -77,6 +77,8 @@ def team_stat_row(label, galaxy_val, opp_val, indent=False, lower_is_better=Fals
     no_comparison = g_num is None or o_num is None
     if not no_comparison and (g_num + o_num) > 0:
         g_pct = round(100 * g_num / (g_num + o_num))
+        if lower_is_better:
+            g_pct = 100 - g_pct
         o_pct = 100 - g_pct
     else:
         g_pct = o_pct = 50
@@ -113,6 +115,7 @@ def team_stats_section(game):
         team_stat_row("Steals", g['s'], "-"),
         team_stat_row("Blocks", g['b'], "-"),
         team_stat_row("Turnovers", g['to'], o['to'], lower_is_better=True),
+        team_stat_row("Points Off", g['pot'], o['pot'], indent=True),
     ])
     return f"""
     <details class="team-stats">

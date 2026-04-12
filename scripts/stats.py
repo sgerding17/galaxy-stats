@@ -73,6 +73,7 @@ def count_stats(events):
     pos_arrow = ""
     last_event = []
     period = 1
+    pot_for = ""
 
     assert events[0][0] == "c", "LINE {}: The first event must be a clock".format(LINE)
     for (line, event) in enumerate(events):
@@ -115,9 +116,11 @@ def count_stats(events):
             assert awarded_to == pos_arrow or not awarded_to, "LINE {}: Possession arrow ({}) does not match awarded-to ({})".format(LINE, pos_arrow, awarded_to)
             if event_type == "oj" and pos_arrow == "o":
                 stats[player]["to"] += 1
+                pot_for = "o"
             elif event_type == "dj" and pos_arrow == "g":
                 stats[player]["s"] += 1
                 stats["o"]["to"] += 1
+                pot_for = "g"
             if event_type == "oj":
                 if possession != "g": missing_opp_turnover = True
             elif event_type == "dj":
@@ -130,7 +133,14 @@ def count_stats(events):
             assert len(event) == 2, "LINE {}: Invalid event: {}".format(LINE, " ".join(event))
             player = event[1]
             if event_type in ("3fgm", "fgm", "ftm"):
+                if player == "o":
+                    assert possession == "o", "LINE {}: Opponent shot without possession".format(LINE)
+                else:
+                    if possession != "g": missing_opp_turnover = True
                 delta_score = get_delta_score(event_type, player)
+                scoring_team = "o" if player == "o" else "g"
+                if pot_for == scoring_team or missing_opp_turnover:
+                    stats[scoring_team]["pot"] += abs(delta_score)
                 for combo in all_combos(in_game):
                     stats[combo]["pm"] += delta_score
                     stats[combo]["pf"] += (delta_score if delta_score > 0 else 0)
@@ -139,10 +149,6 @@ def count_stats(events):
                     stats["o"][f"h{period}_p"] += -delta_score
                 else:
                     stats["g"][f"h{period}_p"] += delta_score
-                if player == "o":
-                    assert possession == "o", "LINE {}: Opponent shot without possession".format(LINE)
-                else:
-                    if possession != "g": missing_opp_turnover = True
                 if not has_upcoming_freethrow(upcoming_events, player):
                     possession = "g" if player == "o" else "o"
 
@@ -163,10 +169,12 @@ def count_stats(events):
                 assert possession == "o", "LINE {}: Galaxy steal without opponent possession".format(LINE)
                 stats["o"]["to"] += 1
                 possession = "g"
+                pot_for = "g"
 
             elif event_type == "to":
                 if possession != "g": missing_opp_turnover = True
                 possession = "o"
+                pot_for = "o"
 
             stats[player][stat] += 1
 
@@ -183,6 +191,9 @@ def count_stats(events):
             for combo in all_combos(in_game):
                 stats[combo][stat] += 1
         last_pos = possession
+
+        if possession != pot_for:
+            pot_for = ""
 
         last_event = event
 
