@@ -50,6 +50,88 @@ def played_in_game(game_stats, player):
     return game_stats[player]["sec"] > 0
 
 
+def team_stat_row(label, galaxy_val, opp_val, indent=False, lower_is_better=False,
+                  compare=None):
+    """Generate a single row for the team stats comparison table.
+    compare: optional (g_num, o_num) tuple to override comparison values."""
+    g_str = str(galaxy_val)
+    o_str = str(opp_val)
+    # Determine which side to bold
+    if compare is not None:
+        g_num, o_num = compare
+    else:
+        try:
+            g_num = float(galaxy_val) if galaxy_val != "-" else None
+            o_num = float(opp_val) if opp_val != "-" else None
+        except (ValueError, TypeError):
+            g_num, o_num = None, None
+    if g_num is not None and o_num is not None and g_num != o_num:
+        if lower_is_better:
+            g_bold = g_num < o_num
+        else:
+            g_bold = g_num > o_num
+        o_bold = not g_bold
+    else:
+        g_bold = o_bold = False
+    # Compute bar widths
+    no_comparison = g_num is None or o_num is None
+    if not no_comparison and (g_num + o_num) > 0:
+        g_pct = round(100 * g_num / (g_num + o_num))
+        o_pct = 100 - g_pct
+    else:
+        g_pct = o_pct = 50
+    g_cell = f"<strong>{g_str}</strong>" if g_bold else g_str
+    o_cell = f"<strong>{o_str}</strong>" if o_bold else o_str
+    indent_class = ' class="ts-indent"' if indent else ""
+    if no_comparison:
+        bar_html = '<span class="bar-na" style="width:100%"></span>'
+    else:
+        bar_html = f'<span class="bar-g" style="width:{g_pct}%"></span><span class="bar-o" style="width:{o_pct}%"></span>'
+    return f"""
+      <tr>
+        <td{indent_class}>{label}</td>
+        <td class="ts-val">{g_cell}</td>
+        <td class="ts-bar">{bar_html}</td>
+        <td class="ts-val">{o_cell}</td>
+      </tr>"""
+
+
+def team_stats_section(game):
+    g = game["stats"]["g"]
+    o = game["stats"]["o"]
+    rows = "".join([
+        team_stat_row("FG", f"{g['fgm']}-{g['fga']}", f"{o['fgm']}-{o['fga']}", compare=(g['fga'], o['fga'])),
+        team_stat_row("Field Goal %", percent(g['fgm'], g['fga']), percent(o['fgm'], o['fga'])),
+        team_stat_row("3PT", f"{g['3fgm']}-{g['3fga']}", f"{o['3fgm']}-{o['3fga']}", compare=(g['3fga'], o['3fga'])),
+        team_stat_row("Three Point %", percent(g['3fgm'], g['3fga']), percent(o['3fgm'], o['3fga'])),
+        team_stat_row("FT", f"{g['ftm']}-{g['fta']}", f"{o['ftm']}-{o['fta']}", compare=(g['fta'], o['fta'])),
+        team_stat_row("Free Throw %", percent(g['ftm'], g['fta']), percent(o['ftm'], o['fta'])),
+        team_stat_row("Rebounds", g['r'], o['r']),
+        team_stat_row("Offensive", g['or'], o['or'], indent=True),
+        team_stat_row("Defensive", g['dr'], o['dr'], indent=True),
+        team_stat_row("Assists", g['a'], "-"),
+        team_stat_row("Steals", g['s'], "-"),
+        team_stat_row("Blocks", g['b'], "-"),
+        team_stat_row("Turnovers", g['to'], o['to'], lower_is_better=True),
+    ])
+    return f"""
+    <details class="team-stats">
+      <summary>Team Stats</summary>
+      <table class="ts-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="ts-val">Galaxy</th>
+            <th class="ts-bar"></th>
+            <th class="ts-val">{html.escape(game['opponent'])}</th>
+          </tr>
+        </thead>
+        <tbody>{rows}
+        </tbody>
+      </table>
+    </details>"""
+
+
 def box_score_table(game):
     game_id = game["id"]
     rows = []
@@ -161,6 +243,7 @@ def box_score_table(game):
           </tbody>
         </table>
       </div>
+      {team_stats_section(game)}
     </article>
     """
 
@@ -595,6 +678,66 @@ def render_html(games, cumulative_stats, per_game_stats):
       font-weight: 700;
       color: var(--accent);
       margin-bottom: 8px;
+    }}
+    .team-stats {{
+      border-top: 1px solid var(--line);
+      padding: 10px 14px;
+    }}
+    .team-stats summary {{
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }}
+    .ts-table {{
+      width: 100%;
+      max-width: 520px;
+      border-collapse: collapse;
+    }}
+    .ts-table th,
+    .ts-table td {{
+      border-bottom: 1px solid #ebeff6;
+      padding: 6px 4px;
+      white-space: nowrap;
+    }}
+    .ts-table td:first-child,
+    .ts-table th:first-child {{
+      text-align: left;
+      font-weight: 500;
+      color: var(--muted);
+      width: auto;
+    }}
+    .ts-table .ts-indent {{
+      padding-left: 20px;
+      font-size: 0.85rem;
+    }}
+    .ts-val {{
+      text-align: center;
+      width: 60px;
+      min-width: 60px;
+    }}
+    .ts-bar {{
+      width: 100px;
+      min-width: 80px;
+      padding: 0 2px;
+      vertical-align: middle;
+    }}
+    .ts-bar span {{
+      display: inline-block;
+      height: 8px;
+      border-radius: 4px;
+    }}
+    .bar-g {{
+      background: var(--accent);
+      border-radius: 4px 0 0 4px;
+    }}
+    .bar-o {{
+      background: #c5d0e4;
+      border-radius: 0 4px 4px 0;
+    }}
+    .bar-na {{
+      background: #e0e4ec;
+      border-radius: 4px;
     }}
     @media (max-width: 720px) {{
       .shell {{ padding: 10px; }}
