@@ -1,6 +1,7 @@
 """AUTOGENTERATED BY CODEX: edit with care."""
 
 import html
+import math
 import os
 from datetime import datetime
 
@@ -73,12 +74,15 @@ def team_stat_row(label, galaxy_val, opp_val, indent=False, lower_is_better=Fals
         o_bold = not g_bold
     else:
         g_bold = o_bold = False
-    # Compute bar widths
+    # Compute bar widths with sigmoid stretch to amplify mid-range differences
     no_comparison = g_num is None or o_num is None
     if not no_comparison and (g_num + o_num) > 0:
-        g_pct = round(100 * g_num / (g_num + o_num))
+        g_pct = 100 * g_num / (g_num + o_num)
         if lower_is_better:
             g_pct = 100 - g_pct
+        # Map [0,100] -> [-6,6], apply sigmoid, map back to [0,100]
+        x = (g_pct - 50) / 50 * 6
+        g_pct = round(100 / (1 + math.exp(-x)))
         o_pct = 100 - g_pct
     else:
         g_pct = o_pct = 50
