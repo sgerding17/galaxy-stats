@@ -62,21 +62,21 @@ def box_score_table(game):
             <tr>
               <td class="sticky">{players[player]}</td>
               <td>{s['min']}</td>
+              <td><strong>{s['p']}</strong></td>
               <td>{s['fgm']}-{s['fga']}</td>
               <td>{percent(s['fgm'], s['fga'])}</td>
               <td>{s['3fgm']}-{s['3fga']}</td>
               <td>{percent(s['3fgm'], s['3fga'])}</td>
               <td>{s['ftm']}-{s['fta']}</td>
               <td>{percent(s['ftm'], s['fta'])}</td>
-              <td>{s['or']}</td>
-              <td>{s['dr']}</td>
               <td>{s['r']}</td>
               <td>{s['a']}</td>
+              <td>{s['to']}</td>
               <td>{s['s']}</td>
               <td>{s['b']}</td>
-              <td>{s['to']}</td>
+              <td>{s['or']}</td>
+              <td>{s['dr']}</td>
               <td>{s['pm']:+d}</td>
-              <td><strong>{s['p']}</strong></td>
             </tr>
             """
         )
@@ -101,21 +101,21 @@ def box_score_table(game):
             <tr>
               <th class="sticky">Player</th>
               <th>MIN</th>
+              <th>PTS</th>
               <th>FG</th>
               <th>FG%</th>
               <th>3FG</th>
               <th>3FG%</th>
               <th>FT</th>
               <th>FT%</th>
-              <th>OR</th>
-              <th>DR</th>
               <th>REB</th>
               <th>AST</th>
+              <th>TO</th>
               <th>STL</th>
               <th>BLK</th>
-              <th>TO</th>
+              <th>OR</th>
+              <th>DR</th>
               <th>+/-</th>
-              <th>PTS</th>
             </tr>
           </thead>
           <tbody>
@@ -123,40 +123,40 @@ def box_score_table(game):
             <tr class="totals">
               <td class="sticky">Galaxy</td>
               <td>-</td>
+              <td><strong>{totals['p']}</strong></td>
               <td>{totals['fgm']}-{totals['fga']}</td>
               <td>{percent(totals['fgm'], totals['fga'])}</td>
               <td>{totals['3fgm']}-{totals['3fga']}</td>
               <td>{percent(totals['3fgm'], totals['3fga'])}</td>
               <td>{totals['ftm']}-{totals['fta']}</td>
               <td>{percent(totals['ftm'], totals['fta'])}</td>
-              <td>{totals['or']}</td>
-              <td>{totals['dr']}</td>
               <td>{totals['r']}</td>
               <td>{totals['a']}</td>
+              <td>{totals['to']}</td>
               <td>{totals['s']}</td>
               <td>{totals['b']}</td>
-              <td>{totals['to']}</td>
+              <td>{totals['or']}</td>
+              <td>{totals['dr']}</td>
               <td>-</td>
-              <td><strong>{totals['p']}</strong></td>
             </tr>
             <tr class="totals opponent">
               <td class="sticky">Opponent</td>
               <td>-</td>
+              <td><strong>{opponent['p']}</strong></td>
               <td>{opponent['fgm']}-{opponent['fga']}</td>
               <td>{percent(opponent['fgm'], opponent['fga'])}</td>
               <td>{opponent['3fgm']}-{opponent['3fga']}</td>
               <td>{percent(opponent['3fgm'], opponent['3fga'])}</td>
               <td>{opponent['ftm']}-{opponent['fta']}</td>
               <td>{percent(opponent['ftm'], opponent['fta'])}</td>
-              <td>{opponent['or']}</td>
-              <td>{opponent['dr']}</td>
               <td>{opponent['r']}</td>
-              <td>-</td>
-              <td>-</td>
               <td>-</td>
               <td>{opponent['to']}</td>
               <td>-</td>
-              <td><strong>{opponent['p']}</strong></td>
+              <td>-</td>
+              <td>{opponent['or']}</td>
+              <td>{opponent['dr']}</td>
+              <td>-</td>
             </tr>
           </tbody>
         </table>
@@ -285,18 +285,18 @@ def game_log_row(game, stats_row, min_value, pm_value):
       <td>{game['date']}</td>
       <td>{result} {galaxy_score}-{opp_score}</td>
       <td>{min_value}</td>
+      <td>{stats_row['p']}</td>
       <td>{stats_row['fgm']}-{stats_row['fga']}</td>
       <td>{stats_row['3fgm']}-{stats_row['3fga']}</td>
       <td>{stats_row['ftm']}-{stats_row['fta']}</td>
-      <td>{stats_row['or']}</td>
-      <td>{stats_row['dr']}</td>
       <td>{stats_row['r']}</td>
       <td>{stats_row['a']}</td>
+      <td>{stats_row['to']}</td>
       <td>{stats_row['s']}</td>
       <td>{stats_row['b']}</td>
-      <td>{stats_row['to']}</td>
+      <td>{stats_row['or']}</td>
+      <td>{stats_row['dr']}</td>
       <td>{pm_value}</td>
-      <td>{stats_row['p']}</td>
     </tr>
     """
 
@@ -313,18 +313,18 @@ def game_log_section(summary, rows):
               <th>Date</th>
               <th>Result</th>
               <th>MIN</th>
+              <th>PTS</th>
               <th>FG</th>
               <th>3FG</th>
               <th>FT</th>
-              <th>OR</th>
-              <th>DR</th>
               <th>REB</th>
               <th>AST</th>
+              <th>TO</th>
               <th>STL</th>
               <th>BLK</th>
-              <th>TO</th>
+              <th>OR</th>
+              <th>DR</th>
               <th>+/-</th>
-              <th>PTS</th>
             </tr>
           </thead>
           <tbody>{''.join(rows)}</tbody>

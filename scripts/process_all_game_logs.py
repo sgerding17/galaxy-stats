@@ -5,6 +5,8 @@ from stats import players
 
 game_logs = ["game_logs/" + l for l in sorted(os.listdir("game_logs"), reverse=True) if not l.startswith(".")]
 
+POINTS_INDEX = 2
+
 box_scores = {}
 for log in game_logs:
     process = subprocess.run(f"python3 scripts/print_box_score.py {log}",
@@ -19,8 +21,8 @@ for log in box_scores:
     game_info[log]["opp"] = opponent.replace("_", " ")
     game_info[log]["venue"] = venue.replace("_", " ")
     for line in box_scores[log].splitlines():
-        if line.startswith("Galaxy"): g = int(line.split()[12])
-        elif line.startswith("Opponent"): o = int(line.split()[12])
+        if line.startswith("Galaxy"): g = int(line.split()[POINTS_INDEX])
+        elif line.startswith("Opponent"): o = int(line.split()[POINTS_INDEX])
     game_info[log]["res"] = f"{'W' if g > o else 'L' if o > g else 'T'} {g}-{o}"
 max_opp_len = max([len(gi["opp"]) for gi in game_info.values()])
 
