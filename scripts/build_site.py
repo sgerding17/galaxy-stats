@@ -5,6 +5,7 @@ import math
 import os
 from datetime import datetime
 
+from game_flow import generate_svg as game_flow_svg
 from stats import accumulate_stats, count_stats, players, rollup_stats
 
 
@@ -267,6 +268,10 @@ def box_score_table(game):
         </table>
       </div>
       {team_stats_section(game)}
+      <details class="game-flow">
+        <summary>Game Flow</summary>
+        {game_flow_svg(game['path'])}
+      </details>
     </article>
     """
 
@@ -707,11 +712,11 @@ def render_html(games, cumulative_stats, per_game_stats):
       color: var(--accent);
       margin-bottom: 8px;
     }}
-    .team-stats {{
+    .team-stats, .game-flow {{
       border-top: 1px solid var(--line);
       padding: 10px 14px;
     }}
-    .team-stats summary {{
+    .team-stats summary, .game-flow summary {{
       cursor: pointer;
       font-weight: 700;
       color: var(--accent);
