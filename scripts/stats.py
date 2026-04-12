@@ -64,6 +64,7 @@ def has_upcoming_freethrow(upcoming_events, player):
 def count_stats(events):
     global LINE
     stats = defaultdict(lambda: defaultdict(int))
+    stats["g"] = defaultdict(int)
 
     clock = 0
     in_game = []
@@ -176,8 +177,6 @@ def count_stats(events):
     return stats
 
 def rollup_stats(stats):
-    g_stats = defaultdict(int)
-
     for player in stats:
         stats[player]["gp"] = 1
         stats[player]["min"] = round(stats[player]["sec"] / 60)
@@ -196,13 +195,12 @@ def rollup_stats(stats):
         stats[player]["fgm"] += stats[player]["3fgm"]
 
         stats[player]["pos"] = stats[player]["opos"] + stats[player]["dpos"]
-        if player[0] not in ("o", "c", "!"):
+        if player[0] not in ("g", "o", "c", "!"):
             for stat in stats[player]:
-                g_stats[stat] += stats[player][stat]
+                stats["g"][stat] += stats[player][stat]
 
-    assert g_stats["sec"] == 60 * 40 * 5, "Unexpected total seconds: {}".format(g_stats["sec"])
-    g_stats["gp"] = 1
-    stats["g"] = g_stats
+    stats["g"]["gp"] = 1
+    assert stats["g"]["sec"] == 60 * 40 * 5, "Unexpected total seconds: {}".format(stats["g"]["sec"])
 
 def accumulate_stats(all_stats, per_game):
     cum_stats = defaultdict(lambda: defaultdict(int))
