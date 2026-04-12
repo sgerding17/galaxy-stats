@@ -129,26 +129,31 @@
       color: var(--muted);
       font-size: 0.9rem;
     }
-    .scoreboard {
-      display: grid;
-      gap: 5px;
+    .scoreboard-table {
+      border-collapse: collapse;
       min-width: 170px;
-    }
-    .scoreboard div {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      font-weight: 600;
-      border-radius: 9px;
-      padding: 6px 10px;
-      background: #edf3fc;
-    }
-    .scoreboard span {
-      color: var(--muted);
       font-size: 0.9rem;
-      font-weight: 500;
     }
-    .scoreboard strong {
+    .scoreboard-table th {
+      background: none;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 2px 5px;
+      text-align: center;
+      position: static;
+    }
+    .scoreboard-table td {
+      padding: 4px 5px;
+      text-align: center;
+      border-bottom: none;
+      white-space: nowrap;
+    }
+    .scoreboard-table td:first-child {
+      text-align: left;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .scoreboard-table strong {
       font-size: 1.1rem;
     }
     .table-wrap {
@@ -314,8 +319,7 @@
       th, td {
         padding: 5px;
       }
-      .scoreboard { width: 100%; min-width: 0; }
-      .scoreboard div { width: 100%; }
+      .scoreboard-table { width: 100%; min-width: 0; }
     }
   </style>
 </head>
@@ -349,10 +353,15 @@
           <h2>2026-03-22 vs. Cheetahs</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>33</strong></div>
-          <div><span>Cheetahs</span><strong>34</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>19</td><td>14</td><td><strong>33</strong></td></tr>
+            <tr><td>Cheetahs</td><td></td><td>15</td><td>19</td><td><strong>34</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -642,10 +651,15 @@
           <h2>2026-03-15 vs. Mighty Musubis</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>26</strong></div>
-          <div><span>Mighty Musubis</span><strong>30</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>13</td><td>13</td><td><strong>26</strong></td></tr>
+            <tr><td>Mighty Musubis</td><td></td><td>15</td><td>15</td><td><strong>30</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -935,10 +949,15 @@
           <h2>2026-03-01 vs. Sakura</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>37</strong></div>
-          <div><span>Sakura</span><strong>18</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>16</td><td>21</td><td><strong>37</strong></td></tr>
+            <tr><td>Sakura</td><td></td><td>8</td><td>10</td><td><strong>18</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -1228,10 +1247,15 @@
           <h2>2026-02-22 vs. Royals</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>16</strong></div>
-          <div><span>Royals</span><strong>34</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>3</td><td>13</td><td><strong>16</strong></td></tr>
+            <tr><td>Royals</td><td></td><td>18</td><td>16</td><td><strong>34</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -1541,10 +1565,15 @@
           <h2>2026-02-01 vs. Supreme</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>35</strong></div>
-          <div><span>Supreme</span><strong>32</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>21</td><td>14</td><td><strong>35</strong></td></tr>
+            <tr><td>Supreme</td><td></td><td>14</td><td>18</td><td><strong>32</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -1874,10 +1903,15 @@
           <h2>2026-01-25 vs. Storm</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>34</strong></div>
-          <div><span>Storm</span><strong>17</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>14</td><td>20</td><td><strong>34</strong></td></tr>
+            <tr><td>Storm</td><td></td><td>5</td><td>12</td><td><strong>17</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -2207,10 +2241,15 @@
           <h2>2026-01-18 vs. Sparks</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>28</strong></div>
-          <div><span>Sparks</span><strong>4</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>19</td><td>9</td><td><strong>28</strong></td></tr>
+            <tr><td>Sparks</td><td></td><td>0</td><td>4</td><td><strong>4</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -2540,10 +2579,15 @@
           <h2>2026-01-11 vs. Shooting Stars</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>25</strong></div>
-          <div><span>Shooting Stars</span><strong>14</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>16</td><td>9</td><td><strong>25</strong></td></tr>
+            <tr><td>Shooting Stars</td><td></td><td>2</td><td>12</td><td><strong>14</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -2873,10 +2917,15 @@
           <h2>2025-12-07 vs. WLA 4</h2>
           <p>CBO Exhibition</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>31</strong></div>
-          <div><span>WLA 4</span><strong>14</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>14</td><td>17</td><td><strong>31</strong></td></tr>
+            <tr><td>WLA 4</td><td></td><td>5</td><td>9</td><td><strong>14</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -3206,10 +3255,15 @@
           <h2>2025-10-26 vs. Mighty Musubis</h2>
           <p>SBYB League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>21</strong></div>
-          <div><span>Mighty Musubis</span><strong>13</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>7</td><td>14</td><td><strong>21</strong></td></tr>
+            <tr><td>Mighty Musubis</td><td></td><td>5</td><td>8</td><td><strong>13</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -3539,10 +3593,15 @@
           <h2>2025-10-19 vs. PB Musubis</h2>
           <p>VFW Silver Friendship Game</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>31</strong></div>
-          <div><span>PB Musubis</span><strong>32</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>16</td><td>15</td><td><strong>31</strong></td></tr>
+            <tr><td>PB Musubis</td><td></td><td>17</td><td>15</td><td><strong>32</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -3872,10 +3931,15 @@
           <h2>2025-10-18 (B) vs. Mighty Musubis</h2>
           <p>VFW Silver Losers Bracket</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>19</strong></div>
-          <div><span>Mighty Musubis</span><strong>25</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>11</td><td>8</td><td><strong>19</strong></td></tr>
+            <tr><td>Mighty Musubis</td><td></td><td>8</td><td>17</td><td><strong>25</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -4205,10 +4269,15 @@
           <h2>2025-10-18 (A) vs. Royals</h2>
           <p>VFW Silver Quarterfinals</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>21</strong></div>
-          <div><span>Royals</span><strong>23</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>11</td><td>10</td><td><strong>21</strong></td></tr>
+            <tr><td>Royals</td><td></td><td>10</td><td>13</td><td><strong>23</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -4538,10 +4607,15 @@
           <h2>2025-10-12 vs. Red Phoenix</h2>
           <p>SBYB League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>18</strong></div>
-          <div><span>Red Phoenix</span><strong>22</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>5</td><td>13</td><td><strong>18</strong></td></tr>
+            <tr><td>Red Phoenix</td><td></td><td>14</td><td>8</td><td><strong>22</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -4851,10 +4925,15 @@
           <h2>2025-10-05 vs. Royals</h2>
           <p>SBYB League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>14</strong></div>
-          <div><span>Royals</span><strong>13</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>3</td><td>11</td><td><strong>14</strong></td></tr>
+            <tr><td>Royals</td><td></td><td>5</td><td>8</td><td><strong>13</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -5184,10 +5263,15 @@
           <h2>2025-09-28 vs. Sakura</h2>
           <p>SBYB League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>37</strong></div>
-          <div><span>Sakura</span><strong>14</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>17</td><td>20</td><td><strong>37</strong></td></tr>
+            <tr><td>Sakura</td><td></td><td>5</td><td>9</td><td><strong>14</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -5517,10 +5601,15 @@
           <h2>2025-09-21 vs. Shooting Stars</h2>
           <p>SBYB League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>31</strong></div>
-          <div><span>Shooting Stars</span><strong>20</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>13</td><td>18</td><td><strong>31</strong></td></tr>
+            <tr><td>Shooting Stars</td><td></td><td>4</td><td>16</td><td><strong>20</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -5830,10 +5919,15 @@
           <h2>2025-09-14 vs. Dolphins</h2>
           <p>SBYB League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>20</strong></div>
-          <div><span>Dolphins</span><strong>23</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>4</td><td>16</td><td><strong>20</strong></td></tr>
+            <tr><td>Dolphins</td><td></td><td>14</td><td>9</td><td><strong>23</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -6163,10 +6257,15 @@
           <h2>2025-08-10 vs. Royals</h2>
           <p>HDLVI Pool B Championship</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>7</strong></div>
-          <div><span>Royals</span><strong>19</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>4</td><td>3</td><td><strong>7</strong></td></tr>
+            <tr><td>Royals</td><td></td><td>5</td><td>14</td><td><strong>19</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -6496,10 +6595,15 @@
           <h2>2025-08-09 (B) vs. PB Musubis</h2>
           <p>HDLVI Pool B Pool Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>19</strong></div>
-          <div><span>PB Musubis</span><strong>18</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>12</td><td>7</td><td><strong>19</strong></td></tr>
+            <tr><td>PB Musubis</td><td></td><td>14</td><td>4</td><td><strong>18</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -6829,10 +6933,15 @@
           <h2>2025-08-09 (A) vs. Cheetahs</h2>
           <p>HDLVI Pool B Pool Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>25</strong></div>
-          <div><span>Cheetahs</span><strong>8</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>8</td><td>17</td><td><strong>25</strong></td></tr>
+            <tr><td>Cheetahs</td><td></td><td>2</td><td>6</td><td><strong>8</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -7162,10 +7271,15 @@
           <h2>2025-05-25 (B) vs. Sakura</h2>
           <p>Tigers Bronze Championship</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>31</strong></div>
-          <div><span>Sakura</span><strong>22</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>12</td><td>19</td><td><strong>31</strong></td></tr>
+            <tr><td>Sakura</td><td></td><td>7</td><td>15</td><td><strong>22</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -7495,10 +7609,15 @@
           <h2>2025-05-25 (A) vs. Sparks</h2>
           <p>Tigers Bronze Pool Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>25</strong></div>
-          <div><span>Sparks</span><strong>10</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>13</td><td>12</td><td><strong>25</strong></td></tr>
+            <tr><td>Sparks</td><td></td><td>5</td><td>5</td><td><strong>10</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -7828,10 +7947,15 @@
           <h2>2025-05-24 vs. Red Phoenix</h2>
           <p>Tigers Bronze Pool Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>23</strong></div>
-          <div><span>Red Phoenix</span><strong>21</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>8</td><td>15</td><td><strong>23</strong></td></tr>
+            <tr><td>Red Phoenix</td><td></td><td>9</td><td>12</td><td><strong>21</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -8161,10 +8285,15 @@
           <h2>2025-05-04 vs. Mighty Musubis</h2>
           <p>FOR Silver Championship</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>14</strong></div>
-          <div><span>Mighty Musubis</span><strong>11</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>6</td><td>8</td><td><strong>14</strong></td></tr>
+            <tr><td>Mighty Musubis</td><td></td><td>6</td><td>5</td><td><strong>11</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -8474,10 +8603,15 @@
           <h2>2025-05-03 vs. PB Musubis</h2>
           <p>FOR Silver Pool Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>47</strong></div>
-          <div><span>PB Musubis</span><strong>28</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>24</td><td>23</td><td><strong>47</strong></td></tr>
+            <tr><td>PB Musubis</td><td></td><td>11</td><td>17</td><td><strong>28</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -8787,10 +8921,15 @@
           <h2>2025-05-02 vs. Red Phoenix</h2>
           <p>FOR Silver Pool Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>16</strong></div>
-          <div><span>Red Phoenix</span><strong>15</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>8</td><td>8</td><td><strong>16</strong></td></tr>
+            <tr><td>Red Phoenix</td><td></td><td>6</td><td>9</td><td><strong>15</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -9120,10 +9259,15 @@
           <h2>2025-04-27 vs. Sakura</h2>
           <p>WLA White Round Robin</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>38</strong></div>
-          <div><span>Sakura</span><strong>27</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>23</td><td>15</td><td><strong>38</strong></td></tr>
+            <tr><td>Sakura</td><td></td><td>15</td><td>12</td><td><strong>27</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -9433,10 +9577,15 @@
           <h2>2025-04-26 (B) vs. Red Phoenix</h2>
           <p>WLA White Round Robin</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>23</strong></div>
-          <div><span>Red Phoenix</span><strong>6</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>13</td><td>10</td><td><strong>23</strong></td></tr>
+            <tr><td>Red Phoenix</td><td></td><td>0</td><td>6</td><td><strong>6</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -9746,10 +9895,15 @@
           <h2>2025-04-26 (A) vs. PB Musubis</h2>
           <p>WLA White Round Robin</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>22</strong></div>
-          <div><span>PB Musubis</span><strong>24</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>6</td><td>16</td><td><strong>22</strong></td></tr>
+            <tr><td>PB Musubis</td><td></td><td>10</td><td>14</td><td><strong>24</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -10059,10 +10213,15 @@
           <h2>2025-03-23 vs. Sparks</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>17</strong></div>
-          <div><span>Sparks</span><strong>23</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>5</td><td>12</td><td><strong>17</strong></td></tr>
+            <tr><td>Sparks</td><td></td><td>15</td><td>8</td><td><strong>23</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -10372,10 +10531,15 @@
           <h2>2025-03-16 vs. Dolphins</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>15</strong></div>
-          <div><span>Dolphins</span><strong>23</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>8</td><td>7</td><td><strong>15</strong></td></tr>
+            <tr><td>Dolphins</td><td></td><td>6</td><td>17</td><td><strong>23</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -10685,10 +10849,15 @@
           <h2>2025-03-09 vs. Mighty Musubis</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>11</strong></div>
-          <div><span>Mighty Musubis</span><strong>20</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>6</td><td>5</td><td><strong>11</strong></td></tr>
+            <tr><td>Mighty Musubis</td><td></td><td>15</td><td>5</td><td><strong>20</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -10998,10 +11167,15 @@
           <h2>2025-03-02 vs. PB Musubis</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>14</strong></div>
-          <div><span>PB Musubis</span><strong>16</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>4</td><td>10</td><td><strong>14</strong></td></tr>
+            <tr><td>PB Musubis</td><td></td><td>4</td><td>12</td><td><strong>16</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -11331,10 +11505,15 @@
           <h2>2025-02-23 vs. Storm</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>19</strong></div>
-          <div><span>Storm</span><strong>8</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>7</td><td>12</td><td><strong>19</strong></td></tr>
+            <tr><td>Storm</td><td></td><td>4</td><td>4</td><td><strong>8</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -11644,10 +11823,15 @@
           <h2>2025-02-02 vs. Sakura</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>13</strong></div>
-          <div><span>Sakura</span><strong>17</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>2</td><td>11</td><td><strong>13</strong></td></tr>
+            <tr><td>Sakura</td><td></td><td>6</td><td>11</td><td><strong>17</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -11957,10 +12141,15 @@
           <h2>2025-01-19 (B) vs. Shooting Stars</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>12</strong></div>
-          <div><span>Shooting Stars</span><strong>31</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>2</td><td>10</td><td><strong>12</strong></td></tr>
+            <tr><td>Shooting Stars</td><td></td><td>6</td><td>25</td><td><strong>31</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -12290,10 +12479,15 @@
           <h2>2025-01-19 (A) vs. Royals</h2>
           <p>JAO League Play</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>2</strong></div>
-          <div><span>Royals</span><strong>9</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>2</td><td>0</td><td><strong>2</strong></td></tr>
+            <tr><td>Royals</td><td></td><td>4</td><td>5</td><td><strong>9</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>

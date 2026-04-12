@@ -172,10 +172,15 @@ def box_score_table(game):
           <h2>{html.escape(game['date'])} vs. {html.escape(game['opponent'])}</h2>
           <p>{html.escape(game['venue'])}</p>
         </div>
-        <div class="scoreboard">
-          <div><span>Galaxy</span><strong>{totals['p']}</strong></div>
-          <div><span>{html.escape(game['opponent'])}</span><strong>{opponent['p']}</strong></div>
-        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>{totals['h1_p']}</td><td>{totals['h2_p']}</td><td><strong>{totals['p']}</strong></td></tr>
+            <tr><td>{html.escape(game['opponent'])}</td><td></td><td>{opponent['h1_p']}</td><td>{opponent['h2_p']}</td><td><strong>{opponent['p']}</strong></td></tr>
+          </tbody>
+        </table>
       </header>
       <div class="table-wrap">
         <table>
@@ -577,26 +582,31 @@ def render_html(games, cumulative_stats, per_game_stats):
       color: var(--muted);
       font-size: 0.9rem;
     }}
-    .scoreboard {{
-      display: grid;
-      gap: 5px;
+    .scoreboard-table {{
+      border-collapse: collapse;
       min-width: 170px;
-    }}
-    .scoreboard div {{
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      font-weight: 600;
-      border-radius: 9px;
-      padding: 6px 10px;
-      background: #edf3fc;
-    }}
-    .scoreboard span {{
-      color: var(--muted);
       font-size: 0.9rem;
-      font-weight: 500;
     }}
-    .scoreboard strong {{
+    .scoreboard-table th {{
+      background: none;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 2px 5px;
+      text-align: center;
+      position: static;
+    }}
+    .scoreboard-table td {{
+      padding: 4px 5px;
+      text-align: center;
+      border-bottom: none;
+      white-space: nowrap;
+    }}
+    .scoreboard-table td:first-child {{
+      text-align: left;
+      font-weight: 600;
+      color: var(--muted);
+    }}
+    .scoreboard-table strong {{
       font-size: 1.1rem;
     }}
     .table-wrap {{
@@ -762,8 +772,7 @@ def render_html(games, cumulative_stats, per_game_stats):
       th, td {{
         padding: 5px;
       }}
-      .scoreboard {{ width: 100%; min-width: 0; }}
-      .scoreboard div {{ width: 100%; }}
+      .scoreboard-table {{ width: 100%; min-width: 0; }}
     }}
   </style>
 </head>

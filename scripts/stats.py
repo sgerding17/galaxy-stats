@@ -72,6 +72,7 @@ def count_stats(events):
     last_pos = ""
     pos_arrow = ""
     last_event = []
+    period = 1
 
     assert events[0][0] == "c", "LINE {}: The first event must be a clock".format(LINE)
     for (line, event) in enumerate(events):
@@ -92,6 +93,7 @@ def count_stats(events):
             if new_clock == 0:
                 possession = pos_arrow
                 pos_arrow = opposite_team(pos_arrow)
+                period += 1
             clock = new_clock
 
         elif event_type == "ig":
@@ -134,28 +136,38 @@ def count_stats(events):
                     stats[combo]["pf"] += (delta_score if delta_score > 0 else 0)
                     stats[combo]["pa"] += (-delta_score if delta_score < 0 else 0)
                 if player == "o":
+                    stats["o"][f"h{period}_p"] += -delta_score
+                else:
+                    stats["g"][f"h{period}_p"] += delta_score
+                if player == "o":
                     assert possession == "o", "LINE {}: Opponent shot without possession".format(LINE)
                 else:
                     if possession != "g": missing_opp_turnover = True
                 if not has_upcoming_freethrow(upcoming_events, player):
                     possession = "g" if player == "o" else "o"
+
             elif event_type in ("3fga", "fga", "fta"):
                 if player == "o":
                     assert possession == "o", "LINE {}: Opponent shot without possession".format(LINE)
                 else:
                     if possession != "g": missing_opp_turnover = True
+
             elif event_type == "r":
                 stat = get_rebound_type(player, last_event)
                 possession = "o" if player == "o" else "g"
+
             elif event_type == "a":
                 assert last_event[0] in ("fgm", "3fgm"), "LINE {}: Assist did not follow a made shot (last_event = {})".format(LINE, " ".join(last_event))
+
             elif event_type == "s":
                 assert possession == "o", "LINE {}: Galaxy steal without opponent possession".format(LINE)
                 stats["o"]["to"] += 1
                 possession = "g"
+
             elif event_type == "to":
                 if possession != "g": missing_opp_turnover = True
                 possession = "o"
+
             stats[player][stat] += 1
 
         else:
