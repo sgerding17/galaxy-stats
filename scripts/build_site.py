@@ -83,6 +83,11 @@ def team_stat_row(label, galaxy_val, opp_val, indent=False, lower_is_better=Fals
         # Map [0,100] -> [-6,6], apply sigmoid, map back to [0,100]
         x = (g_pct - 50) / 50 * 6
         g_pct = round(100 / (1 + math.exp(-x)))
+        # Snap near-full bars to 100 so they get full rounding
+        if g_pct >= 96:
+            g_pct = 100
+        elif g_pct <= 4:
+            g_pct = 0
         o_pct = 100 - g_pct
     else:
         g_pct = o_pct = 50
@@ -92,7 +97,12 @@ def team_stat_row(label, galaxy_val, opp_val, indent=False, lower_is_better=Fals
     if no_comparison:
         bar_html = '<span class="bar-na" style="width:100%"></span>'
     else:
-        bar_html = f'<span class="bar-g" style="width:{g_pct}%"></span><span class="bar-o" style="width:{o_pct}%"></span>'
+        if o_pct == 0:
+            bar_html = '<span class="bar-g" style="width:100%"></span>'
+        elif g_pct == 0:
+            bar_html = '<span class="bar-o" style="width:100%"></span>'
+        else:
+            bar_html = f'<span class="bar-g" style="width:{g_pct}%"></span><span class="bar-o" style="width:{o_pct}%"></span>'
     return f"""
       <tr>
         <td{indent_class}>{label}</td>
@@ -743,15 +753,20 @@ def render_html(games, cumulative_stats, per_game_stats):
     .ts-bar span {{
       display: inline-block;
       height: 8px;
-      border-radius: 4px;
     }}
     .bar-g {{
       background: var(--accent);
       border-radius: 4px 0 0 4px;
     }}
+    .bar-g:only-child {{
+      border-radius: 4px;
+    }}
     .bar-o {{
-      background: #c5d0e4;
+      background: #c44040;
       border-radius: 0 4px 4px 0;
+    }}
+    .bar-o:only-child {{
+      border-radius: 4px;
     }}
     .bar-na {{
       background: #e0e4ec;
