@@ -202,26 +202,26 @@ def box_score_table(game):
         <table>
           <thead>
             <tr>
-              <th class="sticky">Player</th>
+              <th class="sticky">PLAYER</th>
               <th>MIN</th>
               <th>PTS</th>
               <th>FG</th>
-              <th>3FG</th>
+              <th>3PT</th>
               <th>FT</th>
               <th>REB</th>
               <th>AST</th>
               <th>TO</th>
               <th>STL</th>
               <th>BLK</th>
-              <th>OR</th>
-              <th>DR</th>
+              <th>OREB</th>
+              <th>DREB</th>
               <th>+/-</th>
             </tr>
           </thead>
           <tbody>
             {''.join(rows)}
             <tr class="totals">
-              <td class="sticky">Total</td>
+              <td class="sticky">TEAM</td>
               <td>-</td>
               <td><strong>{totals['p']}</strong></td>
               <td>{totals['fgm']}-{totals['fga']}</td>
@@ -286,16 +286,16 @@ def cumulative_table(title, stats, section_id):
         <table>
           <thead>
             <tr>
-              <th class="sticky">Player</th>
+              <th class="sticky">PLAYER</th>
               <th>GP</th>
               <th>MIN</th>
               <th>PTS</th>
               <th>FGM</th>
               <th>FGA</th>
               <th>FG%</th>
-              <th>3FGM</th>
-              <th>3FGA</th>
-              <th>3FG%</th>
+              <th>3PTM</th>
+              <th>3PTA</th>
+              <th>3PT%</th>
               <th>FTM</th>
               <th>FTA</th>
               <th>FT%</th>
@@ -398,15 +398,15 @@ def game_log_section(summary, rows):
               <th>MIN</th>
               <th>PTS</th>
               <th>FG</th>
-              <th>3FG</th>
+              <th>3PT</th>
               <th>FT</th>
               <th>REB</th>
               <th>AST</th>
               <th>TO</th>
               <th>STL</th>
               <th>BLK</th>
-              <th>OR</th>
-              <th>DR</th>
+              <th>OREB</th>
+              <th>DREB</th>
               <th>+/-</th>
             </tr>
           </thead>
@@ -586,6 +586,7 @@ def render_html(games, cumulative_stats, per_game_stats):
       background: none;
       color: var(--muted);
       font-weight: 600;
+      font-size: 0.75rem;
       padding: 2px 5px;
       text-align: center;
       position: static;
@@ -651,6 +652,7 @@ def render_html(games, cumulative_stats, per_game_stats):
     .totals td {{
       font-weight: 700;
       background: #f8fbff;
+      padding-bottom: 6px;
     }}
     .totals.opponent td {{
       background: var(--opp);
