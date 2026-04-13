@@ -1,4 +1,4 @@
-"""AUTOGENTERATED BY CODEX: edit with care."""
+"""AUTOGENTERATED BY CODEX AND CLAUDE."""
 
 import html
 import math
@@ -165,11 +165,8 @@ def box_score_table(game):
               <td>{s['min']}</td>
               <td><strong>{s['p']}</strong></td>
               <td>{s['fgm']}-{s['fga']}</td>
-              <td>{percent(s['fgm'], s['fga'])}</td>
               <td>{s['3fgm']}-{s['3fga']}</td>
-              <td>{percent(s['3fgm'], s['3fga'])}</td>
               <td>{s['ftm']}-{s['fta']}</td>
-              <td>{percent(s['ftm'], s['fta'])}</td>
               <td>{s['r']}</td>
               <td>{s['a']}</td>
               <td>{s['to']}</td>
@@ -209,11 +206,8 @@ def box_score_table(game):
               <th>MIN</th>
               <th>PTS</th>
               <th>FG</th>
-              <th>FG%</th>
               <th>3FG</th>
-              <th>3FG%</th>
               <th>FT</th>
-              <th>FT%</th>
               <th>REB</th>
               <th>AST</th>
               <th>TO</th>
@@ -227,15 +221,12 @@ def box_score_table(game):
           <tbody>
             {''.join(rows)}
             <tr class="totals">
-              <td class="sticky">Galaxy</td>
+              <td class="sticky">Total</td>
               <td>-</td>
               <td><strong>{totals['p']}</strong></td>
               <td>{totals['fgm']}-{totals['fga']}</td>
-              <td>{percent(totals['fgm'], totals['fga'])}</td>
               <td>{totals['3fgm']}-{totals['3fga']}</td>
-              <td>{percent(totals['3fgm'], totals['3fga'])}</td>
               <td>{totals['ftm']}-{totals['fta']}</td>
-              <td>{percent(totals['ftm'], totals['fta'])}</td>
               <td>{totals['r']}</td>
               <td>{totals['a']}</td>
               <td>{totals['to']}</td>
@@ -243,25 +234,6 @@ def box_score_table(game):
               <td>{totals['b']}</td>
               <td>{totals['or']}</td>
               <td>{totals['dr']}</td>
-              <td>-</td>
-            </tr>
-            <tr class="totals opponent">
-              <td class="sticky">Opponent</td>
-              <td>-</td>
-              <td><strong>{opponent['p']}</strong></td>
-              <td>{opponent['fgm']}-{opponent['fga']}</td>
-              <td>{percent(opponent['fgm'], opponent['fga'])}</td>
-              <td>{opponent['3fgm']}-{opponent['3fga']}</td>
-              <td>{percent(opponent['3fgm'], opponent['3fga'])}</td>
-              <td>{opponent['ftm']}-{opponent['fta']}</td>
-              <td>{percent(opponent['ftm'], opponent['fta'])}</td>
-              <td>{opponent['r']}</td>
-              <td>-</td>
-              <td>{opponent['to']}</td>
-              <td>-</td>
-              <td>-</td>
-              <td>{opponent['or']}</td>
-              <td>{opponent['dr']}</td>
               <td>-</td>
             </tr>
           </tbody>
