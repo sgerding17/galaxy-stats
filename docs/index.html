@@ -348,12 +348,343 @@
     <section class="jump-control">
       <select id="jump-to-game" aria-label="Jump to game">
         <option value="">Select a game...</option>
-        <option value="20260418a-wla_white_round_robin-sakura">2026-04-18 (A) vs Sakura</option><option value="20260322-jao_league_play-cheetahs">2026-03-22 vs Cheetahs</option><option value="20260315-jao_league_play-mighty_musubis">2026-03-15 vs Mighty Musubis</option><option value="20260301-jao_league_play-sakura">2026-03-01 vs Sakura</option><option value="20260222-jao_league_play-royals">2026-02-22 vs Royals</option><option value="20260201-jao_league_play-supreme">2026-02-01 vs Supreme</option><option value="20260125-jao_league_play-storm">2026-01-25 vs Storm</option><option value="20260118-jao_league_play-sparks">2026-01-18 vs Sparks</option><option value="20260111-jao_league_play-shooting_stars">2026-01-11 vs Shooting Stars</option><option value="20251207-cbo_exhibition-wla_4">2025-12-07 vs WLA 4</option><option value="20251026-sbyb_league_play-mighty_musubis">2025-10-26 vs Mighty Musubis</option><option value="20251019-vfw_silver_friendship_game-pb_musubis">2025-10-19 vs PB Musubis</option><option value="20251018b-vfw_silver_losers_bracket-mighty_musubis">2025-10-18 (B) vs Mighty Musubis</option><option value="20251018a-vfw_silver_quarterfinals-royals">2025-10-18 (A) vs Royals</option><option value="20251012-sbyb_league_play-red_phoenix">2025-10-12 vs Red Phoenix</option><option value="20251005-sbyb_league_play-royals">2025-10-05 vs Royals</option><option value="20250928-sbyb_league_play-sakura">2025-09-28 vs Sakura</option><option value="20250921-sbyb_league_play-shooting_stars">2025-09-21 vs Shooting Stars</option><option value="20250914-sbyb_league_play-dolphins">2025-09-14 vs Dolphins</option><option value="20250810-hdlvi_pool_b_championship-royals">2025-08-10 vs Royals</option><option value="20250809b-hdlvi_pool_b_pool_play-pb_musubis">2025-08-09 (B) vs PB Musubis</option><option value="20250809a-hdlvi_pool_b_pool_play-cheetahs">2025-08-09 (A) vs Cheetahs</option><option value="20250525b-tigers_bronze_championship-sakura">2025-05-25 (B) vs Sakura</option><option value="20250525a-tigers_bronze_pool_play-sparks">2025-05-25 (A) vs Sparks</option><option value="20250524-tigers_bronze_pool_play-red_phoenix">2025-05-24 vs Red Phoenix</option><option value="20250504-for_silver_championship-mighty_musubis">2025-05-04 vs Mighty Musubis</option><option value="20250503-for_silver_pool_play-pb_musubis">2025-05-03 vs PB Musubis</option><option value="20250502-for_silver_pool_play-red_phoenix">2025-05-02 vs Red Phoenix</option><option value="20250427-wla_white_round_robin-sakura">2025-04-27 vs Sakura</option><option value="20250426b-wla_white_round_robin-red_phoenix">2025-04-26 (B) vs Red Phoenix</option><option value="20250426a-wla_white_round_robin-pb_musubis">2025-04-26 (A) vs PB Musubis</option><option value="20250323-jao_league_play-sparks">2025-03-23 vs Sparks</option><option value="20250316-jao_league_play-dolphins">2025-03-16 vs Dolphins</option><option value="20250309-jao_league_play-mighty_musubis">2025-03-09 vs Mighty Musubis</option><option value="20250302-jao_league_play-pb_musubis">2025-03-02 vs PB Musubis</option><option value="20250223-jao_league_play-storm">2025-02-23 vs Storm</option><option value="20250202-jao_league_play-sakura">2025-02-02 vs Sakura</option><option value="20250119b-jao_league_play-shooting_stars">2025-01-19 (B) vs Shooting Stars</option><option value="20250119a-jao_league_play-royals">2025-01-19 (A) vs Royals</option>
+        <option value="20260418b-wla_white_round_robin-red_phoenix">2026-04-18 (B) vs Red Phoenix</option><option value="20260418a-wla_white_round_robin-sakura">2026-04-18 (A) vs Sakura</option><option value="20260322-jao_league_play-cheetahs">2026-03-22 vs Cheetahs</option><option value="20260315-jao_league_play-mighty_musubis">2026-03-15 vs Mighty Musubis</option><option value="20260301-jao_league_play-sakura">2026-03-01 vs Sakura</option><option value="20260222-jao_league_play-royals">2026-02-22 vs Royals</option><option value="20260201-jao_league_play-supreme">2026-02-01 vs Supreme</option><option value="20260125-jao_league_play-storm">2026-01-25 vs Storm</option><option value="20260118-jao_league_play-sparks">2026-01-18 vs Sparks</option><option value="20260111-jao_league_play-shooting_stars">2026-01-11 vs Shooting Stars</option><option value="20251207-cbo_exhibition-wla_4">2025-12-07 vs WLA 4</option><option value="20251026-sbyb_league_play-mighty_musubis">2025-10-26 vs Mighty Musubis</option><option value="20251019-vfw_silver_friendship_game-pb_musubis">2025-10-19 vs PB Musubis</option><option value="20251018b-vfw_silver_losers_bracket-mighty_musubis">2025-10-18 (B) vs Mighty Musubis</option><option value="20251018a-vfw_silver_quarterfinals-royals">2025-10-18 (A) vs Royals</option><option value="20251012-sbyb_league_play-red_phoenix">2025-10-12 vs Red Phoenix</option><option value="20251005-sbyb_league_play-royals">2025-10-05 vs Royals</option><option value="20250928-sbyb_league_play-sakura">2025-09-28 vs Sakura</option><option value="20250921-sbyb_league_play-shooting_stars">2025-09-21 vs Shooting Stars</option><option value="20250914-sbyb_league_play-dolphins">2025-09-14 vs Dolphins</option><option value="20250810-hdlvi_pool_b_championship-royals">2025-08-10 vs Royals</option><option value="20250809b-hdlvi_pool_b_pool_play-pb_musubis">2025-08-09 (B) vs PB Musubis</option><option value="20250809a-hdlvi_pool_b_pool_play-cheetahs">2025-08-09 (A) vs Cheetahs</option><option value="20250525b-tigers_bronze_championship-sakura">2025-05-25 (B) vs Sakura</option><option value="20250525a-tigers_bronze_pool_play-sparks">2025-05-25 (A) vs Sparks</option><option value="20250524-tigers_bronze_pool_play-red_phoenix">2025-05-24 vs Red Phoenix</option><option value="20250504-for_silver_championship-mighty_musubis">2025-05-04 vs Mighty Musubis</option><option value="20250503-for_silver_pool_play-pb_musubis">2025-05-03 vs PB Musubis</option><option value="20250502-for_silver_pool_play-red_phoenix">2025-05-02 vs Red Phoenix</option><option value="20250427-wla_white_round_robin-sakura">2025-04-27 vs Sakura</option><option value="20250426b-wla_white_round_robin-red_phoenix">2025-04-26 (B) vs Red Phoenix</option><option value="20250426a-wla_white_round_robin-pb_musubis">2025-04-26 (A) vs PB Musubis</option><option value="20250323-jao_league_play-sparks">2025-03-23 vs Sparks</option><option value="20250316-jao_league_play-dolphins">2025-03-16 vs Dolphins</option><option value="20250309-jao_league_play-mighty_musubis">2025-03-09 vs Mighty Musubis</option><option value="20250302-jao_league_play-pb_musubis">2025-03-02 vs PB Musubis</option><option value="20250223-jao_league_play-storm">2025-02-23 vs Storm</option><option value="20250202-jao_league_play-sakura">2025-02-02 vs Sakura</option><option value="20250119b-jao_league_play-shooting_stars">2025-01-19 (B) vs Shooting Stars</option><option value="20250119a-jao_league_play-royals">2025-01-19 (A) vs Royals</option>
       </select>
     </section>
 
     <section>
       
+    <article class="game" id="20260418b-wla_white_round_robin-red_phoenix">
+      <header class="game-header">
+        <div>
+          <h2>2026-04-18 (B) vs. Red Phoenix</h2>
+          <p>WLA White Round Robin</p>
+        </div>
+        <table class="scoreboard-table">
+          <thead>
+            <tr><th></th><th></th><th>H1</th><th>H2</th><th>T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Galaxy</td><td></td><td>4</td><td>10</td><td><strong>14</strong></td></tr>
+            <tr><td>Red Phoenix</td><td></td><td>16</td><td>2</td><td><strong>18</strong></td></tr>
+          </tbody>
+        </table>
+      </header>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="sticky">PLAYER</th>
+              <th>MIN</th>
+              <th>PTS</th>
+              <th>FG</th>
+              <th>3PT</th>
+              <th>FT</th>
+              <th>REB</th>
+              <th>AST</th>
+              <th>TO</th>
+              <th>STL</th>
+              <th>BLK</th>
+              <th>OREB</th>
+              <th>DREB</th>
+              <th>+/-</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td class="sticky">Long</td>
+              <td>16</td>
+              <td><strong>0</strong></td>
+              <td>0-1</td>
+              <td>0-0</td>
+              <td>0-0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>+1</td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Laurel</td>
+              <td>16</td>
+              <td><strong>0</strong></td>
+              <td>0-1</td>
+              <td>0-0</td>
+              <td>0-0</td>
+              <td>7</td>
+              <td>0</td>
+              <td>2</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>7</td>
+              <td>-7</td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Gerding</td>
+              <td>36</td>
+              <td><strong>0</strong></td>
+              <td>0-10</td>
+              <td>0-2</td>
+              <td>0-0</td>
+              <td>4</td>
+              <td>0</td>
+              <td>5</td>
+              <td>1</td>
+              <td>1</td>
+              <td>3</td>
+              <td>1</td>
+              <td>-9</td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Iwai</td>
+              <td>34</td>
+              <td><strong>0</strong></td>
+              <td>0-4</td>
+              <td>0-1</td>
+              <td>0-0</td>
+              <td>4</td>
+              <td>0</td>
+              <td>10</td>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+              <td>3</td>
+              <td>-2</td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Li</td>
+              <td>24</td>
+              <td><strong>2</strong></td>
+              <td>1-7</td>
+              <td>0-1</td>
+              <td>0-0</td>
+              <td>5</td>
+              <td>0</td>
+              <td>5</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>5</td>
+              <td>+1</td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Saito</td>
+              <td>8</td>
+              <td><strong>0</strong></td>
+              <td>0-2</td>
+              <td>0-0</td>
+              <td>0-0</td>
+              <td>1</td>
+              <td>1</td>
+              <td>4</td>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>+0</td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">DeMarti</td>
+              <td>34</td>
+              <td><strong>7</strong></td>
+              <td>2-8</td>
+              <td>0-0</td>
+              <td>3-5</td>
+              <td>17</td>
+              <td>0</td>
+              <td>4</td>
+              <td>6</td>
+              <td>0</td>
+              <td>6</td>
+              <td>11</td>
+              <td>-4</td>
+            </tr>
+            
+            <tr>
+              <td class="sticky">Yosy</td>
+              <td>33</td>
+              <td><strong>5</strong></td>
+              <td>2-9</td>
+              <td>0-1</td>
+              <td>1-2</td>
+              <td>6</td>
+              <td>0</td>
+              <td>3</td>
+              <td>2</td>
+              <td>0</td>
+              <td>5</td>
+              <td>1</td>
+              <td>+0</td>
+            </tr>
+            
+            <tr class="totals">
+              <td class="sticky">TEAM</td>
+              <td>-</td>
+              <td><strong>14</strong></td>
+              <td>5-42</td>
+              <td>0-5</td>
+              <td>4-7</td>
+              <td>48</td>
+              <td>1</td>
+              <td>34</td>
+              <td>13</td>
+              <td>2</td>
+              <td>18</td>
+              <td>30</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+    <details class="team-stats">
+      <summary>Team Stats</summary>
+      <table class="ts-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="ts-val">Galaxy</th>
+            <th class="ts-bar"></th>
+            <th class="ts-val">Red Phoenix</th>
+          </tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td>FG</td>
+        <td class="ts-val">5-42</td>
+        <td class="ts-bar"><span class="bar-g" style="width:32%"></span><span class="bar-o" style="width:68%"></span></td>
+        <td class="ts-val"><strong>9-54</strong></td>
+      </tr>
+      <tr>
+        <td>Field Goal %</td>
+        <td class="ts-val">11.9</td>
+        <td class="ts-bar"><span class="bar-g" style="width:27%"></span><span class="bar-o" style="width:73%"></span></td>
+        <td class="ts-val"><strong>16.7</strong></td>
+      </tr>
+      <tr>
+        <td>3PT</td>
+        <td class="ts-val"><strong>0-5</strong></td>
+        <td class="ts-bar"><span class="bar-g" style="width:93%"></span><span class="bar-o" style="width:7%"></span></td>
+        <td class="ts-val">0-2</td>
+      </tr>
+      <tr>
+        <td>Three Point %</td>
+        <td class="ts-val">0.0</td>
+        <td class="ts-bar"><span class="bar-g" style="width:50%"></span><span class="bar-o" style="width:50%"></span></td>
+        <td class="ts-val">0.0</td>
+      </tr>
+      <tr>
+        <td>FT</td>
+        <td class="ts-val"><strong>4-7</strong></td>
+        <td class="ts-bar"><span class="bar-g" style="width:100%"></span></td>
+        <td class="ts-val">0-2</td>
+      </tr>
+      <tr>
+        <td>Free Throw %</td>
+        <td class="ts-val"><strong>57.1</strong></td>
+        <td class="ts-bar"><span class="bar-g" style="width:100%"></span></td>
+        <td class="ts-val">0.0</td>
+      </tr>
+      <tr>
+        <td>Rebounds</td>
+        <td class="ts-val"><strong>48</strong></td>
+        <td class="ts-bar"><span class="bar-g" style="width:77%"></span><span class="bar-o" style="width:23%"></span></td>
+        <td class="ts-val">32</td>
+      </tr>
+      <tr>
+        <td class="ts-indent">Offensive</td>
+        <td class="ts-val"><strong>18</strong></td>
+        <td class="ts-bar"><span class="bar-g" style="width:68%"></span><span class="bar-o" style="width:32%"></span></td>
+        <td class="ts-val">14</td>
+      </tr>
+      <tr>
+        <td class="ts-indent">Defensive</td>
+        <td class="ts-val"><strong>30</strong></td>
+        <td class="ts-bar"><span class="bar-g" style="width:82%"></span><span class="bar-o" style="width:18%"></span></td>
+        <td class="ts-val">18</td>
+      </tr>
+      <tr>
+        <td>2nd Chance Pts</td>
+        <td class="ts-val"><strong>8</strong></td>
+        <td class="ts-bar"><span class="bar-g" style="width:88%"></span><span class="bar-o" style="width:12%"></span></td>
+        <td class="ts-val">4</td>
+      </tr>
+      <tr>
+        <td>Assists</td>
+        <td class="ts-val">1</td>
+        <td class="ts-bar"><span class="bar-na" style="width:100%"></span></td>
+        <td class="ts-val">-</td>
+      </tr>
+      <tr>
+        <td>Steals</td>
+        <td class="ts-val">13</td>
+        <td class="ts-bar"><span class="bar-na" style="width:100%"></span></td>
+        <td class="ts-val">-</td>
+      </tr>
+      <tr>
+        <td>Blocks</td>
+        <td class="ts-val">2</td>
+        <td class="ts-bar"><span class="bar-na" style="width:100%"></span></td>
+        <td class="ts-val">-</td>
+      </tr>
+      <tr>
+        <td>Turnovers</td>
+        <td class="ts-val">34</td>
+        <td class="ts-bar"><span class="bar-g" style="width:14%"></span><span class="bar-o" style="width:86%"></span></td>
+        <td class="ts-val"><strong>18</strong></td>
+      </tr>
+      <tr>
+        <td class="ts-indent">Points Off</td>
+        <td class="ts-val">2</td>
+        <td class="ts-bar"><span class="bar-o" style="width:100%"></span></td>
+        <td class="ts-val"><strong>14</strong></td>
+      </tr>
+        </tbody>
+      </table>
+    </details>
+      <details class="game-flow">
+        <summary>Game Flow</summary>
+        <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;">
+  <!-- grid -->
+  <line x1="30" y1="140.0" x2="590" y2="140.0" stroke="#eee" stroke-width="0.5"/>
+<line x1="30" y1="119.2" x2="590" y2="119.2" stroke="#eee" stroke-width="0.5"/>
+<line x1="30" y1="98.3" x2="590" y2="98.3" stroke="#eee" stroke-width="0.5"/>
+<line x1="30" y1="77.5" x2="590" y2="77.5" stroke="#eee" stroke-width="0.5"/>
+<line x1="30" y1="56.7" x2="590" y2="56.7" stroke="#eee" stroke-width="0.5"/>
+<line x1="30" y1="35.8" x2="590" y2="35.8" stroke="#eee" stroke-width="0.5"/>
+<line x1="30" y1="15.0" x2="590" y2="15.0" stroke="#eee" stroke-width="0.5"/>
+
+  <!-- zero line -->
+  <line x1="30" y1="77.5" x2="590" y2="77.5" stroke="#ccc" stroke-width="1"/>
+  <!-- half marker -->
+  <line x1="310.0" y1="15" x2="310.0" y2="140" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="310.0" y="154" text-anchor="middle" font-size="10" fill="#999">Half</text>
+  <!-- filled areas -->
+  <path d="" fill="#0f4c81" opacity="0.3"/>
+  <path d="M30.0,77.5 L30.0,77.5 L37.0,87.9 L37.0,77.5Z M37.0,77.5 L37.0,87.9 L39.8,98.3 L39.8,77.5Z M39.8,77.5 L39.8,98.3 L49.5,108.8 L49.5,77.5Z M49.5,77.5 L49.5,108.8 L116.3,119.2 L116.3,77.5Z M116.3,77.5 L116.3,119.2 L143.8,129.6 L143.8,77.5Z M143.8,77.5 L143.8,129.6 L154.2,119.2 L154.2,77.5Z M154.2,77.5 L154.2,119.2 L186.7,108.8 L186.7,77.5Z M186.7,77.5 L186.7,108.8 L188.8,119.2 L188.8,77.5Z M188.8,77.5 L188.8,119.2 L245.2,129.6 L245.2,77.5Z M245.2,77.5 L245.2,129.6 L293.7,140.0 L293.7,77.5Z M293.7,77.5 L293.7,140.0 L310.0,140.0 L310.0,77.5Z M310.0,77.5 L310.0,140.0 L350.5,129.6 L350.5,77.5Z M350.5,77.5 L350.5,129.6 L352.7,124.4 L352.7,77.5Z M352.7,77.5 L352.7,124.4 L361.6,119.2 L361.6,77.5Z M361.6,77.5 L361.6,119.2 L363.8,114.0 L363.8,77.5Z M363.8,77.5 L363.8,114.0 L387.7,103.5 L387.7,77.5Z M387.7,77.5 L387.7,103.5 L438.4,98.3 L438.4,77.5Z M438.4,77.5 L438.4,98.3 L528.4,87.9 L528.4,77.5Z M528.4,77.5 L528.4,87.9 L556.0,98.3 L556.0,77.5Z M556.0,77.5 L556.0,98.3 L590.0,98.3 L590.0,77.5Z" fill="#c44040" opacity="0.3"/>
+  <!-- line -->
+  <polyline points="30.0,77.5 37.0,87.9 39.8,98.3 49.5,108.8 116.3,119.2 143.8,129.6 154.2,119.2 186.7,108.8 188.8,119.2 245.2,129.6 293.7,140.0 310.0,140.0 350.5,129.6 352.7,124.4 361.6,119.2 363.8,114.0 387.7,103.5 438.4,98.3 528.4,87.9 556.0,98.3 590.0,98.3" fill="none" stroke="#333" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- labels -->
+  <text x="26" y="19.0" text-anchor="end" font-size="12" font-weight="bold" fill="#999">+12</text>
+<text x="26" y="81.5" text-anchor="end" font-size="12" font-weight="bold" fill="#999">0</text>
+<text x="26" y="144.0" text-anchor="end" font-size="12" font-weight="bold" fill="#999">-12</text>
+
+  <!-- x-axis labels -->
+</svg>
+      </details>
+    </article>
+    
     <article class="game" id="20260418a-wla_white_round_robin-sakura">
       <header class="game-header">
         <div>
@@ -12973,12 +13304,12 @@
             
             <tr>
               <td class="sticky">Long</td>
-              <td>37</td>
-              <td>840</td>
+              <td>38</td>
+              <td>856</td>
               <td>18</td>
               <td>8</td>
-              <td>60</td>
-              <td>13.3</td>
+              <td>61</td>
+              <td>13.1</td>
               <td>0</td>
               <td>0</td>
               <td>0</td>
@@ -12987,206 +13318,206 @@
               <td>13.3</td>
               <td>62</td>
               <td>11</td>
-              <td>33</td>
+              <td>34</td>
               <td>4</td>
-              <td>74</td>
+              <td>75</td>
               <td>0.15</td>
             </tr>
             
             <tr>
               <td class="sticky">Laurel</td>
-              <td>39</td>
-              <td>990</td>
+              <td>40</td>
+              <td>1006</td>
               <td>56</td>
               <td>24</td>
-              <td>139</td>
-              <td>17.3</td>
+              <td>140</td>
+              <td>17.1</td>
               <td>0</td>
               <td>0</td>
               <td>0</td>
               <td>8</td>
               <td>21</td>
               <td>38.1</td>
-              <td>137</td>
+              <td>144</td>
               <td>9</td>
-              <td>39</td>
+              <td>40</td>
               <td>11</td>
-              <td>73</td>
+              <td>75</td>
               <td>0.12</td>
             </tr>
             
             <tr>
               <td class="sticky">Gerding</td>
-              <td>36</td>
-              <td>959</td>
+              <td>37</td>
+              <td>995</td>
               <td>74</td>
               <td>34</td>
-              <td>172</td>
-              <td>19.8</td>
+              <td>182</td>
+              <td>18.7</td>
               <td>0</td>
-              <td>1</td>
+              <td>3</td>
               <td>0.0</td>
               <td>6</td>
               <td>14</td>
               <td>42.9</td>
-              <td>122</td>
+              <td>126</td>
               <td>30</td>
-              <td>95</td>
-              <td>19</td>
-              <td>133</td>
-              <td>0.23</td>
+              <td>96</td>
+              <td>20</td>
+              <td>138</td>
+              <td>0.22</td>
             </tr>
             
             <tr>
               <td class="sticky">Iwai</td>
-              <td>36</td>
-              <td>1067</td>
+              <td>37</td>
+              <td>1101</td>
               <td>92</td>
               <td>38</td>
-              <td>218</td>
-              <td>17.4</td>
+              <td>222</td>
+              <td>17.1</td>
               <td>6</td>
-              <td>25</td>
-              <td>24.0</td>
+              <td>26</td>
+              <td>23.1</td>
               <td>10</td>
               <td>30</td>
               <td>33.3</td>
-              <td>152</td>
+              <td>156</td>
               <td>49</td>
               <td>56</td>
-              <td>20</td>
-              <td>141</td>
-              <td>0.35</td>
+              <td>21</td>
+              <td>151</td>
+              <td>0.32</td>
             </tr>
             
             <tr>
               <td class="sticky">Li</td>
-              <td>32</td>
-              <td>802</td>
-              <td>65</td>
-              <td>27</td>
-              <td>197</td>
+              <td>33</td>
+              <td>826</td>
+              <td>67</td>
+              <td>28</td>
+              <td>204</td>
               <td>13.7</td>
               <td>0</td>
-              <td>5</td>
+              <td>6</td>
               <td>0.0</td>
               <td>11</td>
               <td>46</td>
               <td>23.9</td>
-              <td>119</td>
+              <td>124</td>
               <td>22</td>
-              <td>42</td>
+              <td>43</td>
               <td>40</td>
-              <td>97</td>
-              <td>0.23</td>
+              <td>102</td>
+              <td>0.22</td>
             </tr>
             
             <tr>
               <td class="sticky">Saito</td>
-              <td>38</td>
-              <td>863</td>
+              <td>39</td>
+              <td>871</td>
               <td>64</td>
               <td>30</td>
-              <td>127</td>
-              <td>23.6</td>
+              <td>129</td>
+              <td>23.3</td>
               <td>3</td>
               <td>7</td>
               <td>42.9</td>
               <td>1</td>
               <td>6</td>
               <td>16.7</td>
-              <td>66</td>
-              <td>12</td>
-              <td>21</td>
+              <td>67</td>
+              <td>13</td>
+              <td>22</td>
               <td>1</td>
-              <td>109</td>
-              <td>0.11</td>
+              <td>113</td>
+              <td>0.12</td>
             </tr>
             
             <tr>
               <td class="sticky">DeMarti</td>
-              <td>37</td>
-              <td>1234</td>
-              <td>462</td>
-              <td>189</td>
-              <td>516</td>
-              <td>36.6</td>
+              <td>38</td>
+              <td>1268</td>
+              <td>469</td>
+              <td>191</td>
+              <td>524</td>
+              <td>36.5</td>
               <td>2</td>
               <td>9</td>
               <td>22.2</td>
-              <td>82</td>
-              <td>200</td>
-              <td>41.0</td>
-              <td>541</td>
+              <td>85</td>
+              <td>205</td>
+              <td>41.5</td>
+              <td>558</td>
               <td>35</td>
-              <td>121</td>
+              <td>127</td>
               <td>116</td>
-              <td>123</td>
+              <td>127</td>
               <td>0.28</td>
             </tr>
             
             <tr>
               <td class="sticky">Yosy</td>
-              <td>38</td>
-              <td>1040</td>
-              <td>62</td>
-              <td>26</td>
-              <td>184</td>
-              <td>14.1</td>
+              <td>39</td>
+              <td>1073</td>
+              <td>67</td>
+              <td>28</td>
+              <td>193</td>
+              <td>14.5</td>
               <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>10</td>
-              <td>46</td>
-              <td>21.7</td>
-              <td>78</td>
+              <td>1</td>
+              <td>0.0</td>
               <td>11</td>
               <td>48</td>
+              <td>22.9</td>
+              <td>84</td>
+              <td>11</td>
+              <td>50</td>
               <td>2</td>
-              <td>106</td>
+              <td>109</td>
               <td>0.10</td>
             </tr>
             
             <tr class="totals">
               <td class="sticky">Galaxy</td>
-              <td>39</td>
+              <td>40</td>
               <td>-</td>
-              <td>893</td>
-              <td>376</td>
-              <td>1613</td>
-              <td>23.3</td>
+              <td>907</td>
+              <td>381</td>
+              <td>1655</td>
+              <td>23.0</td>
               <td>11</td>
-              <td>47</td>
-              <td>23.4</td>
-              <td>130</td>
-              <td>378</td>
-              <td>34.4</td>
-              <td>1467</td>
-              <td>179</td>
-              <td>455</td>
-              <td>213</td>
-              <td>856</td>
-              <td>0.21</td>
+              <td>52</td>
+              <td>21.2</td>
+              <td>134</td>
+              <td>385</td>
+              <td>34.8</td>
+              <td>1515</td>
+              <td>180</td>
+              <td>468</td>
+              <td>215</td>
+              <td>890</td>
+              <td>0.20</td>
             </tr>
             <tr class="totals opponent">
               <td class="sticky">Opponent</td>
-              <td>39</td>
+              <td>40</td>
               <td>-</td>
-              <td>760</td>
-              <td>321</td>
-              <td>1807</td>
-              <td>17.8</td>
+              <td>778</td>
+              <td>330</td>
+              <td>1861</td>
+              <td>17.7</td>
               <td>12</td>
-              <td>37</td>
-              <td>32.4</td>
+              <td>39</td>
+              <td>30.8</td>
               <td>106</td>
-              <td>288</td>
-              <td>36.8</td>
-              <td>1273</td>
+              <td>290</td>
+              <td>36.6</td>
+              <td>1305</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
-              <td>738</td>
+              <td>756</td>
               <td>-</td>
             </tr>
           </tbody>
@@ -13226,19 +13557,19 @@
             
             <tr>
               <td class="sticky">Long</td>
-              <td>37</td>
-              <td>22.7</td>
+              <td>38</td>
+              <td>22.5</td>
               <td>0.5</td>
               <td>0.2</td>
               <td>1.6</td>
-              <td>13.3</td>
+              <td>13.1</td>
               <td>0.0</td>
               <td>0.0</td>
               <td>0</td>
               <td>0.1</td>
               <td>0.4</td>
               <td>13.3</td>
-              <td>1.7</td>
+              <td>1.6</td>
               <td>0.3</td>
               <td>0.9</td>
               <td>0.1</td>
@@ -13248,19 +13579,19 @@
             
             <tr>
               <td class="sticky">Laurel</td>
-              <td>39</td>
-              <td>25.4</td>
+              <td>40</td>
+              <td>25.2</td>
               <td>1.4</td>
               <td>0.6</td>
-              <td>3.6</td>
-              <td>17.3</td>
+              <td>3.5</td>
+              <td>17.1</td>
               <td>0.0</td>
               <td>0.0</td>
               <td>0</td>
               <td>0.2</td>
               <td>0.5</td>
               <td>38.1</td>
-              <td>3.5</td>
+              <td>3.6</td>
               <td>0.2</td>
               <td>1.0</td>
               <td>0.3</td>
@@ -13270,14 +13601,14 @@
             
             <tr>
               <td class="sticky">Gerding</td>
-              <td>36</td>
-              <td>26.6</td>
-              <td>2.1</td>
+              <td>37</td>
+              <td>26.9</td>
+              <td>2.0</td>
               <td>0.9</td>
-              <td>4.8</td>
-              <td>19.8</td>
+              <td>4.9</td>
+              <td>18.7</td>
               <td>0.0</td>
-              <td>0.0</td>
+              <td>0.1</td>
               <td>0.0</td>
               <td>0.2</td>
               <td>0.4</td>
@@ -13287,35 +13618,35 @@
               <td>2.6</td>
               <td>0.5</td>
               <td>3.7</td>
-              <td>0.23</td>
+              <td>0.22</td>
             </tr>
             
             <tr>
               <td class="sticky">Iwai</td>
-              <td>36</td>
-              <td>29.6</td>
-              <td>2.6</td>
-              <td>1.1</td>
-              <td>6.1</td>
-              <td>17.4</td>
+              <td>37</td>
+              <td>29.8</td>
+              <td>2.5</td>
+              <td>1.0</td>
+              <td>6.0</td>
+              <td>17.1</td>
               <td>0.2</td>
               <td>0.7</td>
-              <td>24.0</td>
+              <td>23.1</td>
               <td>0.3</td>
               <td>0.8</td>
               <td>33.3</td>
               <td>4.2</td>
-              <td>1.4</td>
-              <td>1.6</td>
+              <td>1.3</td>
+              <td>1.5</td>
               <td>0.6</td>
-              <td>3.9</td>
-              <td>0.35</td>
+              <td>4.1</td>
+              <td>0.32</td>
             </tr>
             
             <tr>
               <td class="sticky">Li</td>
-              <td>32</td>
-              <td>25.1</td>
+              <td>33</td>
+              <td>25.0</td>
               <td>2.0</td>
               <td>0.8</td>
               <td>6.2</td>
@@ -13326,22 +13657,22 @@
               <td>0.3</td>
               <td>1.4</td>
               <td>23.9</td>
-              <td>3.7</td>
+              <td>3.8</td>
               <td>0.7</td>
               <td>1.3</td>
               <td>1.2</td>
-              <td>3.0</td>
-              <td>0.23</td>
+              <td>3.1</td>
+              <td>0.22</td>
             </tr>
             
             <tr>
               <td class="sticky">Saito</td>
-              <td>38</td>
-              <td>22.7</td>
-              <td>1.7</td>
+              <td>39</td>
+              <td>22.3</td>
+              <td>1.6</td>
               <td>0.8</td>
               <td>3.3</td>
-              <td>23.6</td>
+              <td>23.3</td>
               <td>0.1</td>
               <td>0.2</td>
               <td>42.9</td>
@@ -13353,24 +13684,24 @@
               <td>0.6</td>
               <td>0.0</td>
               <td>2.9</td>
-              <td>0.11</td>
+              <td>0.12</td>
             </tr>
             
             <tr>
               <td class="sticky">DeMarti</td>
-              <td>37</td>
+              <td>38</td>
               <td>33.4</td>
-              <td>12.5</td>
-              <td>5.1</td>
-              <td>13.9</td>
-              <td>36.6</td>
+              <td>12.3</td>
+              <td>5.0</td>
+              <td>13.8</td>
+              <td>36.5</td>
               <td>0.1</td>
               <td>0.2</td>
               <td>22.2</td>
               <td>2.2</td>
               <td>5.4</td>
-              <td>41.0</td>
-              <td>14.6</td>
+              <td>41.5</td>
+              <td>14.7</td>
               <td>0.9</td>
               <td>3.3</td>
               <td>3.1</td>
@@ -13380,19 +13711,19 @@
             
             <tr>
               <td class="sticky">Yosy</td>
-              <td>38</td>
-              <td>27.4</td>
-              <td>1.6</td>
+              <td>39</td>
+              <td>27.5</td>
+              <td>1.7</td>
               <td>0.7</td>
-              <td>4.8</td>
-              <td>14.1</td>
+              <td>4.9</td>
+              <td>14.5</td>
               <td>0.0</td>
               <td>0.0</td>
-              <td>0</td>
+              <td>0.0</td>
               <td>0.3</td>
               <td>1.2</td>
-              <td>21.7</td>
-              <td>2.1</td>
+              <td>22.9</td>
+              <td>2.2</td>
               <td>0.3</td>
               <td>1.3</td>
               <td>0.1</td>
@@ -13402,39 +13733,39 @@
             
             <tr class="totals">
               <td class="sticky">Galaxy</td>
-              <td>39</td>
+              <td>40</td>
               <td>-</td>
-              <td>22.9</td>
-              <td>9.6</td>
+              <td>22.7</td>
+              <td>9.5</td>
               <td>41.4</td>
-              <td>23.3</td>
+              <td>23.0</td>
               <td>0.3</td>
-              <td>1.2</td>
-              <td>23.4</td>
-              <td>3.3</td>
-              <td>9.7</td>
-              <td>34.4</td>
-              <td>37.6</td>
-              <td>4.6</td>
+              <td>1.3</td>
+              <td>21.2</td>
+              <td>3.4</td>
+              <td>9.6</td>
+              <td>34.8</td>
+              <td>37.9</td>
+              <td>4.5</td>
               <td>11.7</td>
-              <td>5.5</td>
-              <td>21.9</td>
-              <td>0.21</td>
+              <td>5.4</td>
+              <td>22.2</td>
+              <td>0.20</td>
             </tr>
             <tr class="totals opponent">
               <td class="sticky">Opponent</td>
-              <td>39</td>
+              <td>40</td>
               <td>-</td>
-              <td>19.5</td>
+              <td>19.4</td>
               <td>8.2</td>
-              <td>46.3</td>
-              <td>17.8</td>
+              <td>46.5</td>
+              <td>17.7</td>
               <td>0.3</td>
-              <td>0.9</td>
-              <td>32.4</td>
-              <td>2.7</td>
-              <td>7.4</td>
-              <td>36.8</td>
+              <td>1.0</td>
+              <td>30.8</td>
+              <td>2.6</td>
+              <td>7.2</td>
+              <td>36.6</td>
               <td>32.6</td>
               <td>-</td>
               <td>-</td>
@@ -13476,6 +13807,25 @@
             </tr>
           </thead>
           <tbody>
+    <tr>
+      <td class="sticky">Red Phoenix</td>
+      <td>2026-04-18 (B)</td>
+      <td>L 14-18</td>
+      <td>-</td>
+      <td>14</td>
+      <td>5-42</td>
+      <td>0-5</td>
+      <td>4-7</td>
+      <td>48</td>
+      <td>1</td>
+      <td>34</td>
+      <td>13</td>
+      <td>2</td>
+      <td>18</td>
+      <td>30</td>
+      <td>-</td>
+    </tr>
+    
     <tr>
       <td class="sticky">Sakura</td>
       <td>2026-04-18 (A)</td>
@@ -14247,6 +14597,25 @@
           </thead>
           <tbody>
     <tr>
+      <td class="sticky">Red Phoenix</td>
+      <td>2026-04-18 (B)</td>
+      <td>L 14-18</td>
+      <td>16</td>
+      <td>0</td>
+      <td>0-1</td>
+      <td>0-0</td>
+      <td>0-0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>+1</td>
+    </tr>
+    
+    <tr>
       <td class="sticky">Sakura</td>
       <td>2026-04-18 (A)</td>
       <td>W 23-22</td>
@@ -14978,6 +15347,25 @@
             </tr>
           </thead>
           <tbody>
+    <tr>
+      <td class="sticky">Red Phoenix</td>
+      <td>2026-04-18 (B)</td>
+      <td>L 14-18</td>
+      <td>16</td>
+      <td>0</td>
+      <td>0-1</td>
+      <td>0-0</td>
+      <td>0-0</td>
+      <td>7</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>-7</td>
+    </tr>
+    
     <tr>
       <td class="sticky">Sakura</td>
       <td>2026-04-18 (A)</td>
@@ -15749,6 +16137,25 @@
           </thead>
           <tbody>
     <tr>
+      <td class="sticky">Red Phoenix</td>
+      <td>2026-04-18 (B)</td>
+      <td>L 14-18</td>
+      <td>36</td>
+      <td>0</td>
+      <td>0-10</td>
+      <td>0-2</td>
+      <td>0-0</td>
+      <td>4</td>
+      <td>0</td>
+      <td>5</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>-9</td>
+    </tr>
+    
+    <tr>
       <td class="sticky">Sakura</td>
       <td>2026-04-18 (A)</td>
       <td>W 23-22</td>
@@ -16461,6 +16868,25 @@
             </tr>
           </thead>
           <tbody>
+    <tr>
+      <td class="sticky">Red Phoenix</td>
+      <td>2026-04-18 (B)</td>
+      <td>L 14-18</td>
+      <td>34</td>
+      <td>0</td>
+      <td>0-4</td>
+      <td>0-1</td>
+      <td>0-0</td>
+      <td>4</td>
+      <td>0</td>
+      <td>10</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>-2</td>
+    </tr>
+    
     <tr>
       <td class="sticky">Sakura</td>
       <td>2026-04-18 (A)</td>
@@ -17175,6 +17601,25 @@
           </thead>
           <tbody>
     <tr>
+      <td class="sticky">Red Phoenix</td>
+      <td>2026-04-18 (B)</td>
+      <td>L 14-18</td>
+      <td>24</td>
+      <td>2</td>
+      <td>1-7</td>
+      <td>0-1</td>
+      <td>0-0</td>
+      <td>5</td>
+      <td>0</td>
+      <td>5</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>+1</td>
+    </tr>
+    
+    <tr>
       <td class="sticky">Sakura</td>
       <td>2026-04-18 (A)</td>
       <td>W 23-22</td>
@@ -17811,6 +18256,25 @@
             </tr>
           </thead>
           <tbody>
+    <tr>
+      <td class="sticky">Red Phoenix</td>
+      <td>2026-04-18 (B)</td>
+      <td>L 14-18</td>
+      <td>8</td>
+      <td>0</td>
+      <td>0-2</td>
+      <td>0-0</td>
+      <td>0-0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>+0</td>
+    </tr>
+    
     <tr>
       <td class="sticky">Sakura</td>
       <td>2026-04-18 (A)</td>
@@ -18563,6 +19027,25 @@
           </thead>
           <tbody>
     <tr>
+      <td class="sticky">Red Phoenix</td>
+      <td>2026-04-18 (B)</td>
+      <td>L 14-18</td>
+      <td>34</td>
+      <td>7</td>
+      <td>2-8</td>
+      <td>0-0</td>
+      <td>3-5</td>
+      <td>17</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6</td>
+      <td>0</td>
+      <td>6</td>
+      <td>11</td>
+      <td>-4</td>
+    </tr>
+    
+    <tr>
       <td class="sticky">Sakura</td>
       <td>2026-04-18 (A)</td>
       <td>W 23-22</td>
@@ -19294,6 +19777,25 @@
             </tr>
           </thead>
           <tbody>
+    <tr>
+      <td class="sticky">Red Phoenix</td>
+      <td>2026-04-18 (B)</td>
+      <td>L 14-18</td>
+      <td>33</td>
+      <td>5</td>
+      <td>2-9</td>
+      <td>0-1</td>
+      <td>1-2</td>
+      <td>6</td>
+      <td>0</td>
+      <td>3</td>
+      <td>2</td>
+      <td>0</td>
+      <td>5</td>
+      <td>1</td>
+      <td>+0</td>
+    </tr>
+    
     <tr>
       <td class="sticky">Sakura</td>
       <td>2026-04-18 (A)</td>
