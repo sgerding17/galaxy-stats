@@ -1,0 +1,312 @@
+c 2000
+ig 1 2 3 5 22
+t g
+to 3
+fga o
+r 3
+fga 2
+r 22
+fga 22
+r o
+3fgm o
+oj 22 -> o
+fgm o
+fga 22
+r 22
+fga 5
+j -> g
+fga 22
+r 1
+to 1
+fga o
+r 22
+c 1730
+fga 3
+r o
+fgm o
+c 1630
+to 1
+c 1600
+ig 1 2 3 5 14
+to 14
+c 1500
+ig 21 3 5 14 25
+fga o
+r 14
+fga 21
+r o
+fgm o
+c 1415
+ig 21 3 5 14 25
+3fga 5
+r 3
+to 3
+fta o
+c 1315
+ig 5 22 14 25 21
+ftm o
+to 22
+fga o
+r 5
+fga 21
+r 21
+fga 22
+j -> o
+fgm o
+c 1130
+ig 5 1 14 22 25
+fta o
+r 22
+to 14
+c 1045
+fgm o
+c 1030
+to 25
+s 1
+c 1000
+ig 3 25 22 14 5
+fgm 22
+a 5
+fga 22
+r o
+3fga o
+r o
+fga o
+r 22
+fga 14
+r 22
+fta 22
+c 0800
+ig 3 22 14 5 2
+ftm 22
+fgm o
+fga 3
+j -> g
+fga 22
+r 22
+fgm 22
+c 0700
+to 5
+fga o
+r 22
+fgm 22
+a 14
+fga o
+r o
+fga o
+r 22
+fga 5
+r 14
+fga 22
+r o
+c 0515
+fga o
+r 5
+3fga 22
+r o
+fga o
+r 14
+to 14
+fga o
+r 22
+to 2
+c 0400
+ig 3 14 1 25 2
+s 14
+oj 3 -> o
+fga o
+r 14
+to 3
+fga o
+r 2
+to 2
+c 0200
+ig 3 25 5 21 1
+fga 21
+r o
+c 0130
+ig 21 2 5 22 25
+s 22
+fta 22
+ftm 22
+fga o
+r 25
+3fga 5
+r o
+fgm o
+c 0000
+c 2000 -> g
+ig 5 3 22 2 1
+fga 3
+r o
+s 1
+fga 2
+r o
+fga o
+r 22
+to 2
+fgm o
+to 1
+c 1800
+3fga 3
+r 2
+fga 2
+r 5
+fga 1
+r 22
+ftm 22
+c 1630
+ig 1 3 5 14 22
+ftm 22
+fga o
+b 14
+r o
+fga o
+r 14
+to 1
+s 22
+fga 22
+r 22
+fgm 22
+a 5
+s 1
+fga 22
+r o
+s 3
+fga 3
+j -> o
+c 1400
+ig 1 25 14 22 5
+s 1
+fga 25
+r o
+fga o
+r 25
+fga 22
+r g
+fga 14
+r o
+fga o
+r 25
+to 25
+fgm o
+c 1245
+fga 14
+r o
+fga o
+r o
+fga o
+r 22
+fga 1
+r o
+fga o
+b 25
+r 14
+fta 22
+c 1130
+ig 22 25 14 5 3
+ftm 22
+fga o
+r 5
+fgm 5
+s 21
+fga 21
+r g
+c 1000
+ig 3 5 14 21 25
+to 5
+fga o
+b 25
+r 3
+3fga 5
+r 3
+fga 25
+r o
+c 0900
+oj 21 -> g
+c 0845
+ig 3 25 14 21 2
+fga 14
+r 14
+c 0830
+ig 21 1 14 3 2
+to 3
+s 1
+fga 1
+r o
+fga o
+r o
+fgm o
+c 0730
+fga 21
+r 2
+ftm 1
+c 0700
+ig 14 1 3 22 2
+fta 1
+r 14
+fgm 22
+a 14
+fga o
+r 22
+c 0615
+ftm 22
+fta 22
+r 3
+oj 3 -> o
+c 0545
+ig 22 14 3 1 5
+3fga 5
+r o
+fga o
+r o
+3fga o
+r 22
+oj 14 -> g
+c 0415
+ig 5 3 1 25 22
+to 25
+fga o
+r o
+fga o
+r 3
+to 3
+s 5
+fga 22
+j -> o
+c 0230
+3fga 5
+r 5
+fgm 5
+fgm o
+c 0145
+fta 5
+ftm 5
+c 0145
+ig 1 3 5 14 22
+s 22
+fga 22
+r o
+fga o
+r o
+s 3
+c 0100
+ftm 3
+fta 3
+r o
+dj 22 -> g
+fgm 3
+a 1
+c 0045
+s 14
+fgm 22
+a 14
+c 0030
+s 22
+fta 3
+fta 3
+r 22
+oj 22 -> o
+fga o
+r g
+c 0000
