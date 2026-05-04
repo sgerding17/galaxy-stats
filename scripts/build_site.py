@@ -20,11 +20,7 @@ PLAYER_ORDER = sorted(players.keys(), key=int)
 def parse_game_log_name(path):
     filename = os.path.basename(path)
     (date_token, venue_token, opp_token) = filename.split(".")
-    base_date = date_token[:8]
-    suffix = date_token[8:]
-    date = datetime.strptime(base_date, "%Y%m%d").strftime("%Y-%m-%d")
-    if suffix:
-        date = f"{date} ({suffix.upper()})"
+    date = datetime.strptime(date_token[:8], "%Y%m%d").strftime("%Y-%m-%d")
     return {
         "date": date,
         "venue": venue_token.replace("_", " "),
