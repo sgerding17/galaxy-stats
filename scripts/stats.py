@@ -85,6 +85,18 @@ def count_stats(events):
         upcoming_events = [e.split() for e in events[line + 1:]]
         missing_opp_turnover = False
 
+        # If a Galaxy event happens while possession is still "o", an opp turnover
+        # is inferred (handled below as missing_opp_turnover). The inferred Galaxy
+        # interlude ends any prior opp 2nd-chance/POT state and starts a Galaxy POT
+        # window. Done before the handler so `to`/`oj` can then overwrite pot_for="o"
+        # for opp's fresh POT eligibility off the Galaxy turnover.
+        if possession == "o" and (
+            event_type in ("oj", "to")
+            or (event_type in ("3fgm", "fgm", "ftm", "3fga", "fga", "fta") and len(event) >= 2 and event[1] != "o")
+        ):
+            scp_for = ""
+            pot_for = "g"
+
         if event_type == "c":
             timestamp = event[1]
             new_clock = parse_timestamp(timestamp)
@@ -197,8 +209,13 @@ def count_stats(events):
                 stats[combo][stat] += 1
         last_pos = possession
 
-        if possession != pot_for:
-            pot_for = ""
+        # Shot attempts don't update possession (the next rebound does), so checking
+        # pot_for against possession here would wrongly clear a Galaxy POT window
+        # set above when possession is still the stale "o". The next rebound's event
+        # will run this cleanup with an authoritative possession.
+        if event_type not in ("3fga", "fga", "fta"):
+            if possession != pot_for:
+                pot_for = ""
         if possession != scp_for:
             scp_for = ""
 
