@@ -1,0 +1,262 @@
+c 2000
+ig 3 21 25 22 5
+t o
+fgm o
+fgm 22
+to 21
+fga 21
+r 22
+fgm 22
+ftm 22
+dj 5 -> g
+c 1715
+3fga 21
+r o
+fgm o
+to 22
+fga o
+r o
+fga o
+r o
+to 5
+dj 5 -> o
+fta o
+fta o
+r o
+fga o
+b 22
+r 22
+c 1400
+fga 5
+r o
+oj 5 -> g
+fga 22
+r 22
+fga 22
+r g
+to 5
+fga o
+r 3
+to 22
+c 1230
+ig 14 22 5 1 2
+fta o
+fta o
+r o
+fga o
+r o
+to 5
+fga o
+b 22
+r o
+fga o
+j -> o
+fgm o
+to 14
+3fga o
+j -> g
+c 0915
+ig 5 3 1 22 21
+ftm 1
+ftm 1
+s 5
+fga 5
+r o
+fga o
+b 22
+r 22
+to 21
+c 0745
+fga o
+r o
+fga 22
+r o
+s 1
+fgm 22
+s 5
+fta 3
+fta 3
+r o
+fga o
+r 3
+fga 1
+r g
+c 0500
+ig 1 25 22 3 5
+fga 3
+r 22
+fgm 22
+fga o
+r 22
+fga 3
+r o
+c 0400
+fga o
+b 22
+r 22
+fga 22
+r 25
+fgm 22
+a 3
+fga o
+r o
+fgm o
+c 0300
+to 22
+c 0245
+ig 2 25 3 14 1
+3fgm o
+to 14
+c 0200
+s 3
+oj 1 -> o
+fga o
+r 3
+c 0100
+fga 14
+r 2
+fga 2
+r 2
+fgm 3
+a 25
+fga o
+r 2
+to 2
+c 0000
+c 2000 -> g
+ig 5 25 21 14 22
+fga 21
+r o
+fga o
+r 22
+fga 22
+j -> o
+fga o
+r o
+fga o
+r 5
+fga 21
+r o
+fta o
+ftm o
+fga 22
+r o
+fga o
+r o
+3fga o
+r g
+fga 22
+r 21
+fga 21
+r o
+c 1630
+fgm o
+to 22
+fga o
+r 22
+to 21
+fga o
+r 5
+fgm 25
+a 22
+c 1500
+ig 3 5 25 22 1
+fga o
+r o
+fga o
+b 22
+r 22
+fga 3
+r 25
+fga 25
+r 25
+fga 22
+r o
+s 25
+fga 3
+r o
+ftm o
+c 1325
+ig 1 25 2 3 5
+ftm o
+fga 25
+r 5
+fgm 5
+fga o
+r 5
+fga 25
+j -> g
+oj 3 -> o
+fga o
+j -> g
+fga 5
+r 2
+c 1015
+ig 1 3 14 22 25
+fgm 14
+a 3
+fga o
+r 22
+fga 25
+r o
+fga o
+b 22
+r 22
+fga 25
+r o
+fga o
+b 3
+r 22
+fga 3
+r 22
+fta 22
+ftm 22
+c 0730
+fga o
+r 14
+to 1
+c 0630
+ig 1 14 3 22 5
+dj 5 -> o
+c 0600
+s 3
+to 14
+fga o
+r 22
+to 22
+fta o
+c 0500
+ig 14 5 22 2 25
+ftm o
+to 14
+dj 2 -> g
+c 0430
+to 14
+fgm o
+to 5
+s 2
+to 2
+s 22
+fgm 25
+c 0230
+s 2
+oj 2 -> o
+s 25
+fga 25
+r o
+fga o
+r o
+fga o
+r 22
+c 0130
+ig 25 3 1 22 5
+to 1
+s 22
+c 0100
+to 3
+fga o
+r 3
+to 3
+fga o
+r 5
+c 0000
