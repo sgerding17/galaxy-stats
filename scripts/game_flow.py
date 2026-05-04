@@ -88,7 +88,7 @@ def compute_game_flow(path):
     return points
 
 
-def generate_svg(path, width=600, height=160):
+def generate_svg(path, width=600, height=220):
     """Generate an inline SVG string showing the game flow chart."""
     points = compute_game_flow(path)
     if len(points) < 2:
@@ -98,7 +98,9 @@ def generate_svg(path, width=600, height=160):
     margins = [m for _, m in points]
     max_abs = max(abs(m) for m in margins) or 1
 
-    pad_l, pad_r, pad_t, pad_b = 30, 10, 15, 20
+    pad_l, pad_r, pad_t, pad_b = 42, 12, 22, 32
+    axis_label_size = 18
+    half_label_size = 16
     chart_w = width - pad_l - pad_r
     chart_h = height - pad_t - pad_b
     mid_y = pad_t + chart_h / 2
@@ -158,7 +160,7 @@ def generate_svg(path, width=600, height=160):
     for val in [max_abs, 0, -max_abs]:
         y = y_pos(val)
         label = f"+{int(val)}" if val > 0 else str(int(val))
-        labels_svg += f'<text x="{pad_l - 4}" y="{y + 4}" text-anchor="end" font-size="12" font-weight="bold" fill="#999">{label}</text>\n'
+        labels_svg += f'<text x="{pad_l - 6}" y="{y + 6}" text-anchor="end" font-size="{axis_label_size}" font-weight="bold" fill="#999">{label}</text>\n'
 
     # Tick marks on y-axis
     tick_svg = ""
@@ -176,7 +178,7 @@ def generate_svg(path, width=600, height=160):
   <line x1="{pad_l}" y1="{mid_y:.1f}" x2="{pad_l + chart_w}" y2="{mid_y:.1f}" stroke="#ccc" stroke-width="1"/>
   <!-- half marker -->
   <line x1="{half_x:.1f}" y1="{pad_t}" x2="{half_x:.1f}" y2="{pad_t + chart_h}" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
-  <text x="{half_x:.1f}" y="{pad_t + chart_h + 14}" text-anchor="middle" font-size="10" fill="#999">Half</text>
+  <text x="{half_x:.1f}" y="{pad_t + chart_h + 22}" text-anchor="middle" font-size="{half_label_size}" fill="#999">Half</text>
   <!-- filled areas -->
   <path d="{blue_path}" fill="#0f4c81" opacity="0.3"/>
   <path d="{red_path}" fill="#c44040" opacity="0.3"/>
