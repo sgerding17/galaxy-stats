@@ -19,8 +19,8 @@ API key:
     export GEMINI_API_KEY=your_key_here
 
 Model selection (optional):
-    export GEMINI_MODEL=gemini-2.0-flash   # default
-    export GEMINI_MODEL=gemini-1.5-pro     # slower, may be more precise
+    export GEMINI_MODEL=gemini-2.5-flash   # default
+    export GEMINI_MODEL=gemini-2.5-pro     # slower, may be more precise
 """
 
 import os
@@ -205,7 +205,7 @@ def main() -> None:
     youtube_url = sys.argv[1]
     log_path = Path(sys.argv[2])
     output_path = Path(sys.argv[3]) if len(sys.argv) > 3 else None
-    model_name = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+    model_name = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 
     if not log_path.exists():
         print(f"Log file not found: {log_path}", file=sys.stderr)

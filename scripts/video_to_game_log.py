@@ -15,8 +15,8 @@ API key:
     export GEMINI_API_KEY=your_key_here
 
 Model selection (optional):
-    export GEMINI_MODEL=gemini-2.0-flash   # default; cheaper, faster
-    export GEMINI_MODEL=gemini-1.5-pro     # more thorough
+    export GEMINI_MODEL=gemini-2.5-flash   # default; cheaper, faster
+    export GEMINI_MODEL=gemini-2.5-pro     # more thorough
 """
 
 import os
@@ -197,7 +197,7 @@ def main() -> None:
 
     youtube_url = sys.argv[1]
     output_file = Path(sys.argv[2]) if len(sys.argv) > 2 else None
-    model_name = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+    model_name = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 
     repo_root = Path(__file__).resolve().parent.parent
     game_logs_dir = repo_root / "game_logs"
