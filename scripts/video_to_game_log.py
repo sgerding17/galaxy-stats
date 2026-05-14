@@ -9,7 +9,7 @@ Usage:
     If output_file is omitted, the log is printed to stdout.
 
 Requirements:
-    pip install google-generativeai
+    pip install requests
 
 API key:
     export GEMINI_API_KEY=your_key_here
@@ -19,15 +19,12 @@ Model selection (optional):
     export GEMINI_MODEL=gemini-2.5-pro     # more thorough
 """
 
+import json
 import os
 import sys
 from pathlib import Path
 
-try:
-    import google.generativeai as genai
-except ImportError:
-    print("Install the Gemini SDK:  pip install google-generativeai", file=sys.stderr)
-    sys.exit(1)
+import requests
 
 
 # ── Roster ────────────────────────────────────────────────────────────────────
@@ -143,7 +140,10 @@ def build_prompt(game_logs_dir: Path) -> str:
     )
 
 
-# ── Gemini call ───────────────────────────────────────────────────────────────
+# ── Gemini REST call ──────────────────────────────────────────────────────────
+
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+
 
 def generate_game_log(youtube_url: str, game_logs_dir: Path, model_name: str) -> str:
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -152,37 +152,37 @@ def generate_game_log(youtube_url: str, game_logs_dir: Path, model_name: str) ->
             "Set the GEMINI_API_KEY environment variable before running."
         )
 
-    genai.configure(api_key=api_key)
-
     prompt_text = build_prompt(game_logs_dir)
-
-    # Pass the YouTube URL as a video part alongside the text prompt.
-    # Gemini 1.5 Pro and 2.0 Flash both accept YouTube URLs via FileData.
-    video_part = genai.protos.Part(
-        file_data=genai.protos.FileData(
-            mime_type="video/*",
-            file_uri=youtube_url,
-        )
-    )
-
-    model = genai.GenerativeModel(
-        model_name,
-        generation_config=genai.types.GenerationConfig(
-            temperature=0.2,   # low temperature for factual transcription
-            max_output_tokens=8192,
-        ),
-    )
+    url = GEMINI_URL.format(model=model_name)
+    payload = {
+        "contents": [
+            {
+                "parts": [
+                    {"file_data": {"mime_type": "video/*", "file_uri": youtube_url}},
+                    {"text": prompt_text},
+                ]
+            }
+        ],
+        "generationConfig": {
+            "temperature": 0.2,
+            "maxOutputTokens": 8192,
+        },
+    }
 
     print(f"[video_to_game_log] model={model_name}", file=sys.stderr)
     print(f"[video_to_game_log] video={youtube_url}", file=sys.stderr)
     print("[video_to_game_log] waiting for response (this can take a few minutes)...", file=sys.stderr)
 
-    response = model.generate_content(
-        [video_part, prompt_text],
-        request_options={"timeout": 600},
-    )
+    resp = requests.post(url, params={"key": api_key}, json=payload, timeout=600)
 
-    return response.text
+    if not resp.ok:
+        raise RuntimeError(f"Gemini API error {resp.status_code}: {resp.text}")
+
+    data = resp.json()
+    try:
+        return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+    except (KeyError, IndexError) as e:
+        raise RuntimeError(f"Unexpected response shape: {e}\n{json.dumps(data, indent=2)}")
 
 
 # ── Entry point ───────────────────────────────────────────────────────────────

@@ -13,7 +13,7 @@ Usage:
     If output_file equals log_file, the file is updated in place.
 
 Requirements:
-    pip install google-generativeai
+    pip install requests
 
 API key:
     export GEMINI_API_KEY=your_key_here
@@ -23,16 +23,13 @@ Model selection (optional):
     export GEMINI_MODEL=gemini-2.5-pro     # slower, may be more precise
 """
 
+import json
 import os
 import re
 import sys
 from pathlib import Path
 
-try:
-    import google.generativeai as genai
-except ImportError:
-    print("Install the Gemini SDK:  pip install google-generativeai", file=sys.stderr)
-    sys.exit(1)
+import requests
 
 
 # ── Prompt ────────────────────────────────────────────────────────────────────
@@ -102,28 +99,19 @@ _YT_PATTERN = re.compile(r"\s+yt\d+\??$")
 
 
 def strip_yt(line: str) -> str:
-    """Remove a yt annotation from a line so we can compare content."""
     return _YT_PATTERN.sub("", line).rstrip()
 
 
 def validate(original: str, annotated: str) -> list[str]:
-    """
-    Return a list of warning strings for any non-clock lines that changed,
-    or clock lines whose non-yt content changed.
-    """
     orig_lines = original.strip().splitlines()
     ann_lines = annotated.strip().splitlines()
-
     warnings = []
 
     if len(orig_lines) != len(ann_lines):
         warnings.append(
             f"Line count changed: original={len(orig_lines)}, annotated={len(ann_lines)}"
         )
-        # Still check as many lines as we can
-        check_count = min(len(orig_lines), len(ann_lines))
-    else:
-        check_count = len(orig_lines)
+    check_count = min(len(orig_lines), len(ann_lines))
 
     for i in range(check_count):
         o = orig_lines[i].strip()
@@ -132,8 +120,6 @@ def validate(original: str, annotated: str) -> list[str]:
             continue
         is_clock = o.startswith("c ") or o == "c"
         if is_clock:
-            # Allowed change: yt timestamp was added. Verify the base content
-            # (everything before the yt token) is unchanged.
             if strip_yt(a) != strip_yt(o):
                 warnings.append(
                     f"Line {i+1}: clock event content changed\n"
@@ -146,7 +132,6 @@ def validate(original: str, annotated: str) -> list[str]:
                 f"  original:  {o!r}\n"
                 f"  annotated: {a!r}"
             )
-
     return warnings
 
 
@@ -154,42 +139,46 @@ def count_yt(text: str) -> int:
     return sum(1 for line in text.splitlines() if re.search(r"\byt\d+", line))
 
 
-# ── Gemini call ───────────────────────────────────────────────────────────────
+# ── Gemini REST call ──────────────────────────────────────────────────────────
+
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+
 
 def annotate(youtube_url: str, log_text: str, model_name: str) -> str:
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        raise EnvironmentError(
-            "Set the GEMINI_API_KEY environment variable before running."
-        )
+        raise EnvironmentError("Set the GEMINI_API_KEY environment variable before running.")
 
-    genai.configure(api_key=api_key)
-
-    video_part = genai.protos.Part(
-        file_data=genai.protos.FileData(
-            mime_type="video/*",
-            file_uri=youtube_url,
-        )
-    )
-
-    model = genai.GenerativeModel(
-        model_name,
-        generation_config=genai.types.GenerationConfig(
-            temperature=0.1,     # very low — this is a lookup task, not creative
-            max_output_tokens=8192,
-        ),
-    )
+    url = GEMINI_URL.format(model=model_name)
+    payload = {
+        "contents": [
+            {
+                "parts": [
+                    {"file_data": {"mime_type": "video/*", "file_uri": youtube_url}},
+                    {"text": build_prompt(log_text)},
+                ]
+            }
+        ],
+        "generationConfig": {
+            "temperature": 0.1,
+            "maxOutputTokens": 8192,
+        },
+    }
 
     print(f"[annotate_yt] model={model_name}", file=sys.stderr)
     print(f"[annotate_yt] video={youtube_url}", file=sys.stderr)
     print("[annotate_yt] waiting for response...", file=sys.stderr)
 
-    response = model.generate_content(
-        [video_part, build_prompt(log_text)],
-        request_options={"timeout": 600},
-    )
+    resp = requests.post(url, params={"key": api_key}, json=payload, timeout=600)
 
-    return response.text.strip()
+    if not resp.ok:
+        raise RuntimeError(f"Gemini API error {resp.status_code}: {resp.text}")
+
+    data = resp.json()
+    try:
+        return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+    except (KeyError, IndexError) as e:
+        raise RuntimeError(f"Unexpected response shape: {e}\n{json.dumps(data, indent=2)}")
 
 
 # ── Entry point ───────────────────────────────────────────────────────────────
@@ -216,7 +205,6 @@ def main() -> None:
 
     result = annotate(youtube_url, log_text, model_name)
 
-    # Validate — catch cases where Gemini changed events it shouldn't have
     warnings = validate(log_text, result)
     if warnings:
         print("[annotate_yt] WARNINGS — review before using this output:", file=sys.stderr)
