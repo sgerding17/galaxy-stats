@@ -48,30 +48,19 @@ def played_in_game(game_stats, player):
     return game_stats[player]["sec"] > 0
 
 
-def team_stat_row(label, galaxy_val, opp_val, indent=False, lower_is_better=False,
-                  compare=None):
-    """Generate a single row for the team stats comparison table.
-    compare: optional (g_num, o_num) tuple to override comparison values."""
-    g_str = str(galaxy_val)
-    o_str = str(opp_val)
-    # Determine which side to bold
+def comparison_numbers(galaxy_val, opp_val, compare=None):
     if compare is not None:
-        g_num, o_num = compare
-    else:
-        try:
-            g_num = float(galaxy_val) if galaxy_val != "-" else None
-            o_num = float(opp_val) if opp_val != "-" else None
-        except (ValueError, TypeError):
-            g_num, o_num = None, None
-    if g_num is not None and o_num is not None and g_num != o_num:
-        if lower_is_better:
-            g_bold = g_num < o_num
-        else:
-            g_bold = g_num > o_num
-        o_bold = not g_bold
-    else:
-        g_bold = o_bold = False
-    # Compute bar widths with sigmoid stretch to amplify mid-range differences
+        return compare
+    try:
+        g_num = float(galaxy_val) if galaxy_val != "-" else None
+        o_num = float(opp_val) if opp_val != "-" else None
+        return g_num, o_num
+    except (ValueError, TypeError):
+        return None, None
+
+
+def comparison_widths(g_num, o_num, lower_is_better=False):
+    """Compute bar widths with sigmoid stretch to amplify mid-range differences."""
     no_comparison = g_num is None or o_num is None
     if not no_comparison and (g_num + o_num) > 0:
         g_pct = 100 * g_num / (g_num + o_num)
@@ -88,18 +77,70 @@ def team_stat_row(label, galaxy_val, opp_val, indent=False, lower_is_better=Fals
         o_pct = 100 - g_pct
     else:
         g_pct = o_pct = 50
-    g_cell = f"<strong>{g_str}</strong>" if g_bold else g_str
-    o_cell = f"<strong>{o_str}</strong>" if o_bold else o_str
-    indent_class = ' class="ts-indent"' if indent else ""
+    return no_comparison, g_pct, o_pct
+
+
+def comparison_bar(g_num, o_num, lower_is_better=False):
+    no_comparison, g_pct, o_pct = comparison_widths(g_num, o_num, lower_is_better)
     if no_comparison:
-        bar_html = '<span class="bar-na" style="width:100%"></span>'
+        return '<span class="bar-na" style="width:100%"></span>'
+    if o_pct == 0:
+        return '<span class="bar-g" style="width:100%"></span>'
+    if g_pct == 0:
+        return '<span class="bar-o" style="width:100%"></span>'
+    return f'<span class="bar-g" style="width:{g_pct}%"></span><span class="bar-o" style="width:{o_pct}%"></span>'
+
+
+def comparison_bold_flags(g_num, o_num, lower_is_better=False):
+    if g_num is None or o_num is None or g_num == o_num:
+        return False, False
+    if lower_is_better:
+        g_bold = g_num < o_num
     else:
-        if o_pct == 0:
-            bar_html = '<span class="bar-g" style="width:100%"></span>'
-        elif g_pct == 0:
-            bar_html = '<span class="bar-o" style="width:100%"></span>'
-        else:
-            bar_html = f'<span class="bar-g" style="width:{g_pct}%"></span><span class="bar-o" style="width:{o_pct}%"></span>'
+        g_bold = g_num > o_num
+    return g_bold, not g_bold
+
+
+def stat_part(value, bold=False):
+    value = html.escape(str(value))
+    return f"<strong>{value}</strong>" if bold else value
+
+
+def made_attempt_cell(made, attempts, made_bold=False, attempts_bold=False):
+    return f"{stat_part(made, made_bold)}-{stat_part(attempts, attempts_bold)}"
+
+
+def split_comparison_bar(made_compare, attempt_compare):
+    made_bar = comparison_bar(*made_compare)
+    attempt_bar = comparison_bar(*attempt_compare)
+    return f"""
+          <span class="split-bar" aria-label="Made shots on top, attempts on bottom">
+            <span class="split-row">{made_bar}</span>
+            <span class="split-row">{attempt_bar}</span>
+          </span>"""
+
+
+def team_stat_row(label, galaxy_val, opp_val, indent=False, lower_is_better=False,
+                  compare=None, split_compare=None):
+    """Generate a single row for the team stats comparison table.
+    compare: optional (g_num, o_num) tuple to override comparison values.
+    split_compare: optional ((g_made, o_made), (g_attempts, o_attempts)) tuple."""
+    g_str = str(galaxy_val)
+    o_str = str(opp_val)
+    if split_compare is not None:
+        (g_made, o_made), (g_attempts, o_attempts) = split_compare
+        g_made_bold, o_made_bold = comparison_bold_flags(g_made, o_made)
+        g_attempts_bold, o_attempts_bold = comparison_bold_flags(g_attempts, o_attempts)
+        g_cell = made_attempt_cell(g_made, g_attempts, g_made_bold, g_attempts_bold)
+        o_cell = made_attempt_cell(o_made, o_attempts, o_made_bold, o_attempts_bold)
+        bar_html = split_comparison_bar(*split_compare)
+    else:
+        g_num, o_num = comparison_numbers(galaxy_val, opp_val, compare)
+        g_bold, o_bold = comparison_bold_flags(g_num, o_num, lower_is_better)
+        g_cell = f"<strong>{g_str}</strong>" if g_bold else g_str
+        o_cell = f"<strong>{o_str}</strong>" if o_bold else o_str
+        bar_html = comparison_bar(g_num, o_num, lower_is_better)
+    indent_class = ' class="ts-indent"' if indent else ""
     return f"""
       <tr>
         <td{indent_class}>{label}</td>
@@ -113,11 +154,11 @@ def team_stats_section(game):
     g = game["stats"]["g"]
     o = game["stats"]["o"]
     rows = "".join([
-        team_stat_row("FG", f"{g['fgm']}-{g['fga']}", f"{o['fgm']}-{o['fga']}", compare=(g['fga'], o['fga'])),
+        team_stat_row("FG", f"{g['fgm']}-{g['fga']}", f"{o['fgm']}-{o['fga']}", split_compare=((g['fgm'], o['fgm']), (g['fga'], o['fga']))),
         team_stat_row("Field Goal %", percent(g['fgm'], g['fga']), percent(o['fgm'], o['fga'])),
-        team_stat_row("3PT", f"{g['3fgm']}-{g['3fga']}", f"{o['3fgm']}-{o['3fga']}", compare=(g['3fga'], o['3fga'])),
+        team_stat_row("3PT", f"{g['3fgm']}-{g['3fga']}", f"{o['3fgm']}-{o['3fga']}", split_compare=((g['3fgm'], o['3fgm']), (g['3fga'], o['3fga']))),
         team_stat_row("Three Point %", percent(g['3fgm'], g['3fga']), percent(o['3fgm'], o['3fga'])),
-        team_stat_row("FT", f"{g['ftm']}-{g['fta']}", f"{o['ftm']}-{o['fta']}", compare=(g['fta'], o['fta'])),
+        team_stat_row("FT", f"{g['ftm']}-{g['fta']}", f"{o['ftm']}-{o['fta']}", split_compare=((g['ftm'], o['ftm']), (g['fta'], o['fta']))),
         team_stat_row("Free Throw %", percent(g['ftm'], g['fta']), percent(o['ftm'], o['fta'])),
         team_stat_row("Rebounds", g['r'], o['r']),
         team_stat_row("Offensive", g['or'], o['or'], indent=True),
@@ -725,9 +766,29 @@ def render_html(games, cumulative_stats, per_game_stats):
       padding: 0 2px;
       vertical-align: middle;
     }}
-    .ts-bar span {{
+    .ts-bar .bar-g,
+    .ts-bar .bar-o,
+    .ts-bar .bar-na {{
       display: inline-block;
       height: 8px;
+      vertical-align: top;
+    }}
+    .split-bar {{
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 100%;
+    }}
+    .split-row {{
+      display: flex;
+      width: 100%;
+      height: 5px;
+      line-height: 0;
+    }}
+    .split-row .bar-g,
+    .split-row .bar-o,
+    .split-row .bar-na {{
+      height: 5px;
     }}
     .bar-g {{
       background: var(--accent);
