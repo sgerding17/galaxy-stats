@@ -1,0 +1,2 @@
+google-genai>=1.38
+yt-dlp>=2026.1.1
