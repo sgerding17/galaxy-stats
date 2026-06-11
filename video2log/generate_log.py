@@ -45,9 +45,28 @@ def probe_duration_seconds(video_path):
         return None
 
 
+def find_existing_upload(client, video_path, size):
+    """Finds a live upload of this video from a previous run, if any."""
+    try:
+        candidates = []
+        for f in client.files.list():
+            if f.state.name != "ACTIVE":
+                continue
+            if int(getattr(f, "size_bytes", 0) or 0) != size:
+                continue
+            name_matches = getattr(f, "display_name", None) == video_path.name
+            candidates.append((0 if name_matches else 1, f.name, f))
+        if candidates:
+            return min(candidates)[2]
+    except Exception:
+        pass
+    return None
+
+
 def upload_video(client, video_path):
     print(f"Uploading {video_path} ...")
-    video = client.files.upload(file=str(video_path))
+    video = client.files.upload(file=str(video_path),
+                                config={"display_name": video_path.name})
     while video.state.name == "PROCESSING":
         print("  waiting for Gemini to process the upload ...")
         time.sleep(10)
@@ -81,7 +100,12 @@ def get_or_upload_video(client, video_path):
             except Exception:
                 pass
         print("Previous upload expired or video changed; re-uploading.")
-    video = upload_video(client, video_path)
+    video = find_existing_upload(client, video_path, stat.st_size)
+    if video:
+        print(f"Found an existing Gemini upload matching {video_path.name} "
+              f"(same size); reusing it.")
+    else:
+        video = upload_video(client, video_path)
     cache_path.write_text(json.dumps(
         {"name": video.name, "size": stat.st_size, "mtime": int(stat.st_mtime)}))
     return video

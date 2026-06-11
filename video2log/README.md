@@ -127,7 +127,20 @@ python3 scripts/print_box_score.py draft.log
 Uploads are cached: Gemini keeps uploaded files for 48 hours, and the script
 writes a `<video>.gemini_upload.json` sidecar next to the video recording the
 upload. Re-runs within 48 hours reuse the upload and skip straight to the
-model calls. Delete the sidecar file to force a re-upload.
+model calls. Even without the sidecar (e.g. a previous run was killed), the
+script scans your existing Gemini uploads for one matching the video's
+filename and size and adopts it. Delete the sidecar AND the server-side file
+to truly force a re-upload — list and delete uploads with:
+
+```sh
+python3 -c "
+from google import genai
+client = genai.Client()
+for f in client.files.list():
+    print(f.name, f.display_name, f.size_bytes, f.state.name)
+    # client.files.delete(name=f.name)  # uncomment to delete
+"
+```
 
 ## What to expect from a draft
 
