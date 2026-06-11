@@ -75,10 +75,20 @@ Guidelines:
 - Emit a "clock_reading" observation at least once per game minute, and
   whenever the score changes.
 - Free throws: one observation per attempt.
-- Watch for fast events that are easy to miss: steals, blocked shots, and
-  turnovers (bad passes, travels, balls out of bounds). Every change of
-  possession has a cause — if the ball changes hands and you did not see a
-  rebound or made basket, it was a turnover or steal; emit it.
+- ONE observation per shot attempt. A shot, its arc, the rim bounce, and the
+  scramble underneath are a SINGLE attempt — report it once, at the moment of
+  release. A new attempt can only happen after somebody secured a rebound (one
+  rebound observation in between). Never report the same attempt at several
+  timestamps.
+- Sanity check yourself: 5 minutes of youth basketball contains roughly 15-40
+  events. If you are reporting a missed shot every few seconds, you have
+  fallen into a loop — stop and re-examine the play.
+- HUNT FOR TURNOVERS. Travels, double dribbles, balls thrown out of bounds,
+  bad passes, offensive fouls, and steals are as common as missed shots at
+  this level. Every change of possession has exactly one cause: a made
+  basket, a defensive rebound, a steal, a turnover, or a jump ball. If the
+  other team has the ball and you did not see a rebound or made basket, you
+  MUST emit a turnover or steal observation.
 - A "turnover" observation needs team; jersey only if it was a Galaxy player.
 - For substitutions, list all 5 Galaxy players on the floor afterwards.
 - Include events you are unsure about with "confidence": "low" rather than
@@ -133,8 +143,13 @@ Compile these observations into a single valid game log. Rules of thumb:
 - DEDUPLICATION: consecutive identical miss+rebound pairs at the same game
   clock are usually one play reported twice — keep one. Do not inflate shot
   attempts.
-- Use the game_clock readings to order events and place `c MMSS` checkpoints
-  (at least one every 1-2 game minutes, plus at every substitution).
+- Use the game_clock readings to order events. Place a `c MMSS` checkpoint
+  roughly every 1-2 game minutes plus one at every substitution — do NOT emit
+  a checkpoint for every clock_reading observation.
+- Be skeptical of bursts: several missed_2/rebound observations within a few
+  seconds of each other are almost always ONE attempt reported repeatedly —
+  collapse them to a single miss and rebound unless an offensive rebound and
+  putback is explicitly described.
 {structure_rule}
 - Every live missed shot needs a following `r` line. If the observations do
   not say who rebounded, infer the most plausible rebounder (`r o` or `r g`
