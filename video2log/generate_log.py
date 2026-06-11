@@ -218,6 +218,10 @@ def main():
     parser.add_argument("--observations-in",
                         help="skip watching the video; compile a log from "
                              "observations JSON saved by --observations-out")
+    parser.add_argument("--upload-name",
+                        help="use an existing Gemini upload (e.g. files/abc123, "
+                             "from the .gemini_upload.json sidecar) instead of a "
+                             "local video; requires --duration-minutes")
     parser.add_argument("--video-start-minute", type=int, default=0,
                         help="only process video from this minute (for cheap "
                              "iteration on a slice; the draft will be partial)")
@@ -235,18 +239,29 @@ def main():
         print(f"Loaded {len(observations)} observations from {args.observations_in}; "
               f"skipping the video-watching pass.")
     else:
-        assert args.video, "Either a video file or --observations-in is required."
-        video_path = Path(args.video)
-        assert video_path.exists(), f"No such file: {video_path}"
-        duration = (args.duration_minutes * 60 if args.duration_minutes
-                    else probe_duration_seconds(video_path))
-        assert duration, ("Could not determine video duration (ffprobe not "
-                          "found?). Pass --duration-minutes.")
+        if args.upload_name:
+            assert args.duration_minutes, "--upload-name requires --duration-minutes"
+            duration = args.duration_minutes * 60
+            video = client.files.get(name=args.upload_name)
+            while video.state.name == "PROCESSING":
+                time.sleep(10)
+                video = client.files.get(name=video.name)
+            assert video.state.name == "ACTIVE", \
+                f"Upload {args.upload_name} is not usable: state={video.state.name}"
+            print(f"Using existing upload {video.uri}")
+        else:
+            assert args.video, ("A video file, --upload-name, or "
+                                "--observations-in is required.")
+            video_path = Path(args.video)
+            assert video_path.exists(), f"No such file: {video_path}"
+            duration = (args.duration_minutes * 60 if args.duration_minutes
+                        else probe_duration_seconds(video_path))
+            assert duration, ("Could not determine video duration (ffprobe not "
+                              "found?). Pass --duration-minutes.")
+            video = get_or_upload_video(client, video_path)
         first_s = args.video_start_minute * 60
         last_s = min(args.video_end_minute * 60, duration) \
             if args.video_end_minute else duration
-
-        video = get_or_upload_video(client, video_path)
 
         # Pass 0: establish jersey colors and the scoreboard layout once, so
         # every segment attributes baskets to the correct team the same way.
