@@ -28,7 +28,18 @@ YouTube video ──(yt-dlp)──▶ game.mp4 ──(Files API upload)──▶
 
 ### 1. Python environment
 
-From the repo root (Python 3.10+):
+**Python 3.10 or newer is required** (both `google-genai` and current `yt-dlp`
+need it). Check first:
+
+```sh
+python3 --version
+```
+
+If that prints 3.9 or older, install a newer Python (`brew install
+python@3.12` on macOS, `sudo apt install python3.12 python3.12-venv` on
+Debian/Ubuntu, or use pyenv) and substitute `python3.12` for `python3` below.
+
+From the repo root:
 
 ```sh
 python3 -m venv .venv
@@ -132,6 +143,9 @@ whether the pipeline is worth running on new games.
 
 ## Troubleshooting
 
+- **`No matching distribution found for yt-dlp` (or `google-genai`)** — your
+  Python is older than 3.10; pip hides packages that need a newer Python. See
+  setup step 1.
 - **`GEMINI_API_KEY is not set`** — see setup step 2; remember `export`.
 - **404 / model not found** — the model ID has rotated; pass `--model` with a
   current one.

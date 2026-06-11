@@ -1,2 +1,5 @@
+# Both packages require Python >= 3.10. If pip says "No matching distribution
+# found", check `python3 --version` first — pip hides releases that need a
+# newer Python than the one running it.
 google-genai>=1.38
-yt-dlp>=2026.1.1
+yt-dlp
