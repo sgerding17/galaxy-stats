@@ -203,6 +203,13 @@ def count_stats(events):
             for combo in all_combos(in_game):
                 stats[combo]["opos"] += 1
             last_pos = "g"
+            # Shot attempt handlers don't update possession, so sync it here.
+            # Otherwise the stale "o" possession counts a spurious dpos below,
+            # re-counts opos if Galaxy keeps the ball on an offensive rebound,
+            # and re-infers (double counts) the opp turnover on a consecutive
+            # Galaxy attempt (e.g. back-to-back free throws).
+            if event_type in ("3fga", "fga", "fta"):
+                possession = "g"
         if possession != last_pos:
             stat = "dpos" if possession == "o" else "opos"
             for combo in all_combos(in_game):
