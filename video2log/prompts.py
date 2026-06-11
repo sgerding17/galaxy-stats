@@ -89,8 +89,16 @@ Guidelines:
 """
 
 
-def compile_prompt(roster, observations_json, team_hint):
+def compile_prompt(roster, observations_json, team_hint, partial=False):
     hint = f"\nAdditional context from the user: {team_hint}\n" if team_hint else ""
+    structure_rule = (
+        "- These observations cover only part of the game. The log must still\n"
+        "  start with `c 2000` (the game start is included), but simply end at\n"
+        "  the last observed event — do NOT fabricate events, halves, or clock\n"
+        "  checkpoints beyond what was observed."
+        if partial else
+        "- The log must start with `c 2000`, end the first half with `c 0000`,\n"
+        "  start the second half with `c 2000`, and end with `c 0000`.")
     return f"""\
 You are compiling a basketball game log for the team "Galaxy". The roster
 (jersey number: player name) is:
@@ -127,8 +135,7 @@ Compile these observations into a single valid game log. Rules of thumb:
   attempts.
 - Use the game_clock readings to order events and place `c MMSS` checkpoints
   (at least one every 1-2 game minutes, plus at every substitution).
-- The log must start with `c 2000`, end the first half with `c 0000`, start
-  the second half with `c 2000`, and end with `c 0000`.
+{structure_rule}
 - Every live missed shot needs a following `r` line. If the observations do
   not say who rebounded, infer the most plausible rebounder (`r o` or `r g`
   if no Galaxy player is identified).

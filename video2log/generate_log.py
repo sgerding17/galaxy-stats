@@ -178,11 +178,12 @@ def observe_segment(client, args, video, start_s, end_s, calibration):
     return watch_segment(client, args, video, start_s, end_s, prompt, args.fps)
 
 
-def compile_log(client, args, observations):
+def compile_log(client, args, observations, partial):
     observations_json = json.dumps(observations, indent=1)
     response = client.models.generate_content(
         model=args.model,
-        contents=compile_prompt(roster_text(), observations_json, args.team_hint))
+        contents=compile_prompt(roster_text(), observations_json, args.team_hint,
+                                partial=partial))
     return strip_fences(response.text)
 
 
@@ -285,7 +286,8 @@ def main():
 
     # Pass 2: compile observations into the log grammar.
     print("Compiling observations into a game log ...")
-    log_text = compile_log(client, args, observations)
+    partial = bool(args.video_end_minute or args.video_start_minute)
+    log_text = compile_log(client, args, observations, partial)
 
     # Pass 3: validate with the real parser; ask the model to repair failures.
     for round_number in range(args.max_repair_rounds + 1):
