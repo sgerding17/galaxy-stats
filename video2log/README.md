@@ -122,6 +122,13 @@ python3 scripts/print_box_score.py draft.log
 | `--model` | `gemini-3-pro-preview` | Or set `GEMINI_MODEL`. Model names change as Google ships new versions — if you get a 404, list current models at [AI Studio](https://aistudio.google.com/) and pass the new ID. |
 | `--observations-out` | — | Saves the raw pass-1 JSON. Useful for debugging whether errors come from *seeing* (pass 1) or *compiling* (pass 2). |
 
+### Iterating without re-uploading
+
+Uploads are cached: Gemini keeps uploaded files for 48 hours, and the script
+writes a `<video>.gemini_upload.json` sidecar next to the video recording the
+upload. Re-runs within 48 hours reuse the upload and skip straight to the
+model calls. Delete the sidecar file to force a re-upload.
+
 ## What to expect from a draft
 
 Roughly in descending order of reliability:
@@ -147,8 +154,10 @@ whether the pipeline is worth running on new games.
   Python is older than 3.10; pip hides packages that need a newer Python. See
   setup step 1.
 - **`GEMINI_API_KEY is not set`** — see setup step 2; remember `export`.
-- **404 / model not found** — the model ID has rotated; pass `--model` with a
-  current one.
+- **404 / model not found** — the model ID has rotated. The script checks the
+  model before doing any work and prints the models your key can use; pass one
+  of those with `--model` (or set `GEMINI_MODEL` in your environment so you
+  don't have to repeat it).
 - **429 / quota errors** — the free tier is too small for video; enable
   billing (setup step 2.4), or wait and retry.
 - **Upload fails / file too large** — the Files API caps files at 2 GB.

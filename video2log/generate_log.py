@@ -57,6 +57,54 @@ def upload_video(client, video_path):
     return video
 
 
+def get_or_upload_video(client, video_path):
+    """Reuses a previous upload of this video if Gemini still has it.
+
+    Uploaded files live on Gemini's side for 48 hours. A sidecar file next to
+    the video remembers the upload so iterating on prompts/flags doesn't pay
+    the upload again.
+    """
+    cache_path = video_path.with_name(video_path.name + ".gemini_upload.json")
+    stat = video_path.stat()
+    if cache_path.exists():
+        cache = json.loads(cache_path.read_text())
+        if cache.get("size") == stat.st_size and cache.get("mtime") == int(stat.st_mtime):
+            try:
+                video = client.files.get(name=cache["name"])
+                while video.state.name == "PROCESSING":
+                    time.sleep(10)
+                    video = client.files.get(name=video.name)
+                if video.state.name == "ACTIVE":
+                    print(f"Reusing previous upload of {video_path.name} "
+                          f"(delete {cache_path.name} to force a re-upload)")
+                    return video
+            except Exception:
+                pass
+        print("Previous upload expired or video changed; re-uploading.")
+    video = upload_video(client, video_path)
+    cache_path.write_text(json.dumps(
+        {"name": video.name, "size": stat.st_size, "mtime": int(stat.st_mtime)}))
+    return video
+
+
+def check_model(client, model_id):
+    try:
+        client.models.get(model=model_id)
+        return
+    except Exception:
+        pass
+    print(f"Model '{model_id}' was not found. Models available to your API key:")
+    try:
+        for model in client.models.list():
+            actions = getattr(model, "supported_actions", None) or []
+            if actions and "generateContent" not in actions:
+                continue
+            print(f"  {model.name.removeprefix('models/')}")
+    except Exception as e:
+        print(f"  (could not list models: {e})")
+    sys.exit("Pass one of these with --model or set GEMINI_MODEL.")
+
+
 def strip_fences(text):
     text = text.strip()
     if text.startswith("```"):
@@ -134,7 +182,8 @@ def main():
                       "Pass --duration-minutes.")
 
     client = genai.Client()
-    video = upload_video(client, video_path)
+    check_model(client, args.model)
+    video = get_or_upload_video(client, video_path)
 
     # Pass 1: extract raw observations per (overlapping) segment.
     observations = []
