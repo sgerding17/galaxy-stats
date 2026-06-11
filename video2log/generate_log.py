@@ -162,6 +162,33 @@ def watch_segment(client, args, video, start_s, end_s, prompt, fps):
 CALIBRATION_SECONDS = 240
 
 
+def looks_confabulated(segment_obs, segment_seconds):
+    """Detects degenerate model output: event spam or invented scoring runs.
+
+    Observed failure mode: partway through a segment the model stops watching
+    and starts generating a plausible-looking pattern (a missed_2/rebound pair
+    every few seconds, or made baskets with a perfectly incrementing score).
+    """
+    if len(segment_obs) > segment_seconds / 3:
+        return f"{len(segment_obs)} events in {segment_seconds}s of video"
+    scores = []
+    for o in segment_obs:
+        if str(o.get("event", "")).startswith("made") and o.get("score_after"):
+            try:
+                (g, opp) = str(o["score_after"]).split("-")
+                scores.append((int(g), int(opp)))
+            except ValueError:
+                pass
+    run = 1
+    for (prev, cur) in zip(scores, scores[1:]):
+        same_team_2pts = (cur == (prev[0] + 2, prev[1]) or
+                          cur == (prev[0], prev[1] + 2))
+        run = run + 1 if same_team_2pts else 1
+        if run >= 7:
+            return f"monotone scoring run ending at {cur[0]}-{cur[1]}"
+    return None
+
+
 def calibrate(client, args, video, start_s):
     print("Calibrating (jersey colors, scoreboard layout) ...")
     calibration = watch_segment(
@@ -175,7 +202,22 @@ def calibrate(client, args, video, start_s):
 def observe_segment(client, args, video, start_s, end_s, calibration):
     prompt = observe_prompt(roster_text(), start_s, end_s, args.team_hint,
                             calibration)
-    return watch_segment(client, args, video, start_s, end_s, prompt, args.fps)
+    segment_obs = watch_segment(client, args, video, start_s, end_s, prompt,
+                                args.fps)
+    reason = looks_confabulated(segment_obs, end_s - start_s)
+    if reason:
+        print(f"  output looks confabulated ({reason}); re-watching segment")
+        retry_prompt = prompt + (
+            f"\nIMPORTANT: a previous attempt at this segment degenerated into "
+            f"invented events ({reason}). Report only events you can actually "
+            f"see happen, and stop when the segment ends.")
+        retry_obs = watch_segment(client, args, video, start_s, end_s,
+                                  retry_prompt, args.fps)
+        if looks_confabulated(retry_obs, end_s - start_s):
+            print("  retry also looks confabulated; keeping whichever is smaller")
+        if len(retry_obs) < len(segment_obs):
+            segment_obs = retry_obs
+    return segment_obs
 
 
 def compile_log(client, args, observations, partial):
