@@ -102,10 +102,11 @@ Guidelines:
 def compile_prompt(roster, observations_json, team_hint, partial=False):
     hint = f"\nAdditional context from the user: {team_hint}\n" if team_hint else ""
     structure_rule = (
-        "- These observations cover only part of the game. The log must still\n"
-        "  start with `c 2000` (the game start is included), but simply end at\n"
-        "  the last observed event — do NOT fabricate events, halves, or clock\n"
-        "  checkpoints beyond what was observed."
+        "- These observations cover only part of the game. Start the log at\n"
+        "  the first observed clock checkpoint (`c 2000` only if the game\n"
+        "  start is actually included) and end at the last observed event —\n"
+        "  do NOT fabricate events, halves, or clock checkpoints beyond what\n"
+        "  was observed."
         if partial else
         "- The log must start with `c 2000`, end the first half with `c 0000`,\n"
         "  start the second half with `c 2000`, and end with `c 0000`.")
