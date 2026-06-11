@@ -18,7 +18,8 @@ from google.genai import types
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 from stats import players
 
-from prompts import observe_prompt, compile_prompt, repair_prompt
+from prompts import (calibration_prompt, observe_prompt, compile_prompt,
+                     repair_prompt)
 from validate_log import validate_events
 
 DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3-pro-preview")
@@ -140,14 +141,14 @@ def strip_fences(text):
     return text.strip()
 
 
-def observe_segment(client, args, video, start_s, end_s):
+def watch_segment(client, args, video, start_s, end_s, prompt, fps):
     content = types.Content(role="user", parts=[
         types.Part(
             file_data=types.FileData(file_uri=video.uri, mime_type=video.mime_type),
             video_metadata=types.VideoMetadata(
-                start_offset=f"{start_s}s", end_offset=f"{end_s}s", fps=args.fps),
+                start_offset=f"{start_s}s", end_offset=f"{end_s}s", fps=fps),
         ),
-        types.Part(text=observe_prompt(roster_text(), start_s, end_s, args.team_hint)),
+        types.Part(text=prompt),
     ])
     config = types.GenerateContentConfig(
         media_resolution=MEDIA_RESOLUTIONS[args.media_resolution],
@@ -156,6 +157,25 @@ def observe_segment(client, args, video, start_s, end_s):
     response = client.models.generate_content(
         model=args.model, contents=[content], config=config)
     return json.loads(strip_fences(response.text))
+
+
+CALIBRATION_SECONDS = 240
+
+
+def calibrate(client, args, video, start_s):
+    print("Calibrating (jersey colors, scoreboard layout) ...")
+    calibration = watch_segment(
+        client, args, video, start_s, start_s + CALIBRATION_SECONDS,
+        calibration_prompt(roster_text(), args.team_hint), fps=1.0)
+    for (key, value) in calibration.items():
+        print(f"  {key}: {value}")
+    return json.dumps(calibration, indent=1)
+
+
+def observe_segment(client, args, video, start_s, end_s, calibration):
+    prompt = observe_prompt(roster_text(), start_s, end_s, args.team_hint,
+                            calibration)
+    return watch_segment(client, args, video, start_s, end_s, prompt, args.fps)
 
 
 def compile_log(client, args, observations):
@@ -174,7 +194,9 @@ def repair_log(client, args, log_text, error):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("video", help="path to a local game video file")
+    parser.add_argument("video", nargs="?",
+                        help="path to a local game video file "
+                             "(not needed with --observations-in)")
     parser.add_argument("-o", "--output", required=True, help="draft log output path")
     parser.add_argument("--model", default=DEFAULT_MODEL,
                         help=f"Gemini model ID (default: {DEFAULT_MODEL})")
@@ -193,36 +215,58 @@ def main():
     parser.add_argument("--max-repair-rounds", type=int, default=3)
     parser.add_argument("--observations-out",
                         help="also save raw pass-1 observations JSON here")
+    parser.add_argument("--observations-in",
+                        help="skip watching the video; compile a log from "
+                             "observations JSON saved by --observations-out")
+    parser.add_argument("--video-start-minute", type=int, default=0,
+                        help="only process video from this minute (for cheap "
+                             "iteration on a slice; the draft will be partial)")
+    parser.add_argument("--video-end-minute", type=int,
+                        help="only process video up to this minute")
     args = parser.parse_args()
 
     assert os.environ.get("GEMINI_API_KEY"), \
         "GEMINI_API_KEY is not set. See video2log/README.md for setup."
-    video_path = Path(args.video)
-    assert video_path.exists(), f"No such file: {video_path}"
-
-    duration = (args.duration_minutes * 60 if args.duration_minutes
-                else probe_duration_seconds(video_path))
-    assert duration, ("Could not determine video duration (ffprobe not found?). "
-                      "Pass --duration-minutes.")
-
     client = genai.Client()
     check_model(client, args.model)
-    video = get_or_upload_video(client, video_path)
 
-    # Pass 1: extract raw observations per (overlapping) segment.
-    observations = []
-    segment_s = args.segment_minutes * 60
-    for start_s in range(0, duration, segment_s):
-        end_s = min(start_s + segment_s + SEGMENT_OVERLAP_SECONDS, duration)
-        print(f"Watching {start_s // 60}:{start_s % 60:02d} - "
-              f"{end_s // 60}:{end_s % 60:02d} ...")
-        segment_obs = observe_segment(client, args, video, start_s, end_s)
-        print(f"  {len(segment_obs)} observations")
-        observations.extend(segment_obs)
+    if args.observations_in:
+        observations = json.loads(Path(args.observations_in).read_text())
+        print(f"Loaded {len(observations)} observations from {args.observations_in}; "
+              f"skipping the video-watching pass.")
+    else:
+        assert args.video, "Either a video file or --observations-in is required."
+        video_path = Path(args.video)
+        assert video_path.exists(), f"No such file: {video_path}"
+        duration = (args.duration_minutes * 60 if args.duration_minutes
+                    else probe_duration_seconds(video_path))
+        assert duration, ("Could not determine video duration (ffprobe not "
+                          "found?). Pass --duration-minutes.")
+        first_s = args.video_start_minute * 60
+        last_s = min(args.video_end_minute * 60, duration) \
+            if args.video_end_minute else duration
 
-    if args.observations_out:
-        Path(args.observations_out).write_text(json.dumps(observations, indent=1))
-        print(f"Saved raw observations to {args.observations_out}")
+        video = get_or_upload_video(client, video_path)
+
+        # Pass 0: establish jersey colors and the scoreboard layout once, so
+        # every segment attributes baskets to the correct team the same way.
+        calibration = calibrate(client, args, video, first_s)
+
+        # Pass 1: extract raw observations per (overlapping) segment.
+        observations = []
+        segment_s = args.segment_minutes * 60
+        for start_s in range(first_s, last_s, segment_s):
+            end_s = min(start_s + segment_s + SEGMENT_OVERLAP_SECONDS, last_s)
+            print(f"Watching {start_s // 60}:{start_s % 60:02d} - "
+                  f"{end_s // 60}:{end_s % 60:02d} ...")
+            segment_obs = observe_segment(client, args, video, start_s, end_s,
+                                          calibration)
+            print(f"  {len(segment_obs)} observations")
+            observations.extend(segment_obs)
+
+        if args.observations_out:
+            Path(args.observations_out).write_text(json.dumps(observations, indent=1))
+            print(f"Saved raw observations to {args.observations_out}")
 
     # Pass 2: compile observations into the log grammar.
     print("Compiling observations into a game log ...")

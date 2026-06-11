@@ -121,6 +121,23 @@ python3 scripts/print_box_score.py draft.log
 | `--segment-minutes` | 10 | Video minutes per request. Smaller segments = more requests but better attention to detail. |
 | `--model` | `gemini-3-pro-preview` | Or set `GEMINI_MODEL`. Model names change as Google ships new versions — if you get a 404, list current models at [AI Studio](https://aistudio.google.com/) and pass the new ID. |
 | `--observations-out` | — | Saves the raw pass-1 JSON. Useful for debugging whether errors come from *seeing* (pass 1) or *compiling* (pass 2). |
+| `--observations-in` | — | Skips the (expensive) video pass and compiles a log from previously saved observations. Use to iterate on the compile step or try a different `--model` for it at near-zero cost. |
+| `--video-start-minute` / `--video-end-minute` | full video | Process only a slice of the video. Cheap way to A/B test fps/resolution settings on the first 10 minutes before paying for a full game. |
+
+### Tuning recipe
+
+Generate against a game you have a hand-kept log for, then look at
+`eval_log.py`'s box-score diff and fix the worst failure mode first:
+
+1. **Scores assigned to the wrong team** → the scoreboard calibration failed.
+   Add a `--team-hint` like `"Galaxy is the HOME score on the scoreboard"`.
+2. **Missing steals/blocks/turnovers** → raise `--fps` to 2-3 (cost scales
+   linearly with fps).
+3. **Wrong player attribution** → `--media-resolution high` (about 2x cost).
+4. **Counts roughly right but the log won't validate** → re-run the compile
+   step alone with a stronger model:
+   `--observations-in obs.json --model gemini-3.1-pro-preview`
+   (save `--observations-out obs.json` on the video pass to enable this).
 
 ### Iterating without re-uploading
 
