@@ -196,9 +196,11 @@ Validator error:
 {error}
 
 Fix the log with the smallest change that resolves the error while keeping it
-consistent with the grammar (the fix may require adding, removing, or
-reordering a line — e.g. a missing rebound after a miss, a missing turnover
-before an opponent score, or a clock checkpoint out of order). Line numbers in
-the error are 1-based. Output ONLY the full corrected log text, no markdown
-fences, no commentary.
+consistent with the grammar. Strongly prefer CORRECTING an existing line over
+INSERTING a new event: a possession inconsistency is most often a rebound
+credited to the wrong team (`r o` that should be a Galaxy number, or vice
+versa) — flipping that rebound is better than inventing a turnover that may
+not have happened. Insert a new event only when no single-line correction
+works. Line numbers in the error are 1-based. Output ONLY the full corrected
+log text, no markdown fences, no commentary.
 """
