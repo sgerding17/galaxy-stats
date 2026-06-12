@@ -91,12 +91,18 @@ Guidelines:
 - Sanity check yourself: 5 minutes of youth basketball contains roughly 15-40
   events. If you are reporting a missed shot every few seconds, you have
   fallen into a loop — stop and re-examine the play.
-- HUNT FOR TURNOVERS. Travels, double dribbles, balls thrown out of bounds,
-  bad passes, offensive fouls, and steals are as common as missed shots at
-  this level. Every change of possession has exactly one cause: a made
-  basket, a defensive rebound, a steal, a turnover, or a jump ball. If the
-  other team has the ball and you did not see a rebound or made basket, you
-  MUST emit a turnover or steal observation.
+- Watch for turnovers: travels, double dribbles, balls thrown out of bounds,
+  bad passes, offensive fouls, and steals. Every change of possession has
+  exactly one cause: a made basket, a defensive rebound, a steal, a turnover,
+  or a jump ball. If the other team has the ball and you did not see a
+  rebound or made basket, emit a turnover or steal observation. Calibration:
+  a typical game at this level has 1 turnover per 2-3 game minutes per team —
+  report what you see, not more.
+- Held balls / jump balls are RARE (a handful per game). A scramble that one
+  team wins is a rebound or steal, not a jump ball — only report jump_ball
+  when the referee actually stops play for a held ball.
+- Substitutions only happen during dead balls. Only emit a substitution
+  observation when the five Galaxy players on the floor actually changed.
 - A "turnover" observation needs team; jersey only if it was a Galaxy player.
 - For substitutions, list all 5 Galaxy players on the floor afterwards.
 - Include events you are unsure about with "confidence": "low" rather than
