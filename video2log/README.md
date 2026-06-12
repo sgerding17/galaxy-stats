@@ -161,22 +161,38 @@ for f in client.files.list():
 
 ## What to expect from a draft
 
-Roughly in descending order of reliability:
+Empirical findings from tuning against the 2026-05-23 Dolphins game (8 runs;
+compare with `compare_slice.py` for partial drafts, `eval_log.py` for full
+games):
 
-1. **Score and made baskets** — good, because the model cross-checks against
-   the scoreboard.
-2. **Shot attempts, free throws, rebounds** — decent.
-3. **Player attribution (who shot/rebounded)** — depends entirely on how
-   legible jersey numbers are in the footage. Try `--media-resolution high`.
-4. **Steals, blocks, turnovers** — fair; fast plays at 1 fps get missed, so
-   raise `--fps` if these matter.
-5. **Assists, lineups (`ig`), jump-ball bookkeeping** — weakest; expect to fix
-   these by hand. Substitutions in particular are hard to spot on game film.
+**Recommended configuration:** `--model gemini-3.1-pro-preview --fps 1
+--media-resolution high`. Do NOT use flash models for the video pass — on
+repetitive stretches (cold-shooting scramble fests) flash collapses into
+generating invented event streams (a miss/rebound pair every few seconds, or
+made baskets with a perfectly incrementing score). The pipeline detects this
+and re-watches the segment once, but flash often confabulates on the retry
+too; Pro stays grounded on the same footage. Higher fps makes attempt
+inflation *worse*, not better (1.9x at fps 1 → 2.5x at fps 3): every glimpse
+of a scramble becomes a new "shot".
+
+Reliability, best to worst:
+
+1. **Score and made baskets** — near-exact once calibration locks onto the
+   right scoreboard (verify the calibration printout at the start of a run;
+   override with `--team-hint` if it picked the wrong one).
+2. **Free throws, steals, lineups, jump-ball counts** — close.
+3. **Missed shots and rebounds** — systematically inflated ~2x. Expect to
+   delete, not add.
+4. **Turnovers** — inflated worse (the model reads most whistles/dead balls
+   as turnovers); prompt calibration did not fix this.
+5. **Three-pointers, blocks, assists** — mostly invisible to the model;
+   expect to add these by hand from memory or a rewatch.
 
 The validator guarantees a clean draft *parses*, not that it's *correct* —
-`eval_log.py`'s box-score diff against a hand-kept log is the real quality
-measure. If you try a game we already have a log for, that diff tells you
-whether the pipeline is worth running on new games.
+the box-score diff against a hand-kept log is the real quality measure. As of
+June 2026 a draft is a usable skeleton (clock, scoring plays, lineups) but
+the possession-level detail needs heavy editing; whether that beats typing
+from scratch is a judgment call.
 
 ## Troubleshooting
 
