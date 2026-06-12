@@ -66,12 +66,20 @@ with this schema:
 {OBSERVATION_SCHEMA}
 
 Guidelines:
-- THE SCOREBOARD IS GROUND TRUTH FOR SCORING. For every made basket, read the
-  scoreboard and fill in "score_after". The team whose number increased is the
-  team that scored — when this disagrees with your visual impression of which
-  team shot, trust the scoreboard. If the score changed but you did not see
-  the shot, still emit a made_2/made_ft observation for the right team with
-  low confidence.
+- THE SCOREBOARD IS GROUND TRUTH FOR SCORING. For every made basket, READ the
+  score off the scoreboard and fill in "score_after". If you cannot actually
+  read the scoreboard at that moment, set score_after to null — NEVER compute
+  or extrapolate the score yourself; a fabricated score poisons the whole
+  log. The team whose number increased is the team that scored — when this
+  disagrees with your visual impression of which team shot, trust the
+  scoreboard. If the score changed but you did not see the shot, still emit a
+  made_2/made_ft observation for the right team with low confidence.
+- Call a shot MADE only if you see the ball pass through the net or the
+  scoreboard change. Layups and putbacks that rattle or roll off are misses —
+  when in doubt, report a miss and let the scoreboard correct you.
+- If multiple scoreboards disagree (e.g. a laggy broadcast overlay vs the
+  physical wall scoreboard), prefer whichever the calibration notes say is
+  authoritative, and read the game clock from the physical scoreboard.
 - Emit a "clock_reading" observation at least once per game minute, and
   whenever the score changes.
 - Free throws: one observation per attempt.
