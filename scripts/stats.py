@@ -4,6 +4,7 @@ players = {
     "1": "Long",
     "2": "Laurel",
     "3": "Gerding",
+    "4": "Rectra",
     "5": "Iwai",
     "14": "Li",
     "21": "Saito",
