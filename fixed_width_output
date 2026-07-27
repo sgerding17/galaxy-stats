@@ -1,6 +1,22 @@
 [Box Scores](#box-scores) &bull; [Aggregate Stats](#aggregate-stats) &bull; [Player Game Logs](#player-game-logs)
 ---
 # Box Scores
+## 2026-07-19 - Galaxy vs. Sakura - SBYB Exhibition
+```
+            MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+ 1 Long      17    2    1-7   0-0    3    1    1    1    0     3     0   -2
+ 2 Laurel    21    0    0-2   0-0    2    0    0    1    0     2     0   -1
+ 3 Gerding   19    4    2-6   0-0    2    0    3    2    0     1     1   +4
+ 4 Rectra    28    7    3-3   1-2    4    2    1    3    1     2     2   +8
+ 5 Iwai      24    0    0-1   0-2    2    0    2    1    0     0     2   -1
+14 Li        14    0    0-2   0-0    4    2    2    0    0     2     2   -1
+21 Saito     21    2    1-5   0-0    2    1    3    1    0     0     2   -1
+22 DeMarti   28   10    4-8   2-2    2    0    2    1    3     1     1   +5
+25 Yosy      28    8    4-8   0-4    8    2    6    3    1     4     4   +4
+
+Galaxy        -   33  15-42  3-10   33    8   20   13    5    17    16    -
+Opponent      -   30  12-39   3-7   24    -   21    -    -    12    12    -
+```
 ## 2026-07-12 - Galaxy vs. Mighty Musubis - SBYB Exhibition
 ```
             MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
@@ -705,40 +721,41 @@ Opponent      -    9   2-35  5-22   29    -   14    -    -    19    10    -
 ## Cumulative Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO   A/TO    PLAYER
-Long       45  1003    22     8    78  10.3     6    21  28.6    49    20    69    12    44     4    88   0.14      Long
-Laurel     48  1147    60    26   166  15.7     8    23  34.8    65   106   171    12    44    11    89   0.13    Laurel
-Gerding    45  1222    93    42   220  19.1     9    22  40.9    63    88   151    38   114    24   176   0.22   Gerding
-Rectra      1    27     5     2     5  40.0     1     4  25.0     4     0     4     0     0     0     1    0.0    Rectra
-Iwai       44  1295   102    41   244  16.8    14    40  35.0    68   110   178    60    65    22   184   0.33      Iwai
-Li         40  1004    81    34   227  15.0    13    50  26.0    69    99   168    30    48    48   128   0.23        Li
-Saito      47  1052    89    41   184  22.3     1     8  12.5    35    41    76    15    23     1   125   0.12     Saito
-DeMarti    46  1548   571   228   638  35.7   112   255  43.9   284   386   670    43   163   141   163   0.26   DeMarti
-Yosy       47  1301    88    38   233  16.3    12    52  23.1    74    34   108    15    60     5   136   0.11      Yosy
+Long       46  1020    24     9    85  10.6     6    21  28.6    52    20    72    13    45     4    89   0.15      Long
+Laurel     49  1168    60    26   168  15.5     8    23  34.8    67   106   173    12    45    11    89   0.13    Laurel
+Gerding    46  1241    97    44   226  19.5     9    22  40.9    64    89   153    38   116    24   179   0.21   Gerding
+Rectra      2    55    12     5     8  62.5     2     6  33.3     6     2     8     2     3     1     2    1.0    Rectra
+Iwai       45  1319   102    41   245  16.7    14    42  33.3    68   112   180    60    66    22   186   0.32      Iwai
+Li         41  1018    81    34   229  14.8    13    50  26.0    71   101   172    32    48    48   130   0.25        Li
+Saito      48  1073    91    42   189  22.2     1     8  12.5    35    43    78    16    24     1   128   0.12     Saito
+DeMarti    47  1576   581   232   646  35.9   114   257  44.4   285   387   672    43   164   144   165   0.26   DeMarti
+Yosy       48  1329    96    42   241  17.4    12    56  21.4    78    38   116    17    63     6   142   0.12      Yosy
 
-Galaxy     48     -  1111   460  1995  23.1   176   475  37.1   805  1018  1823   225   561   256  1090      -    Galaxy
-Opponent   48     -  1016   424  2269  18.7   146   365  40.0   825   746  1571     -     -     -     -      -  Opponent
+Galaxy     49     -  1144   475  2037  23.3   179   485  36.9   822  1034  1856   233   574   261  1110      -    Galaxy
+Opponent   49     -  1046   436  2308  18.9   149   372  40.1   837   758  1595     -     -     -     -      -  Opponent
 ```
 ## Per-Game Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO   A/TO    PLAYER
-Long       45  22.3   0.5   0.2   1.7  10.3   0.1   0.5  28.6   1.1   0.4   1.5   0.3   1.0   0.1   2.0   0.14      Long
-Laurel     48  23.9   1.2   0.5   3.5  15.7   0.2   0.5  34.8   1.4   2.2   3.6   0.2   0.9   0.2   1.9   0.13    Laurel
-Gerding    45  27.2   2.1   0.9   4.9  19.1   0.2   0.5  40.9   1.4   2.0   3.4   0.8   2.5   0.5   3.9   0.22   Gerding
-Rectra      1  27.0   5.0   2.0   5.0  40.0   1.0   4.0  25.0   4.0   0.0   4.0   0.0     0     0   1.0    0.0    Rectra
-Iwai       44  29.4   2.3   0.9   5.5  16.8   0.3   0.9  35.0   1.5   2.5   4.0   1.4   1.5   0.5   4.2   0.33      Iwai
-Li         40  25.1   2.0   0.8   5.7  15.0   0.3   1.2  26.0   1.7   2.5   4.2   0.8   1.2   1.2   3.2   0.23        Li
-Saito      47  22.4   1.9   0.9   3.9  22.3   0.0   0.2  12.5   0.7   0.9   1.6   0.3   0.5   0.0   2.7   0.12     Saito
-DeMarti    46  33.7  12.4   5.0  13.9  35.7   2.4   5.5  43.9   6.2   8.4  14.6   0.9   3.5   3.1   3.5   0.26   DeMarti
-Yosy       47  27.7   1.9   0.8   5.0  16.3   0.3   1.1  23.1   1.6   0.7   2.3   0.3   1.3   0.1   2.9   0.11      Yosy
+Long       46  22.2   0.5   0.2   1.8  10.6   0.1   0.5  28.6   1.1   0.4   1.6   0.3   1.0   0.1   1.9   0.15      Long
+Laurel     49  23.8   1.2   0.5   3.4  15.5   0.2   0.5  34.8   1.4   2.2   3.5   0.2   0.9   0.2   1.8   0.13    Laurel
+Gerding    46  27.0   2.1   1.0   4.9  19.5   0.2   0.5  40.9   1.4   1.9   3.3   0.8   2.5   0.5   3.9   0.21   Gerding
+Rectra      2  27.5   6.0   2.5   4.0  62.5   1.0   3.0  33.3   3.0   1.0   4.0   1.0   1.5   0.5   1.0    1.0    Rectra
+Iwai       45  29.3   2.3   0.9   5.4  16.7   0.3   0.9  33.3   1.5   2.5   4.0   1.3   1.5   0.5   4.1   0.32      Iwai
+Li         41  24.8   2.0   0.8   5.6  14.8   0.3   1.2  26.0   1.7   2.5   4.2   0.8   1.2   1.2   3.2   0.25        Li
+Saito      48  22.4   1.9   0.9   3.9  22.2   0.0   0.2  12.5   0.7   0.9   1.6   0.3   0.5   0.0   2.7   0.12     Saito
+DeMarti    47  33.5  12.4   4.9  13.7  35.9   2.4   5.5  44.4   6.1   8.2  14.3   0.9   3.5   3.1   3.5   0.26   DeMarti
+Yosy       48  27.7   2.0   0.9   5.0  17.4   0.2   1.2  21.4   1.6   0.8   2.4   0.4   1.3   0.1   3.0   0.12      Yosy
 
-Galaxy     48     -  23.1   9.6  41.6  23.1   3.7   9.9  37.1  16.8  21.2  38.0   4.7  11.7   5.3  22.7      -    Galaxy
-Opponent   48     -  21.2   8.8  47.3  18.7   3.0   7.6  40.0  17.2  15.5  32.7     -     -     -     -      -  Opponent
+Galaxy     49     -  23.3   9.7  41.6  23.3   3.7   9.9  36.9  16.8  21.1  37.9   4.8  11.7   5.3  22.7      -    Galaxy
+Opponent   49     -  21.3   8.9  47.1  18.9   3.0   7.6  40.1  17.1  15.5  32.6     -     -     -     -      -  Opponent
 ```
 ---
 # Player Game Logs
 ##  1 Long - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30   17    2    1-7   0-0    3    1    1    1    0     3     0   -2
 2026-05-24  Shooting Stars  L 29-34   10    0    0-1   0-0    0    0    1    0    0     0     0   -6
 2026-05-23  Dolphins        W 29-14   18    1    0-5   1-2    2    0    1    1    0     2     0   +5
 2026-05-23  Supreme         L 18-44   17    0    0-3   0-0    0    0    1    2    0     0     0  -24
@@ -788,6 +805,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  2 Laurel - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30   21    0    0-2   0-0    2    0    0    1    0     2     0   -1
 2026-07-12  Mighty Musubis  W 34-31   36    2    1-6   0-0    4    3    1    1    0     3     1   +2
 2026-05-24  Shooting Stars  L 29-34    6    0    0-2   0-0    1    0    2    0    0     0     1  -12
 2026-05-23  Dolphins        W 29-14   24    2    1-6   0-0    6    0    2    0    0     3     3  +12
@@ -840,6 +858,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  3 Gerding - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30   19    4    2-6   0-0    2    0    3    2    0     1     1   +4
 2026-07-12  Mighty Musubis  W 34-31   35    2    1-5   0-0    1    0    1    1    1     0     1   +7
 2026-05-24  Shooting Stars  L 29-34   31    4    2-6   0-0    3    1    4    5    1     1     2   -5
 2026-05-23  Dolphins        W 29-14   23    2    1-4   0-0    3    2    3    3    1     2     1  +10
@@ -889,11 +908,13 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  4 Rectra - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30   28    7    3-3   1-2    4    2    1    3    1     2     2   +8
 2026-07-12  Mighty Musubis  W 34-31   27    5    2-5   1-4    4    0    1    0    0     4     0   +0
 ```
 ##  5 Iwai - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30   24    0    0-1   0-2    2    0    2    1    0     0     2   -1
 2026-05-24  Shooting Stars  L 29-34   29    0    0-2   0-0    2    1    7    1    0     0     2   -1
 2026-05-23  Dolphins        W 29-14   21    0    0-0   0-0    0    3    1    2    0     0     0   +6
 2026-05-23  Supreme         L 18-44   25    0    0-1   0-0    4    0    6    0    0     1     3  -18
@@ -942,6 +963,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 14 Li - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30   14    0    0-2   0-0    4    2    2    0    0     2     2   -1
 2026-05-24  Shooting Stars  L 29-34   26    2    1-3   0-0    5    2    2    1    3     3     2   +0
 2026-05-23  Dolphins        W 29-14   28    2    1-7   0-0   12    1    6    0    1     4     8  +12
 2026-05-23  Supreme         L 18-44   26    7    3-3   1-2    6    1    1    0    0     1     5   -7
@@ -986,6 +1008,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 21 Saito - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30   21    2    1-5   0-0    2    1    3    1    0     0     2   -1
 2026-07-12  Mighty Musubis  W 34-31   37    3   1-10   0-0    1    0    1    0    0     0     1   +2
 2026-05-24  Shooting Stars  L 29-34   28    5    2-6   0-0    0    0    0    0    0     0     0   -3
 2026-05-23  Dolphins        W 29-14   29   10   5-16   0-0    4    1    2    0    0     1     3  +14
@@ -1037,6 +1060,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 22 DeMarti - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30   28   10    4-8   2-2    2    0    2    1    3     1     1   +5
 2026-07-12  Mighty Musubis  W 34-31   34   17    4-9  8-10    8    1    3    8    3     1     7   +9
 2026-05-24  Shooting Stars  L 29-34   36   14   6-20   2-5   18    2    1    1    2    11     7   +0
 2026-05-23  Dolphins        W 29-14   33    8   4-10   0-0   23    2    4    2    5     5    18  +10
@@ -1087,6 +1111,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 25 Yosy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30   28    8    4-8   0-4    8    2    6    3    1     4     4   +4
 2026-07-12  Mighty Musubis  W 34-31   32    5    2-5   1-2    3    1    4    0    1     2     1   -5
 2026-05-24  Shooting Stars  L 29-34   34    4    2-6   0-0    2    0    5    3    0     2     0   +2
 2026-05-23  Dolphins        W 29-14   24    4    2-6   0-0    1    0    2    1    0     1     0   +6
@@ -1138,6 +1163,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## Galaxy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-07-19  Sakura          W 33-30    -   33  15-42  3-10   33    8   20   13    5    17    16    -
 2026-07-12  Mighty Musubis  W 34-31    -   34  11-40 10-16   28    5   11   10    5    12    16    -
 2026-05-24  Shooting Stars  L 29-34    -   29  13-46   2-5   32    6   22   11    6    17    15    -
 2026-05-23  Dolphins        W 29-14    -   29  14-54   1-2   53    9   21    9    7    18    35    -
