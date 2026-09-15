@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Galaxy Log">
+  <title>Galaxy Logger</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<main id="app" hidden>
+  <header class="scorebar">
+    <div class="team" id="team-gal">
+      <span class="team-name">GALAXY</span>
+      <span class="team-score" id="score-gal">0</span>
+    </div>
+    <button class="clock" id="clock" type="button">
+      <span class="clock-time" id="clock-time">20:00</span>
+      <span class="clock-state" id="clock-state">TAP TO START</span>
+    </button>
+    <div class="team" id="team-opp">
+      <span class="team-name" id="opp-name">OPPONENT</span>
+      <span class="team-score" id="score-opp">0</span>
+    </div>
+  </header>
+
+  <div class="statusline">
+    <span id="status-half">1st half</span>
+    <span id="status-ball">Ball: &mdash;</span>
+    <span id="status-arrow">Arrow: &mdash;</span>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <p class="prompt" id="prompt">Tap a player, then an event &mdash; or an event, then a player.</p>
+
+  <div class="events" id="events"></div>
+
+  <div class="tape" id="tape"></div>
+
+  <nav class="toolbar">
+    <button type="button" data-action="undo" class="tool tool-undo">Undo</button>
+    <button type="button" data-action="subs" class="tool">Subs</button>
+    <button type="button" data-action="stats" class="tool">Stats</button>
+    <button type="button" data-action="menu" class="tool">Game</button>
+  </nav>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<!-- New game / resume -->
+<section class="panel" id="panel-setup" hidden>
+  <header class="panel-head">
+    <h2>New game</h2>
+    <button type="button" class="panel-close" data-close hidden>Cancel</button>
+  </header>
+  <div class="panel-body">
+    <div id="resume-block" hidden>
+      <h3>Pick up where you left off</h3>
+      <div id="saved-games" class="saved-games"></div>
+      <hr>
+      <h3>Or start a new game</h3>
+    </div>
+
+    <label>Date
+      <input type="date" id="setup-date">
+    </label>
+    <label>Event / round
+      <input type="text" id="setup-venue" list="venue-list" placeholder="SBYB League Play" autocapitalize="words">
+      <datalist id="venue-list"></datalist>
+    </label>
+    <label>Opponent
+      <input type="text" id="setup-opponent" list="opponent-list" placeholder="Dolphins" autocapitalize="words">
+      <datalist id="opponent-list"></datalist>
+    </label>
+    <label>Second game of the day?
+      <select id="setup-suffix">
+        <option value="">No &mdash; only game today</option>
+        <option value="a">Yes &mdash; this is game A</option>
+        <option value="b">Yes &mdash; this is game B</option>
+      </select>
+    </label>
+
+    <h3>Starting five</h3>
+    <p class="hint" id="setup-lineup-hint">Pick 5 players.</p>
+    <div class="roster-pick" id="setup-lineup"></div>
+
+    <h3>Opening tip</h3>
+    <div class="toggle-row" id="setup-possession">
+      <button type="button" class="toggle" data-possession="g">Galaxy ball</button>
+      <button type="button" class="toggle" data-possession="o">Opponent ball</button>
+    </div>
+
+    <button type="button" class="primary" id="setup-start">Start game</button>
+    <p class="hint">Halves are 20:00, which is what the stats pipeline expects.</p>
+  </div>
+</section>
+
+<!-- Substitutions -->
+<section class="panel" id="panel-subs" hidden>
+  <header class="panel-head">
+    <h2>Substitutions</h2>
+    <button type="button" class="panel-close" data-close>Cancel</button>
+  </header>
+  <div class="panel-body">
+    <p class="hint" id="subs-hint">Tap players to set who is on the floor.</p>
+    <h3>On the floor</h3>
+    <div class="roster-pick" id="subs-on"></div>
+    <h3>On the bench</h3>
+    <div class="roster-pick" id="subs-off"></div>
+    <button type="button" class="primary" id="subs-apply">Confirm lineup</button>
+  </div>
+</section>
+
+<!-- Live box score -->
+<section class="panel" id="panel-stats" hidden>
+  <header class="panel-head">
+    <h2>Live box score</h2>
+    <button type="button" class="panel-close" data-close>Done</button>
+  </header>
+  <div class="panel-body">
+    <div class="table-scroll"><table class="box" id="box-score"></table></div>
+    <p class="hint">Minutes, plus-minus and possession stats assume the clock is
+      accurate. Advanced ratings are computed by the site build after the game.</p>
+  </div>
+</section>
+
+<!-- Game menu -->
+<section class="panel" id="panel-menu" hidden>
+  <header class="panel-head">
+    <h2>Game</h2>
+    <button type="button" class="panel-close" data-close>Done</button>
+  </header>
+  <div class="panel-body">
+    <h3>Clock</h3>
+    <div class="clock-edit">
+      <input type="number" id="clock-min" min="0" max="20" inputmode="numeric">
+      <span>:</span>
+      <input type="number" id="clock-sec" min="0" max="59" inputmode="numeric">
+      <button type="button" id="clock-set">Set clock</button>
+    </div>
+    <p class="hint">Use this to line the app up with the scoreboard.</p>
+
+    <h3>Period</h3>
+    <button type="button" class="wide" id="end-half">End the half (log 0:00)</button>
+    <button type="button" class="wide" id="start-half">Start the 2nd half</button>
+
+    <h3>Log</h3>
+    <button type="button" class="wide" id="open-export">Export game log</button>
+
+    <h3>Roster</h3>
+    <div class="roster-edit" id="roster-edit"></div>
+    <div class="clock-edit">
+      <input type="text" id="roster-number" placeholder="#" inputmode="numeric">
+      <input type="text" id="roster-name" placeholder="Last name">
+      <button type="button" id="roster-add">Add</button>
+    </div>
+    <p class="hint">Adding a player here only affects this game. Add them to
+      scripts/stats.py to make it permanent.</p>
+
+    <h3>Games</h3>
+    <button type="button" class="wide" id="new-game">Start a different game</button>
+    <button type="button" class="wide danger" id="delete-game">Delete this game</button>
+  </div>
+</section>
+
+<!-- Export -->
+<section class="panel" id="panel-export" hidden>
+  <header class="panel-head">
+    <h2>Export</h2>
+    <button type="button" class="panel-close" data-close>Done</button>
+  </header>
+  <div class="panel-body">
+    <p class="hint">Save this as <code id="export-name">game log</code> in
+      <code>game_logs/</code>, then rebuild the site.</p>
+    <div id="export-status" class="status"></div>
+    <div class="button-row">
+      <button type="button" id="export-copy">Copy</button>
+      <button type="button" id="export-download">Download</button>
+      <button type="button" id="export-share" hidden>Share</button>
+    </div>
+    <textarea id="export-text" readonly spellcheck="false"></textarea>
+  </div>
+</section>
+
+<script src="seed.js"></script>
+<script src="logstats.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

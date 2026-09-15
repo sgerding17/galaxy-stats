@@ -8,6 +8,7 @@ PORT="${1:-8000}"
 
 cd "$ROOT_DIR"
 python3 scripts/build_site.py
+python3 scripts/build_logger.py
 
 IP_ADDR="$(ipconfig getifaddr en0 2>/dev/null || true)"
 if [[ -z "$IP_ADDR" ]]; then
@@ -22,8 +23,10 @@ fi
 
 echo "Serving from: $ROOT_DIR"
 echo "Local URL: http://localhost:${PORT}/docs/"
+echo "Logger URL: http://localhost:${PORT}/docs/logger/"
 if [[ -n "$IP_ADDR" ]]; then
   echo "Phone URL: http://${IP_ADDR}:${PORT}/docs/"
+  echo "Phone logger URL: http://${IP_ADDR}:${PORT}/docs/logger/"
 else
   echo "Phone URL: unable to detect network IP automatically."
 fi
