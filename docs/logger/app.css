@@ -429,6 +429,12 @@ button {
   gap: 8px;
 }
 
+/* Substitutions: exactly five across, so a full lineup reads as one row. */
+.roster-pick.five {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
 .pick {
   display: flex;
   flex-direction: column;
@@ -437,11 +443,23 @@ button {
   border-radius: 11px;
   background: var(--panel-2);
   border: 2px solid var(--line);
+  min-width: 0;
 }
+
+.roster-pick.five .pick { padding: 9px 2px; }
 
 .pick.on { background: var(--gal); border-color: #93c5fd; }
 .pick-number { font-size: 1.2rem; font-weight: 700; }
-.pick-name { font-size: 0.68rem; color: var(--muted); }
+
+.pick-name {
+  font-size: 0.68rem;
+  color: var(--muted);
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .pick.on .pick-name { color: #dbe6f7; }
 
 .toggle-row { display: flex; gap: 8px; }
