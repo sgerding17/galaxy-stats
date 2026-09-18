@@ -2,7 +2,7 @@
    mid-possession. Cache-first so taps never wait on the network, with a quiet
    background refresh so a rebuilt app lands on the next open. */
 
-var CACHE = "galaxy-logger-v1";
+var CACHE = "galaxy-logger-v2";
 var SHELL = [
   "./",
   "index.html",
