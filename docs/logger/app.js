@@ -18,8 +18,9 @@
   var HALF_SECONDS = 20 * 60;
   var CHECKPOINT_SECONDS = 60;
 
-  // Laid out three across: shot outcomes on the left two columns, everything
-  // else on the right.
+  // Laid out three across. Shot outcomes fill the left two columns; the right
+  // column is what follows a shot -- rebound, assist, block. The bottom row is
+  // the ball changing hands: turnover, steal, held ball.
   var EVENTS = [
     { id: "fgm", label: "2PT", mark: "MADE", cls: "make" },
     { id: "fga", label: "2PT", mark: "MISS", cls: "miss" },
@@ -29,9 +30,9 @@
     { id: "a", label: "AST", mark: "ASSIST", cls: "ball" },
     { id: "ftm", label: "FT", mark: "MADE", cls: "make" },
     { id: "fta", label: "FT", mark: "MISS", cls: "miss" },
-    { id: "s", label: "STL", mark: "STEAL", cls: "def" },
-    { id: "to", label: "TO", mark: "TURNOVER", cls: "bad" },
     { id: "b", label: "BLK", mark: "BLOCK", cls: "def" },
+    { id: "to", label: "TO", mark: "TURNOVER", cls: "bad" },
+    { id: "s", label: "STL", mark: "STEAL", cls: "def" },
     { id: "jump", label: "JUMP", mark: "HELD BALL", cls: "neutral" }
   ];
 
