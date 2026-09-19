@@ -845,6 +845,7 @@ def render_html(games, cumulative_stats, per_game_stats):
     </header>
 
     <nav class="top-links">
+      <a href="live/">Watch Live</a>
       <a href="#cumulative-stats">Cumulative Stats</a>
       <a href="#per-game-stats">Per-Game Stats</a>
       <a href="#player-game-logs">Player Game Logs</a>

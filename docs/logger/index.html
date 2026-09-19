@@ -156,6 +156,26 @@
     <h3>Log</h3>
     <button type="button" class="wide" id="open-export">Export game log</button>
 
+    <h3>Share live</h3>
+    <p class="hint">Parents and coaches follow the box score on the live page
+      while you log. Set this up once; it sticks to this phone.</p>
+    <label>Relay URL
+      <input type="url" id="live-endpoint" placeholder="https://galaxy-live.example.workers.dev"
+             autocapitalize="off" autocorrect="off" spellcheck="false">
+    </label>
+    <label>Write key
+      <input type="password" id="live-key" placeholder="the secret you set with wrangler"
+             autocapitalize="off" autocorrect="off" spellcheck="false">
+    </label>
+    <div class="toggle-row" id="live-toggle">
+      <button type="button" class="toggle" data-live="on">Sharing on</button>
+      <button type="button" class="toggle" data-live="off">Sharing off</button>
+    </div>
+    <div id="live-status" class="status"></div>
+    <p class="hint">The write key stays on this phone. It is never in the repo and
+      never shown to viewers &mdash; it only rides along as a header on your own
+      updates. See <code>worker/README.md</code> to set the relay up.</p>
+
     <h3>Roster</h3>
     <div class="roster-edit" id="roster-edit"></div>
     <div class="clock-edit">

@@ -24,9 +24,11 @@ fi
 echo "Serving from: $ROOT_DIR"
 echo "Local URL: http://localhost:${PORT}/docs/"
 echo "Logger URL: http://localhost:${PORT}/docs/logger/"
+echo "Live URL: http://localhost:${PORT}/docs/live/"
 if [[ -n "$IP_ADDR" ]]; then
   echo "Phone URL: http://${IP_ADDR}:${PORT}/docs/"
   echo "Phone logger URL: http://${IP_ADDR}:${PORT}/docs/logger/"
+  echo "Phone live URL: http://${IP_ADDR}:${PORT}/docs/live/"
 else
   echo "Phone URL: unable to detect network IP automatically."
 fi

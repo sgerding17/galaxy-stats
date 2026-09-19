@@ -15,8 +15,12 @@
 
   var SEED = window.GALAXY_SEED || { roster: {}, venues: [], opponents: [] };
   var STORE_KEY = "galaxy-logger/v1";
+  var LIVE_KEY = "galaxy-logger/live/v1";
   var HALF_SECONDS = 20 * 60;
   var CHECKPOINT_SECONDS = 60;
+  // The free KV tier allows 1,000 writes a day, so updates are rationed: at most
+  // one every ten seconds, and only when something a viewer would notice changed.
+  var LIVE_INTERVAL = 10000;
 
   // Laid out three across. Shot outcomes fill the left two columns; the right
   // column is what follows a shot -- rebound, assist, block. The bottom row is
@@ -69,6 +73,8 @@
   var setupPossession = "g";
   var toastTimer = null;
   var wakeLock = null;
+  var live = loadLive();
+  var liveState = { sending: false, timer: null, sent: "", sentAt: 0, triedAt: 0, error: "" };
 
   var el = {};
   ["app", "chips", "events", "tape", "prompt", "toast", "clock", "clock-time", "clock-state",
@@ -95,6 +101,10 @@
     } catch (error) {
       toast("This device would not save the log. Export it soon.");
     }
+    // Every change to the game goes through here, so this is the one place live
+    // sharing has to hook into. It decides for itself whether anything is worth
+    // sending.
+    scheduleLivePush();
   }
 
   /* -------------------------------------------------------------- game model */
@@ -637,6 +647,7 @@
   }
 
   function openGame(id) {
+    liveState.sent = "";
     game = store.games[id];
     store.currentId = id;
     // The clock cannot keep running while the app is closed; whatever it read
@@ -847,6 +858,174 @@
     navigator.share({ title: fileName(), text: logText() }).catch(function () { /* cancelled */ });
   }
 
+  /* --------------------------------------------------------- live sharing */
+
+  /* The relay URL and the write key live only in this phone's storage: the key
+     never goes near the repository, and it leaves here only as a header on our
+     own updates. */
+  function loadLive() {
+    try {
+      var raw = JSON.parse(localStorage.getItem(LIVE_KEY));
+      if (raw && typeof raw.endpoint === "string") {
+        return { endpoint: raw.endpoint, key: raw.key || "", enabled: !!raw.enabled };
+      }
+    } catch (error) { /* corrupt or unavailable; sharing starts off */ }
+    return { endpoint: "", key: "", enabled: false };
+  }
+
+  function persistLive() {
+    try {
+      localStorage.setItem(LIVE_KEY, JSON.stringify(live));
+    } catch (error) {
+      toast("This device would not remember the relay settings.");
+    }
+  }
+
+  function liveUrl() {
+    return live.endpoint.trim().replace(/\/+$/, "") + "/game/current";
+  }
+
+  function livePayload() {
+    return {
+      log: logText(),
+      meta: {
+        date: game.date,
+        venue: game.venue,
+        opponent: game.opponent,
+        roster: game.roster,
+        onCourt: game.onCourt,
+        half: game.half,
+        halvesEnded: game.halvesEnded || 0
+      },
+      clock: {
+        seconds: currentSeconds(),
+        running: game.clockStartedAt != null,
+        anchor: game.clockBase
+      }
+    };
+  }
+
+  /* What a viewer would actually notice. The clock's remaining seconds are left
+     out on purpose -- a clock running with nothing happening is not news, and the
+     viewer counts it down on its own. Including it would cost a write every ten
+     seconds all game. */
+  function liveSignature(payload) {
+    return JSON.stringify([payload.log, payload.meta, payload.clock.running, payload.clock.anchor]);
+  }
+
+  function liveReady() {
+    return !!(live.enabled && live.endpoint.trim() && game);
+  }
+
+  function scheduleLivePush(immediate) {
+    if (!liveReady()) return;
+    if (liveState.timer || liveState.sending) return;
+    if (liveSignature(livePayload()) === liveState.sent) return;
+    var wait = immediate ? 0 : Math.max(0, LIVE_INTERVAL - (Date.now() - liveState.triedAt));
+    liveState.timer = setTimeout(pushLive, wait);
+  }
+
+  function pushLive() {
+    liveState.timer = null;
+    if (!liveReady()) return;
+
+    var payload = livePayload();
+    var signature = liveSignature(payload);
+    if (signature === liveState.sent) return;
+
+    liveState.sending = true;
+    liveState.triedAt = Date.now();
+    renderLiveStatus();
+
+    fetch(liveUrl(), {
+      method: "PUT",
+      headers: { "content-type": "application/json", "x-galaxy-key": live.key },
+      body: JSON.stringify(payload)
+    }).then(function (response) {
+      if (response.status === 401) throw new Error("the relay rejected the write key");
+      if (!response.ok) throw new Error("the relay answered " + response.status);
+      liveState.sent = signature;
+      liveState.sentAt = Date.now();
+      liveState.error = "";
+    }).catch(function (error) {
+      liveState.error = String(error && error.message || error);
+      // A wrong key will never start working; anything else (a dead spot in the
+      // gym, a sleeping radio) usually will, so those just wait for the next window.
+      if (liveState.error.indexOf("write key") !== -1) {
+        live.enabled = false;
+        persistLive();
+        toast("Live sharing is off: the relay rejected the write key.");
+      }
+    }).then(function () {
+      liveState.sending = false;
+      renderLiveStatus();
+      scheduleLivePush();   // anything logged mid-flight, or a retry after a failure
+    });
+  }
+
+  /* Starting a different game overwrites the live one anyway; deleting one should
+     not leave it sitting there. */
+  function clearLive() {
+    if (!live.enabled || !live.endpoint.trim()) return;
+    liveState.sent = "";
+    fetch(liveUrl(), {
+      method: "DELETE",
+      headers: { "x-galaxy-key": live.key }
+    }).catch(function () { /* best effort; the value expires on its own */ });
+  }
+
+  function viewerUrl() {
+    try {
+      return new URL("../live/", location.href).href;
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function renderLiveStatus() {
+    var box = document.getElementById("live-status");
+    if (!box) return;
+
+    document.querySelectorAll("#live-toggle .toggle").forEach(function (button) {
+      var on = button.dataset.live === "on";
+      button.className = "toggle" + (on === !!live.enabled ? " on" : "");
+    });
+
+    var message;
+    var good = false;
+    if (!live.enabled) {
+      message = "Off. Nothing is being sent.";
+    } else if (!live.endpoint.trim()) {
+      message = "Add the relay URL above.";
+    } else if (liveState.error) {
+      message = "Trying again: " + liveState.error + ".";
+    } else if (liveState.sending) {
+      message = "Sending…";
+    } else if (liveState.sentAt) {
+      message = "Live. Last update " + agoText(liveState.sentAt) + ".";
+      good = true;
+    } else {
+      message = "Waiting for the first update.";
+    }
+
+    box.textContent = message;
+    box.className = "status" + (liveState.error ? " bad" : good ? "" : " idle");
+
+    if (live.enabled && !liveState.error) {
+      var link = document.createElement("div");
+      link.className = "hint";
+      link.textContent = "Viewers: " + viewerUrl().replace(/^https?:\/\//, "");
+      box.appendChild(link);
+    }
+  }
+
+  function agoText(stamp) {
+    var seconds = Math.max(0, Math.round((Date.now() - stamp) / 1000));
+    if (seconds < 5) return "just now";
+    if (seconds < 60) return seconds + "s ago";
+    return Math.round(seconds / 60) + " min ago";
+  }
+
   /* ------------------------------------------------------------- game menu */
 
   function renderMenu() {
@@ -856,6 +1035,9 @@
     document.getElementById("end-half").disabled = betweenHalves() || gameOver();
     document.getElementById("start-half").disabled = !betweenHalves();
     renderRosterEdit();
+    document.getElementById("live-endpoint").value = live.endpoint;
+    document.getElementById("live-key").value = live.key;
+    renderLiveStatus();
     openPanel("panel-menu");
   }
 
@@ -911,6 +1093,7 @@
 
   function deleteGame() {
     if (!confirm("Delete this game and its log? This cannot be undone.")) return;
+    clearLive();
     delete store.games[game.id];
     store.currentId = null;
     persist();
@@ -983,6 +1166,41 @@
     persist();
     renderRosterEdit();
     toast("Added " + number + " " + name + ".", true);
+  });
+
+  document.getElementById("live-endpoint").addEventListener("change", function () {
+    live.endpoint = this.value.trim();
+    liveState.sent = "";
+    liveState.error = "";
+    persistLive();
+    renderLiveStatus();
+    scheduleLivePush(true);
+  });
+
+  document.getElementById("live-key").addEventListener("change", function () {
+    live.key = this.value;
+    liveState.sent = "";
+    liveState.error = "";
+    persistLive();
+    renderLiveStatus();
+    scheduleLivePush(true);
+  });
+
+  document.querySelectorAll("#live-toggle .toggle").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var on = button.dataset.live === "on";
+      live.endpoint = document.getElementById("live-endpoint").value.trim();
+      live.key = document.getElementById("live-key").value;
+      live.enabled = on;
+      liveState.error = "";
+      if (on) liveState.sent = "";
+      persistLive();
+      renderLiveStatus();
+      if (on) {
+        if (!live.endpoint) toast("Add the relay URL first.");
+        else scheduleLivePush(true);
+      }
+    });
   });
 
   if (navigator.share) document.getElementById("export-share").hidden = false;

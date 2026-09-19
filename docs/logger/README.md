@@ -5,7 +5,9 @@ reconstructing one afterwards from video. It writes the same grammar as the
 files in `game_logs/` (see [video2log/GRAMMAR.md](../../video2log/GRAMMAR.md)),
 so its output drops straight into the existing stats pipeline.
 
-It is a static page. No server, no accounts, no network needed once loaded.
+It is a static page. No accounts, and logging needs no network at all once the
+page has loaded. Sharing the game live is optional and adds one small relay;
+see [Sharing it live](#sharing-it-live).
 
 **URL:** https://sgerding17.github.io/galaxy-stats/logger/
 
@@ -54,6 +56,29 @@ complete.
 rules as `scripts/stats.py`. Advanced ratings (on/off, points off turnovers,
 second-chance points) are left to the site build.
 
+## Sharing it live
+
+**Game → Share live** posts the running game to the relay in [`worker/`](../../worker/README.md)
+so parents and coaches can follow the box score at
+<https://sgerding17.github.io/galaxy-stats/live/> while you log.
+
+Set it up once: paste the relay URL and the write key, then turn sharing on. Both
+are kept in this phone's browser storage. **The write key never goes in the
+repository** — it leaves the phone only as a header on your own updates, and
+without it the relay refuses to change anything, so a viewer with the URL can
+only read.
+
+The status line under the toggle says when the last update went out. If the phone
+loses signal the app keeps logging as normal and catches up on its own; nothing
+is lost either way, because the export at the end comes from the phone, not the
+relay.
+
+Updates are rationed to stay inside Cloudflare's free tier, which allows 1,000
+writes a day: at most one update every ten seconds, and only when something a
+viewer would notice has changed. A clock ticking down with nothing happening is
+not a change — the live page counts it down on its own. A two-hour game costs a
+few hundred writes.
+
 ## Nothing invalid can be logged
 
 Every tap is appended, run through the parser, and kept only if the log still
@@ -88,6 +113,9 @@ icon-*.png      GENERATED: home-screen icons
 sw.js           offline cache
 ```
 
+The live page is separate, in [`docs/live/`](../live/), and shares `logstats.js`
+with this one so there is only ever one set of stat rules in the project.
+
 `seed.js` and the icons come from the roster in `scripts/stats.py` and the
 filenames in `game_logs/`. Regenerate them after a roster change or a new game:
 
@@ -110,5 +138,6 @@ on/off ratings.
 
 - Fouls and timeouts, which the grammar does not track either.
 - Halves other than 20:00.
-- Live sharing. The box score is on the logging phone only; coaches and parents
-  still see stats when the site is rebuilt after the game.
+- Advanced ratings while the game is on. On/off, points off turnovers and
+  second-chance points still wait for the site build; the live page shows the
+  box score only.

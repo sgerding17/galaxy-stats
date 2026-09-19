@@ -532,6 +532,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
 }
 
 .status.bad { background: #331620; border-color: #6b2130; color: #fca5a5; }
+/* Live sharing has a state the export status never has: set up and healthy,
+   but with nothing sent yet. Green would overstate it. */
+.status.idle { background: var(--panel-2); border-color: var(--line); color: var(--muted); }
+.status .hint { margin: 6px 0 0; word-break: break-all; }
+#live-toggle { margin-bottom: 12px; }
 
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
