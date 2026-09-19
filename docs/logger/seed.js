@@ -49,5 +49,6 @@ window.GALAXY_SEED = {
     "Storm",
     "WLA_4",
     "PB_Musubis"
-  ]
+  ],
+  "build": "ba3ee2781d"
 };
