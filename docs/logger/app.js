@@ -1035,6 +1035,9 @@
     document.getElementById("end-half").disabled = betweenHalves() || gameOver();
     document.getElementById("start-half").disabled = !betweenHalves();
     renderRosterEdit();
+    document.getElementById("build-stamp").textContent =
+      "Build " + (SEED.build || "dev") + ". If two devices disagree about what " +
+      "this app can do, they are on different builds.";
     document.getElementById("live-endpoint").value = live.endpoint;
     document.getElementById("live-key").value = live.key;
     renderLiveStatus();
@@ -1234,7 +1237,12 @@
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function () { /* offline is best-effort */ });
+      // updateViaCache "none": GitHub Pages serves sw.js with a ten-minute
+      // max-age, and without this the browser checks for a new worker against
+      // its own stale copy -- so a deploy could sit unnoticed behind the worker
+      // that was meant to notice it.
+      navigator.serviceWorker.register("sw.js", { updateViaCache: "none" })
+        .catch(function () { /* offline is best-effort */ });
     });
   }
 

@@ -110,18 +110,22 @@ app.js          state, tap handling, rendering, export
 logstats.js     the stat engine -- a port of scripts/stats.py
 seed.js         GENERATED: roster, past venues and opponents
 icon-*.png      GENERATED: home-screen icons
-sw.js           offline cache
+sw.js           offline cache; GENERATED stamps (cache name, asset versions)
 ```
 
 The live page is separate, in [`docs/live/`](../live/), and shares `logstats.js`
 with this one so there is only ever one set of stat rules in the project.
 
-`seed.js` and the icons come from the roster in `scripts/stats.py` and the
-filenames in `game_logs/`. Regenerate them after a roster change or a new game:
+**Run `python3 scripts/build_logger.py` after every change to this directory**,
+not just after a roster change:
 
 ```sh
 python3 scripts/build_logger.py
 ```
+
+It regenerates `seed.js` and the icons from the roster in `scripts/stats.py` and
+the filenames in `game_logs/`, and it stamps the build id — see below — into
+`index.html` and `sw.js`. Skip it and phones keep running the old code.
 
 `logstats.js` is a hand port of `count_stats`/`rollup_stats`, so the two can
 drift. They are checked against each other over every log in `game_logs/`:
@@ -133,6 +137,28 @@ python3 scripts/test_logger_stats.py
 Run that after touching either engine. It compares every stat for every player
 in every game, and the port only leaves out the lineup-combo rows behind the
 on/off ratings.
+
+## How an update reaches a phone
+
+Two caches sit between a `git push` and the app on the floor: the browser's own
+(GitHub Pages sends a ten-minute `max-age`) and the service worker's. Between
+them they could serve a *new* `index.html` beside an *old* `app.js` — a screen
+that looks right with buttons that do nothing, and no error anywhere.
+
+Three things stop that, all driven by one build id, which is a hash of every
+file the phone downloads:
+
+- `index.html` asks for `app.js?v=<build>`, and the other assets likewise. Those
+  URLs hold exactly one build's bytes, so a page can never pair itself with code
+  from a different build. This is the part that does the real work.
+- The service worker's cache is named for the build, so it rolls when the app
+  changes and never when it does not.
+- The worker is network-first with a 2.5 second timeout rather than cache-first,
+  so a live connection always gets the current build and a dead one still opens
+  instantly from cache. Courtside that fallback is the case that matters.
+
+The build id is at the bottom of **Game**. If two devices disagree about what
+the app can do, compare those two strings before anything else.
 
 ## Not covered
 
