@@ -10,24 +10,43 @@ connection; the parents need the live page.
 
 ## Deploying it
 
-You need a free Cloudflare account. No credit card, no always-on anything.
+You need a free Cloudflare account. No credit card, and nothing runs when no
+game is on.
 
 ```sh
 cd worker
-npx wrangler login                      # opens a browser once
+npx wrangler login                      # opens a browser; click Allow
 npx wrangler kv namespace create LIVE   # prints an id
 ```
 
-Paste that id into `wrangler.toml` as the `LIVE` binding id. Then pick a write
-secret — any long random string — and store it with Cloudflare:
+`kv namespace` needs wrangler 3.60 or newer, which is what `npx` fetches. On
+something older the command is `kv:namespace` with a colon.
+
+Paste the id it prints into `wrangler.toml`, replacing
+`PASTE_YOUR_KV_NAMESPACE_ID_HERE`. Then deploy:
 
 ```sh
-npx wrangler secret put WRITE_KEY       # paste the string when prompted
 npx wrangler deploy
 ```
 
-`wrangler deploy` prints the URL, something like
-`https://galaxy-live.<your-subdomain>.workers.dev`. Two things to do with it:
+Deploying before setting the write key is deliberate: a relay with no
+`WRITE_KEY` refuses every write, so there is no window where anyone can post to
+it. Now make a key and give it to Cloudflare:
+
+```sh
+openssl rand -base64 24                 # copy what this prints
+npx wrangler secret put WRITE_KEY       # paste it at the prompt
+```
+
+`wrangler deploy` printed the URL, something like
+`https://galaxy-live.<your-subdomain>.workers.dev`. Check it answers:
+
+```sh
+curl https://galaxy-live.<your-subdomain>.workers.dev/
+# {"ok":true,"service":"galaxy live relay"}
+```
+
+Two things to do with that URL:
 
 1. On the logging phone, open the logger, tap **Game → Share live**, paste the
    URL and the write secret, and turn sharing on. They are kept in that phone's
