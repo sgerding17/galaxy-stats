@@ -34,19 +34,24 @@
 
   /* ---------------------------------------------------------------- endpoint */
 
-  /* ?api= wins (handy for testing and for pointing at a second game), then this
-     device's remembered choice, then whatever config.js was committed with. */
+  /* ?api= wins, for testing and for pointing at a second game. Then the URL this
+     copy of the site was built with, which is the answer for everybody. A URL
+     typed into the prompt below ranks last, because it only exists for the case
+     where the site had no answer -- if it outranked config.js, one device's
+     stale guess would outlive the commit that fixed it for everyone. */
   function resolveEndpoint() {
     var fromQuery = new URLSearchParams(location.search).get("api");
     if (fromQuery) {
       remember(fromQuery);
       return fromQuery.trim();
     }
+    var built = ((window.GALAXY_LIVE || {}).endpoint || "").trim();
+    if (built) return built;
     try {
       var saved = localStorage.getItem(STORE_KEY);
       if (saved) return saved;
-    } catch (error) { /* private mode; fall through to the built-in default */ }
-    return ((window.GALAXY_LIVE || {}).endpoint || "").trim();
+    } catch (error) { /* private mode; nothing was remembered */ }
+    return "";
   }
 
   function remember(url) {
