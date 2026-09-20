@@ -9,5 +9,5 @@
  * in that device's browser storage. A ?api= query parameter overrides both.
  */
 window.GALAXY_LIVE = {
-  endpoint: ""
+  endpoint: "https://galaxy-live.forgalaxy.workers.dev"
 };
