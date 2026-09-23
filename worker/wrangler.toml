@@ -7,7 +7,7 @@ compatibility_date = "2026-01-01"
 # then paste the id it prints here.
 [[kv_namespaces]]
 binding = "LIVE"
-id = "PASTE_YOUR_KV_NAMESPACE_ID_HERE"
+id = "b52efabd468641a3bf33596e516be711"
 
 # The write secret is NOT in this file. Set it with:
 #   npx wrangler secret put WRITE_KEY
