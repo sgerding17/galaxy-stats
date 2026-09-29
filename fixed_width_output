@@ -1,6 +1,21 @@
 [Box Scores](#box-scores) &bull; [Aggregate Stats](#aggregate-stats) &bull; [Player Game Logs](#player-game-logs)
 ---
 # Box Scores
+## 2026-09-27 - Galaxy vs. Cheetahs - SBYB League Play
+```
+            MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+ 1 Long      25    3    0-8   3-6    3    0    0    2    0     3     0   +8
+ 2 Laurel    29    7    2-7   3-7    4    0    1    0    1     3     1   -5
+ 3 Gerding   18    2    1-5   0-0    2    1    2    0    0     1     1   +1
+ 4 Rectra    18    0    0-2   0-0    1    1    1    1    0     0     1   -8
+ 5 Iwai      22    0    0-2   0-0    3    0    0    1    1     1     2   +0
+21 Saito     26    3   1-10   1-2    2    1    2    1    0     1     1   +6
+22 DeMarti   30    9    4-8   1-5    7    1    0    2    1     1     6   +1
+25 Yosy      33    2    0-6   2-2    3    0    1    3    0     1     2   -8
+
+Galaxy        -   26   8-48 10-22   32    4    7   10    3    14    18    -
+Opponent      -   27  12-39  2-12   37    -   15    -    -    10    27    -
+```
 ## 2026-09-20 - Galaxy vs. Royals - SBYB League Play
 ```
             MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
@@ -750,40 +765,41 @@ Opponent      -    9   2-35  5-22   29    -   14    -    -    19    10    -
 ## Cumulative Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO   A/TO    PLAYER
-Long       47  1045    26    10    91  11.0     6    21  28.6    52    20    72    14    45     4    91   0.15      Long
-Laurel     51  1216    64    28   174  16.1     8    23  34.8    72   108   180    13    47    11    92   0.14    Laurel
-Gerding    48  1296   102    46   237  19.4    10    24  41.7    67    96   163    41   121    24   188   0.22   Gerding
-Rectra      4   116    15     6    15  40.0     2     6  33.3     6     4    10     3     8     2     8   0.38    Rectra
-Iwai       47  1369   103    41   252  16.3    15    44  34.1    70   117   187    64    68    22   188   0.34      Iwai
+Long       48  1070    29    10    99  10.1     9    27  33.3    55    20    75    14    47     4    91   0.15      Long
+Laurel     52  1245    71    30   181  16.6    11    30  36.7    75   109   184    13    47    12    93   0.14    Laurel
+Gerding    49  1314   104    47   242  19.4    10    24  41.7    68    97   165    42   121    24   190   0.22   Gerding
+Rectra      5   134    15     6    17  35.3     2     6  33.3     6     5    11     4     9     2     9   0.44    Rectra
+Iwai       48  1391   103    41   254  16.1    15    44  34.1    71   119   190    64    69    23   188   0.34      Iwai
 Li         41  1018    81    34   229  14.8    13    50  26.0    71   101   172    32    48    48   130   0.25        Li
-Saito      50  1124   100    45   201  22.4     3    10  30.0    37    45    82    16    26     1   130   0.12     Saito
-DeMarti    49  1634   605   243   669  36.3   115   261  44.1   295   393   688    43   168   146   167   0.26   DeMarti
-Yosy       50  1382   101    44   249  17.7    13    59  22.0    79    38   117    18    64     7   146   0.12      Yosy
+Saito      51  1150   103    46   211  21.8     4    12  33.3    38    46    84    17    27     1   132   0.13     Saito
+DeMarti    50  1664   614   247   677  36.5   116   266  43.6   296   399   695    44   170   147   167   0.26   DeMarti
+Yosy       51  1415   103    44   255  17.3    15    61  24.6    80    40   120    18    67     7   147   0.12      Yosy
 
-Galaxy     51     -  1197   497  2117  23.5   185   498  37.1   849  1065  1914   244   595   265  1140      -    Galaxy
-Opponent   51     -  1098   461  2381  19.4   151   381  39.6   855   787  1642     -     -     -     -      -  Opponent
+Galaxy     52     -  1223   505  2165  23.3   195   520  37.5   863  1083  1946   248   605   268  1147      -    Galaxy
+Opponent   52     -  1125   473  2420  19.5   153   393  38.9   865   814  1679     -     -     -     -      -  Opponent
 ```
 ## Per-Game Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO   A/TO    PLAYER
-Long       47  22.2   0.6   0.2   1.9  11.0   0.1   0.4  28.6   1.1   0.4   1.5   0.3   1.0   0.1   1.9   0.15      Long
-Laurel     51  23.8   1.3   0.5   3.4  16.1   0.2   0.5  34.8   1.4   2.1   3.5   0.3   0.9   0.2   1.8   0.14    Laurel
-Gerding    48  27.0   2.1   1.0   4.9  19.4   0.2   0.5  41.7   1.4   2.0   3.4   0.9   2.5   0.5   3.9   0.22   Gerding
-Rectra      4  29.0   3.8   1.5   3.8  40.0   0.5   1.5  33.3   1.5   1.0   2.5   0.8   2.0   0.5   2.0   0.38    Rectra
-Iwai       47  29.1   2.2   0.9   5.4  16.3   0.3   0.9  34.1   1.5   2.5   4.0   1.4   1.4   0.5   4.0   0.34      Iwai
+Long       48  22.3   0.6   0.2   2.1  10.1   0.2   0.6  33.3   1.1   0.4   1.6   0.3   1.0   0.1   1.9   0.15      Long
+Laurel     52  23.9   1.4   0.6   3.5  16.6   0.2   0.6  36.7   1.4   2.1   3.5   0.2   0.9   0.2   1.8   0.14    Laurel
+Gerding    49  26.8   2.1   1.0   4.9  19.4   0.2   0.5  41.7   1.4   2.0   3.4   0.9   2.5   0.5   3.9   0.22   Gerding
+Rectra      5  26.8   3.0   1.2   3.4  35.3   0.4   1.2  33.3   1.2   1.0   2.2   0.8   1.8   0.4   1.8   0.44    Rectra
+Iwai       48  29.0   2.1   0.9   5.3  16.1   0.3   0.9  34.1   1.5   2.5   4.0   1.3   1.4   0.5   3.9   0.34      Iwai
 Li         41  24.8   2.0   0.8   5.6  14.8   0.3   1.2  26.0   1.7   2.5   4.2   0.8   1.2   1.2   3.2   0.25        Li
-Saito      50  22.5   2.0   0.9   4.0  22.4   0.1   0.2  30.0   0.7   0.9   1.6   0.3   0.5   0.0   2.6   0.12     Saito
-DeMarti    49  33.3  12.3   5.0  13.7  36.3   2.3   5.3  44.1   6.0   8.0  14.0   0.9   3.4   3.0   3.4   0.26   DeMarti
-Yosy       50  27.6   2.0   0.9   5.0  17.7   0.3   1.2  22.0   1.6   0.8   2.3   0.4   1.3   0.1   2.9   0.12      Yosy
+Saito      51  22.5   2.0   0.9   4.1  21.8   0.1   0.2  33.3   0.7   0.9   1.6   0.3   0.5   0.0   2.6   0.13     Saito
+DeMarti    50  33.3  12.3   4.9  13.5  36.5   2.3   5.3  43.6   5.9   8.0  13.9   0.9   3.4   2.9   3.3   0.26   DeMarti
+Yosy       51  27.7   2.0   0.9   5.0  17.3   0.3   1.2  24.6   1.6   0.8   2.4   0.4   1.3   0.1   2.9   0.12      Yosy
 
-Galaxy     51     -  23.5   9.7  41.5  23.5   3.6   9.8  37.1  16.6  20.9  37.5   4.8  11.7   5.2  22.4      -    Galaxy
-Opponent   51     -  21.5   9.0  46.7  19.4   3.0   7.5  39.6  16.8  15.4  32.2     -     -     -     -      -  Opponent
+Galaxy     52     -  23.5   9.7  41.6  23.3   3.8  10.0  37.5  16.6  20.8  37.4   4.8  11.6   5.2  22.1      -    Galaxy
+Opponent   52     -  21.6   9.1  46.5  19.5   2.9   7.6  38.9  16.6  15.7  32.3     -     -     -     -      -  Opponent
 ```
 ---
 # Player Game Logs
 ##  1 Long - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-09-27  Cheetahs        L 26-27   25    3    0-8   3-6    3    0    0    2    0     3     0   +8
 2026-09-20  Royals          L 27-37   25    2    1-6   0-0    0    1    2    0    0     0     0  -11
 2026-07-19  Sakura          W 33-30   17    2    1-7   0-0    3    1    1    1    0     3     0   -2
 2026-05-24  Shooting Stars  L 29-34   10    0    0-1   0-0    0    0    1    0    0     0     0   -6
@@ -835,6 +851,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  2 Laurel - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-09-27  Cheetahs        L 26-27   29    7    2-7   3-7    4    0    1    0    1     3     1   -5
 2026-09-20  Royals          L 27-37   22    0    0-3   0-0    3    0    1    1    0     2     1   -4
 2026-07-26  Dolphins        W 26-15   26    4    2-3   0-0    4    1    2    1    0     3     1  +13
 2026-07-19  Sakura          W 33-30   21    0    0-2   0-0    2    0    0    1    0     2     0   -1
@@ -890,6 +907,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  3 Gerding - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-09-27  Cheetahs        L 26-27   18    2    1-5   0-0    2    1    2    0    0     1     1   +1
 2026-09-20  Royals          L 27-37   27    2    1-5   0-0    5    1    5    1    0     2     3   -8
 2026-07-26  Dolphins        W 26-15   28    3    1-6   1-2    5    2    4    4    0     1     4   +7
 2026-07-19  Sakura          W 33-30   19    4    2-6   0-0    2    0    3    2    0     1     1   +4
@@ -942,6 +960,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  4 Rectra - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-09-27  Cheetahs        L 26-27   18    0    0-2   0-0    1    1    1    1    0     0     1   -8
 2026-09-20  Royals          L 27-37   25    0    0-3   0-0    1    0    3    1    1     0     1   -6
 2026-07-26  Dolphins        W 26-15   36    3    1-4   0-0    1    1    3    4    0     0     1  +11
 2026-07-19  Sakura          W 33-30   28    7    3-3   1-2    4    2    1    3    1     2     2   +8
@@ -950,6 +969,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  5 Iwai - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-09-27  Cheetahs        L 26-27   22    0    0-2   0-0    3    0    0    1    1     1     2   +0
 2026-09-20  Royals          L 27-37   24    0    0-5   0-0    6    2    0    1    0     2     4   -5
 2026-07-26  Dolphins        W 26-15   26    1    0-2   1-2    1    2    2    1    0     0     1   +0
 2026-07-19  Sakura          W 33-30   24    0    0-1   0-2    2    0    2    1    0     0     2   -1
@@ -1046,6 +1066,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 21 Saito - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-09-27  Cheetahs        L 26-27   26    3   1-10   1-2    2    1    2    1    0     1     1   +6
 2026-09-20  Royals          L 27-37   26    6    2-9   2-2    4    0    2    2    0     2     2   -7
 2026-07-26  Dolphins        W 26-15   25    3    1-3   0-0    0    0    0    0    0     0     0  +11
 2026-07-19  Sakura          W 33-30   21    2    1-5   0-0    2    1    3    1    0     0     2   -1
@@ -1100,6 +1121,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 22 DeMarti - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-09-27  Cheetahs        L 26-27   30    9    4-8   1-5    7    1    0    2    1     1     6   +1
 2026-09-20  Royals          L 27-37   28   15   7-13   0-0   11    0    1    2    1     9     2   -2
 2026-07-26  Dolphins        W 26-15   30    9   4-10   1-4    5    0    1    2    1     1     4  +10
 2026-07-19  Sakura          W 33-30   28   10    4-8   2-2    2    0    2    1    3     1     1   +5
@@ -1153,6 +1175,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 25 Yosy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-09-27  Cheetahs        L 26-27   33    2    0-6   2-2    3    0    1    3    0     1     2   -8
 2026-09-20  Royals          L 27-37   23    2    1-6   0-0    0    0    0    1    0     0     0   -7
 2026-07-26  Dolphins        W 26-15   30    3    1-2   1-3    1    1    4    0    1     1     0   +3
 2026-07-19  Sakura          W 33-30   28    8    4-8   0-4    8    2    6    3    1     4     4   +4
@@ -1207,6 +1230,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## Galaxy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-09-27  Cheetahs        L 26-27    -   26   8-48 10-22   32    4    7   10    3    14    18    -
 2026-09-20  Royals          L 27-37    -   27  12-50   2-2   33    4   14    9    2    17    16    -
 2026-07-26  Dolphins        W 26-15    -   26  10-30  4-11   25    7   16   12    2    10    15    -
 2026-07-19  Sakura          W 33-30    -   33  15-42  3-10   33    8   20   13    5    17    16    -
