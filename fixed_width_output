@@ -1,6 +1,21 @@
 [Box Scores](#box-scores) &bull; [Aggregate Stats](#aggregate-stats) &bull; [Player Game Logs](#player-game-logs)
 ---
 # Box Scores
+## 2026-10-04 - Galaxy vs. PB Musubis - SBYB League Play
+```
+            MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+ 1 Long      29    0    0-0   0-0    1    0    1    0    0     1     0  -16
+ 2 Laurel    28    0    0-2   0-0    3    0    5    0    0     1     2  -10
+ 3 Gerding   26    5   2-10   1-2    3    2    3    2    0     0     3   -5
+ 4 Rectra    24    4    1-2   2-4    4    3    3    0    1     4     0   -6
+ 5 Iwai      20    0    0-4   0-0    3    0    3    4    0     0     3   -2
+21 Saito     20    3    1-3   1-2    2    0    2    1    0     1     1   -8
+22 DeMarti   24    7    3-6   1-5    5    0    1    3    1     2     3   +0
+25 Yosy      30    2    1-8   0-0    4    0    2    1    0     1     3   -8
+
+Galaxy        -   21   8-35  5-13   28    5   20   11    2    12    16    -
+Opponent      -   32  14-57   1-2   42    -   15    -    -    24    18    -
+```
 ## 2026-09-27 - Galaxy vs. Cheetahs - SBYB League Play
 ```
             MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
@@ -765,40 +780,41 @@ Opponent      -    9   2-35  5-22   29    -   14    -    -    19    10    -
 ## Cumulative Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO   A/TO    PLAYER
-Long       48  1070    29    10    99  10.1     9    27  33.3    55    20    75    14    47     4    91   0.15      Long
-Laurel     52  1245    71    30   181  16.6    11    30  36.7    75   109   184    13    47    12    93   0.14    Laurel
-Gerding    49  1314   104    47   242  19.4    10    24  41.7    68    97   165    42   121    24   190   0.22   Gerding
-Rectra      5   134    15     6    17  35.3     2     6  33.3     6     5    11     4     9     2     9   0.44    Rectra
-Iwai       48  1391   103    41   254  16.1    15    44  34.1    71   119   190    64    69    23   188   0.34      Iwai
+Long       49  1099    29    10    99  10.1     9    27  33.3    56    20    76    14    47     4    92   0.15      Long
+Laurel     53  1273    71    30   183  16.4    11    30  36.7    76   111   187    13    47    12    98   0.13    Laurel
+Gerding    50  1340   109    49   252  19.4    11    26  42.3    68   100   168    44   123    24   193   0.23   Gerding
+Rectra      6   158    19     7    19  36.8     4    10  40.0    10     5    15     7     9     3    12   0.58    Rectra
+Iwai       49  1411   103    41   258  15.9    15    44  34.1    71   122   193    64    73    23   191   0.34      Iwai
 Li         41  1018    81    34   229  14.8    13    50  26.0    71   101   172    32    48    48   130   0.25        Li
-Saito      51  1150   103    46   211  21.8     4    12  33.3    38    46    84    17    27     1   132   0.13     Saito
-DeMarti    50  1664   614   247   677  36.5   116   266  43.6   296   399   695    44   170   147   167   0.26   DeMarti
-Yosy       51  1415   103    44   255  17.3    15    61  24.6    80    40   120    18    67     7   147   0.12      Yosy
+Saito      52  1170   106    47   214  22.0     5    14  35.7    39    47    86    17    28     1   134   0.13     Saito
+DeMarti    51  1688   621   250   683  36.6   117   271  43.2   298   402   700    44   173   148   168   0.26   DeMarti
+Yosy       52  1445   105    45   263  17.1    15    61  24.6    81    43   124    18    68     7   149   0.12      Yosy
 
-Galaxy     52     -  1223   505  2165  23.3   195   520  37.5   863  1083  1946   248   605   268  1147      -    Galaxy
-Opponent   52     -  1125   473  2420  19.5   153   393  38.9   865   814  1679     -     -     -     -      -  Opponent
+Galaxy     53     -  1244   513  2200  23.3   200   533  37.5   875  1099  1974   253   616   270  1167      -    Galaxy
+Opponent   53     -  1157   487  2477  19.7   154   395  39.0   889   832  1721     -     -     -     -      -  Opponent
 ```
 ## Per-Game Stats
 ```
 PLAYER     GP   MIN   PTS   FGM   FGA   FG%   FTM   FTA   FT%  OREB  DREB   REB   AST   STL   BLK    TO   A/TO    PLAYER
-Long       48  22.3   0.6   0.2   2.1  10.1   0.2   0.6  33.3   1.1   0.4   1.6   0.3   1.0   0.1   1.9   0.15      Long
-Laurel     52  23.9   1.4   0.6   3.5  16.6   0.2   0.6  36.7   1.4   2.1   3.5   0.2   0.9   0.2   1.8   0.14    Laurel
-Gerding    49  26.8   2.1   1.0   4.9  19.4   0.2   0.5  41.7   1.4   2.0   3.4   0.9   2.5   0.5   3.9   0.22   Gerding
-Rectra      5  26.8   3.0   1.2   3.4  35.3   0.4   1.2  33.3   1.2   1.0   2.2   0.8   1.8   0.4   1.8   0.44    Rectra
-Iwai       48  29.0   2.1   0.9   5.3  16.1   0.3   0.9  34.1   1.5   2.5   4.0   1.3   1.4   0.5   3.9   0.34      Iwai
+Long       49  22.4   0.6   0.2   2.0  10.1   0.2   0.6  33.3   1.1   0.4   1.6   0.3   1.0   0.1   1.9   0.15      Long
+Laurel     53  24.0   1.3   0.6   3.5  16.4   0.2   0.6  36.7   1.4   2.1   3.5   0.2   0.9   0.2   1.8   0.13    Laurel
+Gerding    50  26.8   2.2   1.0   5.0  19.4   0.2   0.5  42.3   1.4   2.0   3.4   0.9   2.5   0.5   3.9   0.23   Gerding
+Rectra      6  26.3   3.2   1.2   3.2  36.8   0.7   1.7  40.0   1.7   0.8   2.5   1.2   1.5   0.5   2.0   0.58    Rectra
+Iwai       49  28.8   2.1   0.8   5.3  15.9   0.3   0.9  34.1   1.4   2.5   3.9   1.3   1.5   0.5   3.9   0.34      Iwai
 Li         41  24.8   2.0   0.8   5.6  14.8   0.3   1.2  26.0   1.7   2.5   4.2   0.8   1.2   1.2   3.2   0.25        Li
-Saito      51  22.5   2.0   0.9   4.1  21.8   0.1   0.2  33.3   0.7   0.9   1.6   0.3   0.5   0.0   2.6   0.13     Saito
-DeMarti    50  33.3  12.3   4.9  13.5  36.5   2.3   5.3  43.6   5.9   8.0  13.9   0.9   3.4   2.9   3.3   0.26   DeMarti
-Yosy       51  27.7   2.0   0.9   5.0  17.3   0.3   1.2  24.6   1.6   0.8   2.4   0.4   1.3   0.1   2.9   0.12      Yosy
+Saito      52  22.5   2.0   0.9   4.1  22.0   0.1   0.3  35.7   0.8   0.9   1.7   0.3   0.5   0.0   2.6   0.13     Saito
+DeMarti    51  33.1  12.2   4.9  13.4  36.6   2.3   5.3  43.2   5.8   7.9  13.7   0.9   3.4   2.9   3.3   0.26   DeMarti
+Yosy       52  27.8   2.0   0.9   5.1  17.1   0.3   1.2  24.6   1.6   0.8   2.4   0.3   1.3   0.1   2.9   0.12      Yosy
 
-Galaxy     52     -  23.5   9.7  41.6  23.3   3.8  10.0  37.5  16.6  20.8  37.4   4.8  11.6   5.2  22.1      -    Galaxy
-Opponent   52     -  21.6   9.1  46.5  19.5   2.9   7.6  38.9  16.6  15.7  32.3     -     -     -     -      -  Opponent
+Galaxy     53     -  23.5   9.7  41.5  23.3   3.8  10.1  37.5  16.5  20.7  37.2   4.8  11.6   5.1  22.0      -    Galaxy
+Opponent   53     -  21.8   9.2  46.7  19.7   2.9   7.5  39.0  16.8  15.7  32.5     -     -     -     -      -  Opponent
 ```
 ---
 # Player Game Logs
 ##  1 Long - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-10-04  PB Musubis      L 21-32   29    0    0-0   0-0    1    0    1    0    0     1     0  -16
 2026-09-27  Cheetahs        L 26-27   25    3    0-8   3-6    3    0    0    2    0     3     0   +8
 2026-09-20  Royals          L 27-37   25    2    1-6   0-0    0    1    2    0    0     0     0  -11
 2026-07-19  Sakura          W 33-30   17    2    1-7   0-0    3    1    1    1    0     3     0   -2
@@ -851,6 +867,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  2 Laurel - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-10-04  PB Musubis      L 21-32   28    0    0-2   0-0    3    0    5    0    0     1     2  -10
 2026-09-27  Cheetahs        L 26-27   29    7    2-7   3-7    4    0    1    0    1     3     1   -5
 2026-09-20  Royals          L 27-37   22    0    0-3   0-0    3    0    1    1    0     2     1   -4
 2026-07-26  Dolphins        W 26-15   26    4    2-3   0-0    4    1    2    1    0     3     1  +13
@@ -907,6 +924,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  3 Gerding - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-10-04  PB Musubis      L 21-32   26    5   2-10   1-2    3    2    3    2    0     0     3   -5
 2026-09-27  Cheetahs        L 26-27   18    2    1-5   0-0    2    1    2    0    0     1     1   +1
 2026-09-20  Royals          L 27-37   27    2    1-5   0-0    5    1    5    1    0     2     3   -8
 2026-07-26  Dolphins        W 26-15   28    3    1-6   1-2    5    2    4    4    0     1     4   +7
@@ -960,6 +978,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  4 Rectra - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-10-04  PB Musubis      L 21-32   24    4    1-2   2-4    4    3    3    0    1     4     0   -6
 2026-09-27  Cheetahs        L 26-27   18    0    0-2   0-0    1    1    1    1    0     0     1   -8
 2026-09-20  Royals          L 27-37   25    0    0-3   0-0    1    0    3    1    1     0     1   -6
 2026-07-26  Dolphins        W 26-15   36    3    1-4   0-0    1    1    3    4    0     0     1  +11
@@ -969,6 +988,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ##  5 Iwai - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-10-04  PB Musubis      L 21-32   20    0    0-4   0-0    3    0    3    4    0     0     3   -2
 2026-09-27  Cheetahs        L 26-27   22    0    0-2   0-0    3    0    0    1    1     1     2   +0
 2026-09-20  Royals          L 27-37   24    0    0-5   0-0    6    2    0    1    0     2     4   -5
 2026-07-26  Dolphins        W 26-15   26    1    0-2   1-2    1    2    2    1    0     0     1   +0
@@ -1066,6 +1086,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 21 Saito - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-10-04  PB Musubis      L 21-32   20    3    1-3   1-2    2    0    2    1    0     1     1   -8
 2026-09-27  Cheetahs        L 26-27   26    3   1-10   1-2    2    1    2    1    0     1     1   +6
 2026-09-20  Royals          L 27-37   26    6    2-9   2-2    4    0    2    2    0     2     2   -7
 2026-07-26  Dolphins        W 26-15   25    3    1-3   0-0    0    0    0    0    0     0     0  +11
@@ -1121,6 +1142,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 22 DeMarti - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-10-04  PB Musubis      L 21-32   24    7    3-6   1-5    5    0    1    3    1     2     3   +0
 2026-09-27  Cheetahs        L 26-27   30    9    4-8   1-5    7    1    0    2    1     1     6   +1
 2026-09-20  Royals          L 27-37   28   15   7-13   0-0   11    0    1    2    1     9     2   -2
 2026-07-26  Dolphins        W 26-15   30    9   4-10   1-4    5    0    1    2    1     1     4  +10
@@ -1175,6 +1197,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## 25 Yosy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-10-04  PB Musubis      L 21-32   30    2    1-8   0-0    4    0    2    1    0     1     3   -8
 2026-09-27  Cheetahs        L 26-27   33    2    0-6   2-2    3    0    1    3    0     1     2   -8
 2026-09-20  Royals          L 27-37   23    2    1-6   0-0    0    0    0    1    0     0     0   -7
 2026-07-26  Dolphins        W 26-15   30    3    1-2   1-3    1    1    4    0    1     1     0   +3
@@ -1230,6 +1253,7 @@ DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  
 ## Galaxy - Game Log
 ```
 DATE        OPPONENT        RESULT   MIN  PTS     FG    FT  REB  AST   TO  STL  BLK  OREB  DREB  +/-
+2026-10-04  PB Musubis      L 21-32    -   21   8-35  5-13   28    5   20   11    2    12    16    -
 2026-09-27  Cheetahs        L 26-27    -   26   8-48 10-22   32    4    7   10    3    14    18    -
 2026-09-20  Royals          L 27-37    -   27  12-50   2-2   33    4   14    9    2    17    16    -
 2026-07-26  Dolphins        W 26-15    -   26  10-30  4-11   25    7   16   12    2    10    15    -
