@@ -61,7 +61,9 @@ second-chance points) are left to the site build.
 logged immediately and appears in a newest-first list. **Edit** and **Delete**
 let you correct dictated events; every correction is checked against the whole
 game log before it is saved. If the browser pauses speech recognition, the app
-reconnects while listening remains on.
+reconnects while listening remains on. The **Recognizer** row shows the exact
+browser transcript before `voice.js` parses it, and flashes when that transcript
+becomes final; the **Parser** row shows the resulting DSL line or rejection.
 
 ## Sharing it live
 

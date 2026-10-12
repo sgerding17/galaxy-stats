@@ -538,6 +538,47 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
 .status .hint { margin: 6px 0 0; word-break: break-all; }
 #live-toggle { margin-bottom: 12px; }
 
+.voice-raw {
+  min-height: 44px;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.voice-raw.hearing {
+  background: #17263d;
+  border-color: #385276;
+  color: #dbeafe;
+}
+
+.voice-raw.final {
+  background: #16364a;
+  border-color: #38bdf8;
+  color: #e0f2fe;
+}
+
+.voice-raw.flash { animation: voice-recognized-flash 700ms ease-out; }
+
+@keyframes voice-recognized-flash {
+  0% {
+    background: #e0f2fe;
+    border-color: #f8fafc;
+    color: #07111f;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35);
+  }
+  100% {
+    background: #16364a;
+    border-color: #38bdf8;
+    color: #e0f2fe;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-raw.flash { animation: none; }
+}
+
 .voice-events {
   display: grid;
   gap: 8px;

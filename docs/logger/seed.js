@@ -50,5 +50,5 @@ window.GALAXY_SEED = {
     "Storm",
     "WLA_4"
   ],
-  "build": "29767d535a"
+  "build": "f62dae7b40"
 };

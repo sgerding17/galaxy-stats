@@ -81,7 +81,9 @@
     requested: false,
     restartTimer: null,
     error: "",
-    message: "Waiting for an event.",
+    rawText: "Recognizer: waiting for speech.",
+    rawMode: "idle",
+    message: "Parser: waiting for an event.",
     messageBad: false,
     editingIndex: null
   };
@@ -91,7 +93,7 @@
    "score-gal", "score-opp", "opp-name", "team-gal", "team-opp", "status-half", "status-ball",
    "status-arrow", "box-score", "export-text", "export-name", "export-status", "saved-games",
    "resume-block", "setup-lineup", "setup-lineup-hint", "subs-on", "subs-off", "subs-hint",
-   "roster-edit", "voice-status", "voice-toggle", "voice-heard", "voice-events"].forEach(function (id) {
+   "roster-edit", "voice-status", "voice-toggle", "voice-raw", "voice-heard", "voice-events"].forEach(function (id) {
     el[id] = document.getElementById(id);
   });
 
@@ -901,11 +903,21 @@
         if (event.results[i].isFinal) finalText += (finalText ? " " : "") + text;
         else interimText += (interimText ? " " : "") + text;
       }
-      if (finalText) processVoiceText(finalText);
-      if (interimText) {
-        voice.message = "Hearing: " + interimText;
-        voice.messageBad = false;
-        renderVoiceFeedback();
+      if (!finalText && !interimText) return;
+      if (finalText && interimText) {
+        voice.rawText = "Recognizer final: " + finalText + " | hearing: " + interimText;
+        voice.rawMode = "final";
+      } else if (finalText) {
+        voice.rawText = "Recognizer final: " + finalText;
+        voice.rawMode = "final";
+      } else {
+        voice.rawText = "Recognizer hearing: " + interimText;
+        voice.rawMode = "hearing";
+      }
+      renderVoiceRecognition(false);
+      if (finalText) {
+        processVoiceText(finalText);
+        renderVoiceRecognition(true);
       }
     };
 
@@ -965,8 +977,6 @@
       try { voice.recognition.stop(); } catch (error) { /* already stopped */ }
     }
     voice.listening = false;
-    voice.message = "Listening stopped.";
-    voice.messageBad = false;
   }
 
   function scheduleVoiceRestart() {
@@ -994,7 +1004,7 @@
 
     var parsed = window.VoiceDsl.parseUtterance(text, { players: Object.keys(game.roster) });
     if (!parsed.ok) {
-      voice.message = "Skipped: " + parsed.error;
+      voice.message = "Parser skipped it: " + parsed.error;
       voice.messageBad = true;
       renderVoiceFeedback();
       return;
@@ -1002,11 +1012,11 @@
 
     var parsedLines = parsed.lines || [parsed.line];
     if (appendVoiceLines(parsedLines)) {
-      voice.message = "Logged: " + parsedLines.join(" | ");
+      voice.message = "Parser logged: " + parsedLines.join(" | ");
       voice.messageBad = false;
       renderVoicePanel();
     } else {
-      voice.message = "Those events did not fit the current game state.";
+      voice.message = "Parser rejected it: those events did not fit the current game state.";
       voice.messageBad = true;
       renderVoiceFeedback();
     }
@@ -1015,6 +1025,16 @@
   function renderVoiceFeedback() {
     el["voice-heard"].className = voice.messageBad ? "status bad" : "status idle";
     el["voice-heard"].textContent = voice.message;
+  }
+
+  function renderVoiceRecognition(flash) {
+    var raw = el["voice-raw"];
+    raw.className = "status voice-raw " + voice.rawMode;
+    raw.textContent = voice.rawText;
+    if (flash) {
+      void raw.offsetWidth;
+      raw.classList.add("flash");
+    }
   }
 
   function renderVoicePanel() {
@@ -1042,6 +1062,7 @@
 
     el["voice-toggle"].disabled = !voiceAvailable();
     el["voice-toggle"].textContent = voice.requested ? "Stop listening" : "Start listening";
+    renderVoiceRecognition(false);
     renderVoiceFeedback();
     renderVoiceEvents();
   }
