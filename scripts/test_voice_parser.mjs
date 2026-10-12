@@ -47,6 +47,32 @@ const clockAtTwoOhFive = VoiceDsl.parseUtterance("c 205", { players: roster });
 assert.equal(clockAtTwoOhFive.ok, true, clockAtTwoOhFive.error);
 assert.equal(clockAtTwoOhFive.line, "c 0205");
 
+const grammarPhrases = VoiceDsl.grammarPhrases({ players: roster });
+for (const phrase of ["[unk]", "turnover five", "s twenty two", "f g a fourteen", "are oh", "five s"]) {
+  assert.equal(grammarPhrases.includes(phrase), true, `grammar includes ${phrase}`);
+}
+assert.equal(grammarPhrases.some((phrase) => /\d/.test(phrase)), false, "grammar uses spoken numbers");
+assert.equal(VoiceDsl.trimEdgeUnknowns("[unk] f g a fourteen [unk]"), "f g a fourteen");
+assert.equal(VoiceDsl.trimEdgeUnknowns("[unk] [unk]"), "");
+assert.deepEqual(
+  VoiceDsl.recognizedSegments("[unk] f g a fourteen [unk] are oh [unk]"),
+  ["f g a fourteen", "are oh"],
+);
+
+const grammarSequence = VoiceDsl.parseUtterance(
+  "turnover five s twenty two f g a fourteen are oh",
+  { players: roster },
+);
+assert.equal(grammarSequence.ok, true, grammarSequence.error);
+assert.deepEqual(grammarSequence.lines, ["to 5", "s 22", "fga 14", "r o"]);
+
+const voskSequence = VoiceDsl.parseUtterance(
+  "f g a oh bee three r three f g m three a twenty one",
+  { players: roster },
+);
+assert.equal(voskSequence.ok, true, voskSequence.error);
+assert.deepEqual(voskSequence.lines, ["fga o", "b 3", "r 3", "fgm 3", "a 21"]);
+
 assert.deepEqual(VoiceDsl.withoutOverlap(["fga 14"], ["fga 14"]), []);
 assert.deepEqual(
   VoiceDsl.withoutOverlap(["fga 14", "b 3"], ["b 3", "r 3"]),

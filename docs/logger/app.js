@@ -16,10 +16,13 @@
   var SEED = window.GALAXY_SEED || { roster: {}, venues: [], opponents: [] };
   var STORE_KEY = "galaxy-logger/v1";
   var LIVE_KEY = "galaxy-logger/live/v1";
+  var VOICE_ENGINE_KEY = "galaxy-logger/voice-engine/v1";
   var HALF_SECONDS = 20 * 60;
   var CHECKPOINT_SECONDS = 60;
   var VOICE_DUPLICATE_MS = 4000;
   var VOICE_HISTORY_LINES = 20;
+  var VOSK_SCRIPT = "vendor/vosk.js";
+  var VOSK_MODEL = "models/vosk-model-small-en-us-0.15.tar.gz";
   // The free KV tier allows 1,000 writes a day, so updates are rationed: at most
   // one every ten seconds, and only when something a viewer would notice changed.
   var LIVE_INTERVAL = 10000;
@@ -78,6 +81,7 @@
   var live = loadLive();
   var liveState = { sending: false, timer: null, sent: "", sentAt: 0, triedAt: 0, error: "" };
   var voice = {
+    engine: loadVoiceEngine(),
     recognition: null,
     listening: false,
     requested: false,
@@ -89,7 +93,19 @@
     messageBad: false,
     editingIndex: null,
     recentLines: [],
-    lastFinalAt: 0
+    lastFinalAt: 0,
+    voskScriptPromise: null,
+    grammarModelPromise: null,
+    grammarModel: null,
+    grammarLoadId: 0,
+    grammarStartId: 0,
+    grammarLoading: false,
+    grammarRecognizer: null,
+    grammarStream: null,
+    grammarContext: null,
+    grammarSource: null,
+    grammarProcessor: null,
+    grammarGain: null
   };
 
   var el = {};
@@ -97,7 +113,8 @@
    "score-gal", "score-opp", "opp-name", "team-gal", "team-opp", "status-half", "status-ball",
    "status-arrow", "box-score", "export-text", "export-name", "export-status", "saved-games",
    "resume-block", "setup-lineup", "setup-lineup-hint", "subs-on", "subs-off", "subs-hint",
-   "roster-edit", "voice-status", "voice-toggle", "voice-raw", "voice-heard", "voice-events"].forEach(function (id) {
+   "roster-edit", "voice-engine", "voice-status", "voice-toggle", "voice-raw", "voice-heard",
+   "voice-events"].forEach(function (id) {
     el[id] = document.getElementById(id);
   });
 
@@ -880,8 +897,23 @@
     return window.SpeechRecognition || window.webkitSpeechRecognition || null;
   }
 
+  function loadVoiceEngine() {
+    try {
+      var saved = localStorage.getItem(VOICE_ENGINE_KEY);
+      if (saved === "browser" || saved === "grammar") return saved;
+    } catch (error) { /* storage is optional */ }
+    return "grammar";
+  }
+
+  function grammarRecognitionAvailable() {
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia &&
+      window.Worker && window.WebAssembly && AudioContext);
+  }
+
   function voiceAvailable() {
-    return !!(recognitionClass() && window.VoiceDsl);
+    if (!window.VoiceDsl) return false;
+    return voice.engine === "grammar" ? grammarRecognitionAvailable() : !!recognitionClass();
   }
 
   function openVoice() {
@@ -945,13 +977,20 @@
   }
 
   function startVoiceListening() {
+    voice.requested = true;
+    voice.error = "";
+    if (voice.engine === "grammar") {
+      startGrammarListening();
+      renderVoicePanel();
+      return;
+    }
+
     if (!ensureRecognition()) {
       voice.error = "Voice recognition is not available in this browser.";
       voice.requested = false;
       renderVoicePanel();
       return;
     }
-    voice.requested = true;
     beginVoiceRecognition();
   }
 
@@ -977,6 +1016,10 @@
       clearTimeout(voice.restartTimer);
       voice.restartTimer = null;
     }
+    if (voice.engine === "grammar") {
+      stopGrammarAudio(true);
+      return;
+    }
     if (voice.recognition && voice.listening) {
       try { voice.recognition.stop(); } catch (error) { /* already stopped */ }
     }
@@ -984,11 +1027,222 @@
   }
 
   function scheduleVoiceRestart() {
+    if (voice.engine !== "browser") return;
     if (!voice.requested || voice.listening || voice.restartTimer || document.visibilityState !== "visible") return;
     voice.restartTimer = setTimeout(function () {
       voice.restartTimer = null;
       beginVoiceRecognition();
     }, 300);
+  }
+
+  function loadVoskScript() {
+    if (window.Vosk) return Promise.resolve(window.Vosk);
+    if (voice.voskScriptPromise) return voice.voskScriptPromise;
+
+    voice.voskScriptPromise = new Promise(function (resolve, reject) {
+      var script = document.createElement("script");
+      script.src = VOSK_SCRIPT + "?v=" + encodeURIComponent(SEED.build || "dev");
+      script.onload = function () {
+        if (window.Vosk) resolve(window.Vosk);
+        else reject(new Error("Vosk did not initialize."));
+      };
+      script.onerror = function () { reject(new Error("The grammar recognizer could not load.")); };
+      document.head.appendChild(script);
+    }).catch(function (error) {
+      voice.voskScriptPromise = null;
+      throw error;
+    });
+    return voice.voskScriptPromise;
+  }
+
+  function ensureGrammarModel() {
+    if (voice.grammarModel) return Promise.resolve(voice.grammarModel);
+    if (voice.grammarModelPromise) return voice.grammarModelPromise;
+
+    voice.grammarLoading = true;
+    var loadId = ++voice.grammarLoadId;
+    renderVoicePanel();
+    voice.grammarModelPromise = loadVoskScript().then(function () {
+      if (loadId !== voice.grammarLoadId) return null;
+      return window.Vosk.createModel(VOSK_MODEL, -1);
+    }).then(function (model) {
+      if (!model) return null;
+      if (loadId !== voice.grammarLoadId) {
+        model.terminate();
+        return null;
+      }
+      voice.grammarModel = model;
+      voice.grammarLoading = false;
+      voice.grammarModelPromise = null;
+      renderVoicePanel();
+      return model;
+    }).catch(function (error) {
+      if (loadId !== voice.grammarLoadId) return null;
+      voice.grammarLoading = false;
+      voice.grammarModelPromise = null;
+      voice.error = "Grammar model failed to load. Connect once and try again.";
+      voice.requested = false;
+      renderVoicePanel();
+      throw error;
+    });
+    return voice.grammarModelPromise;
+  }
+
+  function startGrammarListening() {
+    if (!grammarRecognitionAvailable()) {
+      voice.error = "Grammar recognition is not available in this browser.";
+      voice.requested = false;
+      renderVoicePanel();
+      return;
+    }
+
+    var startId = ++voice.grammarStartId;
+    ensureGrammarModel().then(function (model) {
+      if (!model || startId !== voice.grammarStartId || !voice.requested ||
+          voice.engine !== "grammar" || voice.listening) return null;
+      return navigator.mediaDevices.getUserMedia({
+        video: false,
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+          channelCount: 1,
+          sampleRate: 16000
+        }
+      }).then(function (stream) {
+        if (startId !== voice.grammarStartId || !voice.requested || voice.engine !== "grammar") {
+          stream.getTracks().forEach(function (track) { track.stop(); });
+          return;
+        }
+        try { beginGrammarAudio(model, stream); }
+        catch (error) {
+          stream.getTracks().forEach(function (track) { track.stop(); });
+          throw error;
+        }
+      });
+    }).catch(function (error) {
+      if (startId !== voice.grammarStartId) return;
+      if (!voice.error) voice.error = "Grammar recognition could not start.";
+      voice.requested = false;
+      voice.listening = false;
+      renderVoicePanel();
+    });
+  }
+
+  function beginGrammarAudio(model, stream) {
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    var context;
+    try { context = new AudioContext({ sampleRate: 16000 }); }
+    catch (error) { context = new AudioContext(); }
+    var grammar = window.VoiceDsl.grammarPhrases({ players: Object.keys(game.roster) });
+    var recognizer = new model.KaldiRecognizer(context.sampleRate, JSON.stringify(grammar));
+    recognizer.setWords(true);
+
+    recognizer.on("partialresult", function (message) {
+      var text = String(message && message.result && message.result.partial || "").trim();
+      if (!text) return;
+      voice.rawText = "Grammar hearing: " + text;
+      voice.rawMode = "hearing";
+      renderVoiceRecognition(false);
+    });
+    recognizer.on("result", function (message) {
+      var text = String(message && message.result && message.result.text || "").trim();
+      if (!text) return;
+      voice.rawText = "Grammar final: " + text;
+      voice.rawMode = "final";
+      renderVoiceRecognition(false);
+      var segments = window.VoiceDsl.recognizedSegments(text);
+      if (segments.length) segments.forEach(processVoiceText);
+      else {
+        voice.message = "Parser ignored low-confidence sound.";
+        voice.messageBad = false;
+        renderVoiceFeedback();
+      }
+      renderVoiceRecognition(true);
+    });
+
+    var source = context.createMediaStreamSource(stream);
+    var processor = context.createScriptProcessor(4096, 1, 1);
+    var gain = context.createGain();
+    gain.gain.value = 0;
+    processor.onaudioprocess = function (event) {
+      try { recognizer.acceptWaveform(event.inputBuffer); }
+      catch (error) { /* a stop can race the final audio callback */ }
+    };
+    source.connect(processor);
+    processor.connect(gain);
+    gain.connect(context.destination);
+    context.resume().catch(function () { /* already running on most browsers */ });
+
+    voice.grammarRecognizer = recognizer;
+    voice.grammarStream = stream;
+    voice.grammarContext = context;
+    voice.grammarSource = source;
+    voice.grammarProcessor = processor;
+    voice.grammarGain = gain;
+    voice.error = "";
+    voice.listening = true;
+    renderVoicePanel();
+  }
+
+  function stopGrammarAudio(flush) {
+    voice.grammarStartId += 1;
+    var recognizer = voice.grammarRecognizer;
+    if (voice.grammarProcessor) {
+      voice.grammarProcessor.onaudioprocess = null;
+      try { voice.grammarProcessor.disconnect(); } catch (error) { /* already disconnected */ }
+    }
+    if (voice.grammarSource) {
+      try { voice.grammarSource.disconnect(); } catch (error) { /* already disconnected */ }
+    }
+    if (voice.grammarGain) {
+      try { voice.grammarGain.disconnect(); } catch (error) { /* already disconnected */ }
+    }
+    if (voice.grammarStream) {
+      voice.grammarStream.getTracks().forEach(function (track) { track.stop(); });
+    }
+    if (voice.grammarContext) voice.grammarContext.close().catch(function () { /* already closed */ });
+
+    voice.grammarRecognizer = null;
+    voice.grammarStream = null;
+    voice.grammarContext = null;
+    voice.grammarSource = null;
+    voice.grammarProcessor = null;
+    voice.grammarGain = null;
+    voice.listening = false;
+
+    if (recognizer) {
+      if (flush) {
+        recognizer.retrieveFinalResult();
+        setTimeout(function () { recognizer.remove(); }, 750);
+      } else {
+        recognizer.remove();
+      }
+    }
+  }
+
+  function releaseGrammarModel() {
+    voice.requested = false;
+    stopGrammarAudio(false);
+    voice.grammarLoadId += 1;
+    if (voice.grammarModel) voice.grammarModel.terminate();
+    voice.grammarModel = null;
+    voice.grammarModelPromise = null;
+    voice.grammarLoading = false;
+  }
+
+  function setVoiceEngine(engine) {
+    if ((engine !== "grammar" && engine !== "browser") || voice.engine === engine) return;
+    stopVoiceListening();
+    if (voice.engine === "grammar") releaseGrammarModel();
+    voice.engine = engine;
+    voice.error = "";
+    voice.rawText = "Recognizer: waiting for speech.";
+    voice.rawMode = "idle";
+    voice.message = "Parser: waiting for an event.";
+    voice.messageBad = false;
+    try { localStorage.setItem(VOICE_ENGINE_KEY, engine); } catch (error) { /* storage is optional */ }
+    renderVoicePanel();
   }
 
   function processVoiceText(text) {
@@ -1066,23 +1320,39 @@
     if (!window.VoiceDsl) {
       el["voice-status"].className = "status bad";
       el["voice-status"].textContent = "The voice parser did not load.";
-    } else if (!recognitionClass()) {
+    } else if (!voiceAvailable()) {
       el["voice-status"].className = "status bad";
-      el["voice-status"].textContent = "Voice recognition is not available in this browser.";
+      el["voice-status"].textContent = voice.engine === "grammar" ?
+        "Grammar recognition is not available in this browser." :
+        "Voice recognition is not available in this browser.";
     } else if (voice.error) {
       el["voice-status"].className = "status bad";
       el["voice-status"].textContent = voice.error;
+    } else if (voice.grammarLoading) {
+      el["voice-status"].className = "status idle";
+      el["voice-status"].textContent = "Loading grammar model (39 MB the first time).";
     } else if (voice.listening) {
       el["voice-status"].className = "status";
-      el["voice-status"].textContent = "Listening.";
+      el["voice-status"].textContent = voice.engine === "grammar" ?
+        "Grammar model listening." : "Browser listening.";
     } else if (voice.requested) {
       el["voice-status"].className = "status idle";
-      el["voice-status"].textContent = "Reconnecting.";
+      el["voice-status"].textContent = voice.engine === "grammar" ? "Starting grammar model." : "Reconnecting.";
+    } else if (voice.engine === "grammar" && voice.grammarModel) {
+      el["voice-status"].className = "status idle";
+      el["voice-status"].textContent = "Grammar model ready offline.";
+    } else if (voice.engine === "grammar") {
+      el["voice-status"].className = "status idle";
+      el["voice-status"].textContent = "Grammar model needs a one-time 39 MB download.";
     } else {
       el["voice-status"].className = "status idle";
-      el["voice-status"].textContent = "Ready.";
+      el["voice-status"].textContent = "Browser recognizer ready.";
     }
 
+    document.querySelectorAll("#voice-engine .toggle").forEach(function (button) {
+      button.classList.toggle("on", button.dataset.voiceEngine === voice.engine);
+      button.disabled = voice.requested;
+    });
     el["voice-toggle"].disabled = !voiceAvailable();
     el["voice-toggle"].textContent = voice.requested ? "Stop listening" : "Start listening";
     renderVoiceRecognition(false);
@@ -1575,6 +1845,9 @@
       startVoiceListening();
     }
   });
+  document.querySelectorAll("#voice-engine .toggle").forEach(function (button) {
+    button.addEventListener("click", function () { setVoiceEngine(button.dataset.voiceEngine); });
+  });
   document.getElementById("end-half").addEventListener("click", endHalf);
   document.getElementById("start-half").addEventListener("click", startHalf);
   document.getElementById("delete-game").addEventListener("click", deleteGame);
@@ -1649,6 +1922,10 @@
       event.preventDefault();
       event.returnValue = "";
     }
+  });
+
+  window.addEventListener("pagehide", function () {
+    if (voice.engine === "grammar") releaseGrammarModel();
   });
 
   /* Courtside the screen must not sleep between whistles. */

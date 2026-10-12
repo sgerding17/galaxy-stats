@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon-192.png">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="stylesheet" href="app.css?v=d8092224b1">
+  <link rel="stylesheet" href="app.css?v=1ed6907828">
 </head>
 <body>
 
@@ -141,6 +141,10 @@
     <button type="button" class="panel-close" data-close>Done</button>
   </header>
   <div class="panel-body">
+    <div class="toggle-row voice-engine" id="voice-engine" role="group" aria-label="Recognition engine">
+      <button type="button" class="toggle" data-voice-engine="grammar">Grammar</button>
+      <button type="button" class="toggle" data-voice-engine="browser">Browser</button>
+    </div>
     <div id="voice-status" class="status idle"></div>
     <button type="button" class="primary" id="voice-toggle">Start listening</button>
     <div id="voice-raw" class="status voice-raw idle" role="status" aria-live="polite"></div>
@@ -231,9 +235,9 @@
   </div>
 </section>
 
-<script src="seed.js?v=d8092224b1"></script>
-<script src="logstats.js?v=d8092224b1"></script>
-<script src="voice.js?v=d8092224b1"></script>
-<script src="app.js?v=d8092224b1"></script>
+<script src="seed.js?v=1ed6907828"></script>
+<script src="logstats.js?v=1ed6907828"></script>
+<script src="voice.js?v=1ed6907828"></script>
+<script src="app.js?v=1ed6907828"></script>
 </body>
 </html>

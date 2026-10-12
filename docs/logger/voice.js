@@ -80,7 +80,101 @@
     fifty: 50
   };
 
+  var NUMBER_NAMES = [
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+    "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+    "seventeen", "eighteen", "nineteen"
+  ];
+  var TENS_NAMES = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
   function has(list, value) { return list.indexOf(value) !== -1; }
+
+  function spokenNumber(value) {
+    var number = parseInt(value, 10);
+    if (!isFinite(number) || number < 0 || number > 99) return "";
+    if (number < 20) return NUMBER_NAMES[number];
+    return TENS_NAMES[Math.floor(number / 10)] + (number % 10 ? " " + NUMBER_NAMES[number % 10] : "");
+  }
+
+  function grammarPhrases(options) {
+    var phrases = [];
+    var seen = {};
+    var players = (options && options.players || []).map(spokenNumber).filter(Boolean);
+    var opponent = ["o", "oh"];
+    var galaxy = ["g", "gee", "galaxy"];
+
+    function add(phrase) {
+      phrase = String(phrase || "").trim();
+      if (!phrase || seen[phrase]) return;
+      seen[phrase] = true;
+      phrases.push(phrase);
+    }
+
+    function addCommands(prefixes, targets, suffixes) {
+      suffixes = suffixes || [""];
+      prefixes.forEach(function (prefix) {
+        targets.forEach(function (target) {
+          suffixes.forEach(function (suffix) {
+            add(prefix + (target ? " " + target : "") + (suffix ? " " + suffix : ""));
+          });
+        });
+      });
+    }
+
+    var shotTargets = players.concat(opponent);
+    addCommands(["f g m"], shotTargets);
+    addCommands(["f g a"], shotTargets);
+    addCommands(["three f g m"], shotTargets);
+    addCommands(["three f g a"], shotTargets);
+    addCommands(["f t m"], shotTargets);
+    addCommands(["f t a"], shotTargets);
+    addCommands(["r", "are"], players.concat(opponent, galaxy));
+    addCommands(["a", "ay"], players);
+    addCommands(["s", "ess"], players);
+    addCommands(["b", "be", "bee"], players);
+    addCommands(["to", "two", "turnover"], players);
+
+    // Do not admit the spoken word "arrow": it is acoustically too close to
+    // the common rebound call "R O". Say the literal destination as "to G"
+    // or "to O" for the rare jump-ball forms.
+    var arrowTargets = ["to g", "to gee", "to o", "to oh"];
+    addCommands(["j", "jay"], [""], arrowTargets);
+    addCommands(["o j", "o jay", "oh j", "oh jay"], players, arrowTargets);
+    addCommands(["d j", "d jay", "dee j", "dee jay"], players, arrowTargets);
+    add("p a e");
+    add("p ay e");
+    add("pea a e");
+    add("pea ay e");
+    addCommands(["t", "tee"], galaxy.concat(opponent));
+
+    // Vosk's runtime phrase grammar uses word bigrams. Add every legal command
+    // boundary so a rapid sequence can continue without waiting for a pause.
+    var commands = phrases.slice();
+    var starts = {};
+    var ends = {};
+    commands.forEach(function (phrase) {
+      var words = phrase.split(" ");
+      starts[words[0]] = true;
+      ends[words[words.length - 1]] = true;
+    });
+    Object.keys(ends).forEach(function (end) {
+      Object.keys(starts).forEach(function (start) { add(end + " " + start); });
+    });
+
+    phrases.unshift("[unk]");
+    return phrases;
+  }
+
+  function trimEdgeUnknowns(text) {
+    var words = String(text || "").trim().split(/\s+/);
+    while (words.length && words[0] === "[unk]") words.shift();
+    while (words.length && words[words.length - 1] === "[unk]") words.pop();
+    return words.join(" ");
+  }
+
+  function recognizedSegments(text) {
+    return trimEdgeUnknowns(text).split(/\s*\[unk\]\s*/).filter(Boolean);
+  }
 
   function withoutOverlap(previous, lines) {
     var maxOverlap = Math.min(previous.length, lines.length);
@@ -430,6 +524,9 @@
   return {
     parseUtterance: parseUtterance,
     parseLine: parseLine,
+    grammarPhrases: grammarPhrases,
+    recognizedSegments: recognizedSegments,
+    trimEdgeUnknowns: trimEdgeUnknowns,
     withoutOverlap: withoutOverlap,
     _tokensForTest: tokensFor
   };

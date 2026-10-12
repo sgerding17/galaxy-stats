@@ -538,6 +538,14 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
 .status .hint { margin: 6px 0 0; word-break: break-all; }
 #live-toggle { margin-bottom: 12px; }
 
+.voice-engine { margin-bottom: 12px; }
+
+.voice-engine .toggle {
+  min-height: 42px;
+  padding: 9px 6px;
+  border-radius: 7px;
+}
+
 .voice-raw {
   min-height: 44px;
   overflow-wrap: anywhere;

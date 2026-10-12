@@ -6,8 +6,9 @@ files in `game_logs/` (see [video2log/GRAMMAR.md](../../video2log/GRAMMAR.md)),
 so its output drops straight into the existing stats pipeline.
 
 It is a static page. No accounts, and logging needs no network at all once the
-page has loaded. Sharing the game live is optional and adds one small relay;
-see [Sharing it live](#sharing-it-live).
+page has loaded. Grammar voice recognition has a one-time model download before
+it also works offline. Sharing the game live is optional and adds one small
+relay; see [Sharing it live](#sharing-it-live).
 
 **URL:** https://sgerding17.github.io/galaxy-stats/logger/
 
@@ -60,12 +61,20 @@ second-chance points) are left to the site build.
 `FGA21`, `R3`, or a burst like `FGAO B3 R3 FGM3`. Each recognized event is
 logged immediately and appears in a newest-first list. **Edit** and **Delete**
 let you correct dictated events; every correction is checked against the whole
-game log before it is saved. If the browser pauses speech recognition, the app
-reconnects while listening remains on. The **Recognizer** row shows the exact
-browser transcript before `voice.js` parses it, and flashes when that transcript
-becomes final; the **Parser** row shows the resulting DSL line or rejection.
-Repeated or overlapping final transcripts received within four seconds are
-deduplicated before they reach the game log.
+game log before it is saved.
+
+**Grammar** is the default recognition engine. On first use it downloads a 39 MB
+Vosk model, then keeps it cached separately from app updates for offline use.
+Its generated phrase graph contains the current roster, DSL event spellings,
+and transitions between rapid events. **Browser** retains the phone's built-in
+speech service as a fallback; if that service pauses, the app reconnects while
+listening remains on.
+
+The **Recognizer** row shows the exact engine transcript before `voice.js`
+parses it, and flashes when that transcript becomes final; the **Parser** row
+shows the resulting DSL line or rejection. Repeated or overlapping final
+transcripts received within four seconds are deduplicated before they reach the
+game log.
 
 ## Sharing it live
 
@@ -120,6 +129,9 @@ app.css         styling
 app.js          state, tap handling, rendering, export
 logstats.js     the stat engine -- a port of scripts/stats.py
 voice.js        literal speech/typed-line parser for the DSL
+models/         offline Vosk speech model (downloaded lazily by the app)
+vendor/         vendored vosk-browser runtime and license
+THIRD_PARTY_NOTICES.md  speech runtime/model attribution
 seed.js         GENERATED: roster, past venues and opponents
 icon-*.png      GENERATED: home-screen icons
 sw.js           offline cache; GENERATED stamps (cache name, asset versions)

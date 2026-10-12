@@ -12,7 +12,9 @@
    files, so it rolls whenever the app changes and never when it does not.
    Do not edit that line by hand. */
 
-var CACHE = "galaxy-logger-d8092224b1";
+var CACHE = "galaxy-logger-1ed6907828";
+var MODEL_CACHE = "galaxy-logger-model-vosk-small-en-us-0.15";
+var MODEL_FILE = "/models/vosk-model-small-en-us-0.15.tar.gz";
 var NETWORK_TIMEOUT = 2500;
 
 /* The versioned entries carry the same version query index.html asks for.
@@ -24,11 +26,11 @@ var NETWORK_TIMEOUT = 2500;
 var SHELL = [
   "./",
   "index.html",
-  "app.css?v=d8092224b1",
-  "app.js?v=d8092224b1",
-  "logstats.js?v=d8092224b1",
-  "voice.js?v=d8092224b1",
-  "seed.js?v=d8092224b1",
+  "app.css?v=1ed6907828",
+  "app.js?v=1ed6907828",
+  "logstats.js?v=1ed6907828",
+  "voice.js?v=1ed6907828",
+  "seed.js?v=1ed6907828",
   "manifest.webmanifest",
   "icon-192.png",
   "icon-512.png"
@@ -47,7 +49,7 @@ self.addEventListener("install", function (event) {
 self.addEventListener("activate", function (event) {
   event.waitUntil(caches.keys().then(function (names) {
     return Promise.all(names.map(function (name) {
-      return name === CACHE ? null : caches.delete(name);
+      return name === CACHE || name === MODEL_CACHE ? null : caches.delete(name);
     }));
   }).then(function () { return self.clients.claim(); }));
 });
@@ -56,9 +58,28 @@ self.addEventListener("fetch", function (event) {
   var request = event.request;
   if (request.method !== "GET") return;
   // Leave the live relay, and anything else off this origin, entirely alone.
-  if (new URL(request.url).origin !== self.location.origin) return;
+  var url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+  if (url.pathname.endsWith(MODEL_FILE)) {
+    event.respondWith(modelAnswer(event, request));
+    return;
+  }
   event.respondWith(answer(event, request));
 });
+
+function modelAnswer(event, request) {
+  return caches.open(MODEL_CACHE).then(function (cache) {
+    return cache.match(request).then(function (cached) {
+      if (cached) return cached;
+      return fetch(new Request(request, { cache: "no-cache" })).then(function (response) {
+        if (!response || !response.ok) return response;
+        var copy = response.clone();
+        event.waitUntil(cache.put(request, copy));
+        return response;
+      });
+    });
+  });
+}
 
 function answer(event, request) {
   return caches.match(request).then(function (cached) {
