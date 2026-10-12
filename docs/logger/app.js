@@ -78,10 +78,12 @@
   var voice = {
     recognition: null,
     listening: false,
-    parsed: null,
-    interim: false,
+    requested: false,
+    restartTimer: null,
     error: "",
-    autoLog: true
+    message: "Waiting for an event.",
+    messageBad: false,
+    editingIndex: null
   };
 
   var el = {};
@@ -89,7 +91,7 @@
    "score-gal", "score-opp", "opp-name", "team-gal", "team-opp", "status-half", "status-ball",
    "status-arrow", "box-score", "export-text", "export-name", "export-status", "saved-games",
    "resume-block", "setup-lineup", "setup-lineup-hint", "subs-on", "subs-off", "subs-hint",
-   "roster-edit", "voice-status", "voice-toggle", "voice-auto", "voice-input", "voice-parse", "voice-add"].forEach(function (id) {
+   "roster-edit", "voice-status", "voice-toggle", "voice-heard", "voice-events"].forEach(function (id) {
     el[id] = document.getElementById(id);
   });
 
@@ -538,7 +540,6 @@
   }
 
   function closePanels() {
-    stopVoiceListening();
     var panels = document.querySelectorAll(".panel");
     for (var i = 0; i < panels.length; i++) panels[i].hidden = true;
   }
@@ -900,22 +901,27 @@
         if (event.results[i].isFinal) finalText += (finalText ? " " : "") + text;
         else interimText += (interimText ? " " : "") + text;
       }
-      var heard = finalText || interimText;
-      if (!heard) return;
-      el["voice-input"].value = heard;
-      parseVoiceInput(!finalText);
-      if (finalText && voice.autoLog && voice.parsed && voice.parsed.ok) addVoiceLines();
+      if (finalText) processVoiceText(finalText);
+      if (interimText) {
+        voice.message = "Hearing: " + interimText;
+        voice.messageBad = false;
+        renderVoiceFeedback();
+      }
     };
 
     recognition.onerror = function (event) {
       voice.error = event.error ? "Voice error: " + event.error + "." : "Voice recognition stopped.";
       voice.listening = false;
+      if (event.error === "not-allowed" || event.error === "service-not-allowed" || event.error === "audio-capture") {
+        voice.requested = false;
+      }
       renderVoicePanel();
     };
 
     recognition.onend = function () {
       voice.listening = false;
       renderVoicePanel();
+      scheduleVoiceRestart();
     };
 
     voice.recognition = recognition;
@@ -925,8 +931,19 @@
   function startVoiceListening() {
     if (!ensureRecognition()) {
       voice.error = "Voice recognition is not available in this browser.";
+      voice.requested = false;
       renderVoicePanel();
       return;
+    }
+    voice.requested = true;
+    beginVoiceRecognition();
+  }
+
+  function beginVoiceRecognition() {
+    if (!voice.requested || voice.listening || document.visibilityState !== "visible") return;
+    if (voice.restartTimer) {
+      clearTimeout(voice.restartTimer);
+      voice.restartTimer = null;
     }
     try {
       voice.error = "";
@@ -934,57 +951,70 @@
       voice.listening = true;
       renderVoicePanel();
     } catch (error) {
-      voice.error = "Voice recognition is already starting.";
-      renderVoicePanel();
+      scheduleVoiceRestart();
     }
   }
 
   function stopVoiceListening() {
-    if (!voice.recognition || !voice.listening) return;
-    try { voice.recognition.stop(); } catch (error) { /* already stopped */ }
+    voice.requested = false;
+    if (voice.restartTimer) {
+      clearTimeout(voice.restartTimer);
+      voice.restartTimer = null;
+    }
+    if (voice.recognition && voice.listening) {
+      try { voice.recognition.stop(); } catch (error) { /* already stopped */ }
+    }
     voice.listening = false;
+    voice.message = "Listening stopped.";
+    voice.messageBad = false;
   }
 
-  function parseVoiceInput(interim) {
-    var text = el["voice-input"].value.trim();
-    voice.interim = !!interim;
-    voice.parsed = null;
+  function scheduleVoiceRestart() {
+    if (!voice.requested || voice.listening || voice.restartTimer || document.visibilityState !== "visible") return;
+    voice.restartTimer = setTimeout(function () {
+      voice.restartTimer = null;
+      beginVoiceRecognition();
+    }, 300);
+  }
 
-    if (!text) {
-      el["voice-parse"].className = "status idle";
-      el["voice-parse"].textContent = "Waiting for an event.";
-      el["voice-add"].textContent = "Add line";
-      el["voice-add"].disabled = true;
-      return;
-    }
-
+  function processVoiceText(text) {
     if (!game) {
-      el["voice-parse"].className = "status idle";
-      el["voice-parse"].textContent = "Start or resume a game first.";
-      el["voice-add"].disabled = true;
+      voice.message = "Start or resume a game first.";
+      voice.messageBad = true;
+      renderVoiceFeedback();
       return;
     }
 
     if (!window.VoiceDsl) {
-      el["voice-parse"].className = "status bad";
-      el["voice-parse"].textContent = "The voice parser did not load.";
-      el["voice-add"].disabled = true;
+      voice.message = "The voice parser did not load.";
+      voice.messageBad = true;
+      renderVoiceFeedback();
       return;
     }
 
     var parsed = window.VoiceDsl.parseUtterance(text, { players: Object.keys(game.roster) });
-    if (parsed.ok) {
-      voice.parsed = parsed;
-      var parsedLines = parsed.lines || [parsed.line];
-      el["voice-parse"].className = "status";
-      el["voice-parse"].textContent = (voice.interim ? "Hearing: " : "Ready: ") + parsedLines.join(" | ");
-      el["voice-add"].textContent = parsedLines.length === 1 ? "Add line" : "Add " + parsedLines.length + " lines";
-      el["voice-add"].disabled = voice.interim;
-    } else {
-      el["voice-parse"].className = "status bad";
-      el["voice-parse"].textContent = parsed.error;
-      el["voice-add"].disabled = true;
+    if (!parsed.ok) {
+      voice.message = "Skipped: " + parsed.error;
+      voice.messageBad = true;
+      renderVoiceFeedback();
+      return;
     }
+
+    var parsedLines = parsed.lines || [parsed.line];
+    if (appendVoiceLines(parsedLines)) {
+      voice.message = "Logged: " + parsedLines.join(" | ");
+      voice.messageBad = false;
+      renderVoicePanel();
+    } else {
+      voice.message = "Those events did not fit the current game state.";
+      voice.messageBad = true;
+      renderVoiceFeedback();
+    }
+  }
+
+  function renderVoiceFeedback() {
+    el["voice-heard"].className = voice.messageBad ? "status bad" : "status idle";
+    el["voice-heard"].textContent = voice.message;
   }
 
   function renderVoicePanel() {
@@ -994,23 +1024,159 @@
       el["voice-status"].className = "status bad";
       el["voice-status"].textContent = "The voice parser did not load.";
     } else if (!recognitionClass()) {
-      el["voice-status"].className = "status idle";
-      el["voice-status"].textContent = "This browser cannot listen. Typed entry still works.";
+      el["voice-status"].className = "status bad";
+      el["voice-status"].textContent = "Voice recognition is not available in this browser.";
     } else if (voice.error) {
       el["voice-status"].className = "status bad";
       el["voice-status"].textContent = voice.error;
     } else if (voice.listening) {
       el["voice-status"].className = "status";
       el["voice-status"].textContent = "Listening.";
+    } else if (voice.requested) {
+      el["voice-status"].className = "status idle";
+      el["voice-status"].textContent = "Reconnecting.";
     } else {
       el["voice-status"].className = "status idle";
       el["voice-status"].textContent = "Ready.";
     }
 
     el["voice-toggle"].disabled = !voiceAvailable();
-    el["voice-toggle"].textContent = voice.listening ? "Stop listening" : "Start listening";
-    el["voice-auto"].checked = voice.autoLog;
-    parseVoiceInput(voice.interim);
+    el["voice-toggle"].textContent = voice.requested ? "Stop listening" : "Start listening";
+    renderVoiceFeedback();
+    renderVoiceEvents();
+  }
+
+  function renderVoiceEvents() {
+    var container = el["voice-events"];
+    container.innerHTML = "";
+    var found = false;
+
+    for (var i = game ? game.entries.length - 1 : -1; i >= 0; i--) {
+      if (!game.entries[i].voice) continue;
+      found = true;
+      container.appendChild(voiceEventRow(i, game.entries[i]));
+    }
+
+    if (!found) {
+      var empty = document.createElement("p");
+      empty.className = "voice-empty";
+      empty.textContent = "No dictated events yet.";
+      container.appendChild(empty);
+    }
+  }
+
+  function voiceEventRow(index, entry) {
+    var row = document.createElement("div");
+    row.className = "voice-event";
+
+    if (voice.editingIndex === index) {
+      var input = document.createElement("input");
+      input.type = "text";
+      input.className = "voice-edit-input";
+      input.value = entry.line;
+      input.setAttribute("autocapitalize", "off");
+      input.setAttribute("autocorrect", "off");
+      input.spellcheck = false;
+      input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") saveVoiceEvent(index, input.value);
+        else if (event.key === "Escape") cancelVoiceEdit();
+      });
+      row.appendChild(input);
+      row.appendChild(voiceEventActions([
+        { label: "Save", action: function () { saveVoiceEvent(index, input.value); } },
+        { label: "Cancel", action: cancelVoiceEdit }
+      ]));
+      setTimeout(function () { input.focus(); input.select(); }, 0);
+    } else {
+      var line = document.createElement("code");
+      line.className = "voice-event-line";
+      line.textContent = entry.line;
+      row.appendChild(line);
+      row.appendChild(voiceEventActions([
+        { label: "Edit", action: function () { beginVoiceEdit(index); } },
+        { label: "Delete", danger: true, action: function () { deleteVoiceEvent(index); } }
+      ]));
+    }
+
+    return row;
+  }
+
+  function voiceEventActions(actions) {
+    var holder = document.createElement("div");
+    holder.className = "voice-event-actions";
+    actions.forEach(function (action) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.textContent = action.label;
+      if (action.danger) button.className = "danger";
+      button.addEventListener("click", action.action);
+      holder.appendChild(button);
+    });
+    return holder;
+  }
+
+  function beginVoiceEdit(index) {
+    voice.editingIndex = index;
+    renderVoiceEvents();
+  }
+
+  function cancelVoiceEdit() {
+    voice.editingIndex = null;
+    renderVoiceEvents();
+  }
+
+  function saveVoiceEvent(index, text) {
+    var parsed;
+    try {
+      parsed = window.VoiceDsl.parseLine(text.trim(), { players: Object.keys(game.roster) });
+    } catch (error) {
+      voice.message = String(error && error.message || error);
+      voice.messageBad = true;
+      renderVoiceFeedback();
+      return;
+    }
+
+    var oldLine = game.entries[index].line;
+    if (!changeVoiceEvent(index, parsed.line)) return;
+    voice.editingIndex = null;
+    voice.message = "Changed: " + oldLine + " to " + parsed.line;
+    voice.messageBad = false;
+    renderVoicePanel();
+  }
+
+  function deleteVoiceEvent(index) {
+    var line = game.entries[index].line;
+    if (!confirm("Delete " + line + "?")) return;
+    if (!changeVoiceEvent(index, null)) return;
+    voice.editingIndex = null;
+    voice.message = "Deleted: " + line;
+    voice.messageBad = false;
+    renderVoicePanel();
+  }
+
+  function changeVoiceEvent(index, replacement) {
+    var backup = game.entries.slice();
+    if (replacement == null) game.entries.splice(index, 1);
+    else game.entries[index] = Object.assign({}, game.entries[index], { line: replacement });
+
+    try {
+      recompute();
+      derive();
+    } catch (error) {
+      game.entries = backup;
+      try { recompute(); derive(); } catch (ignored) { /* the backup already parsed */ }
+      voice.message = friendlyError(error);
+      voice.messageBad = true;
+      renderVoiceFeedback();
+      return false;
+    }
+
+    game.updatedAt = Date.now();
+    persist();
+    var latest = game.entries[game.entries.length - 1];
+    if (latest) afterVoiceLine(latest.line);
+    render();
+    return true;
   }
 
   function afterVoiceLine(line) {
@@ -1053,7 +1219,7 @@
         items.push(checkpoint);
         checkpointAdded = true;
       }
-      items.push({ line: line });
+      items.push({ line: line, voice: true });
       if (eventType === "c") {
         checkpointAdded = true;
         lastClock = line.split(" ")[1];
@@ -1072,18 +1238,6 @@
     render();
     toast(voiceLines.length === 1 ? "Logged " + voiceLines[0] + "." : "Logged " + voiceLines.length + " events.", true);
     return true;
-  }
-
-  function addVoiceLines() {
-    parseVoiceInput(false);
-    if (!voice.parsed || !voice.parsed.ok) return;
-    var parsedLines = voice.parsed.lines || [voice.parsed.line];
-    if (appendVoiceLines(parsedLines)) {
-      el["voice-input"].value = "";
-      voice.parsed = null;
-      voice.interim = false;
-      renderVoicePanel();
-    }
   }
 
   /* --------------------------------------------------------- live sharing */
@@ -1370,20 +1524,13 @@
   document.getElementById("export-copy").addEventListener("click", copyLog);
   document.getElementById("export-download").addEventListener("click", downloadLog);
   document.getElementById("voice-toggle").addEventListener("click", function () {
-    if (voice.listening) {
+    if (voice.requested) {
       stopVoiceListening();
       renderVoicePanel();
     } else {
       startVoiceListening();
     }
   });
-  document.getElementById("voice-input").addEventListener("input", function () {
-    parseVoiceInput(false);
-  });
-  document.getElementById("voice-auto").addEventListener("change", function () {
-    voice.autoLog = this.checked;
-  });
-  document.getElementById("voice-add").addEventListener("click", addVoiceLines);
   document.getElementById("end-half").addEventListener("click", endHalf);
   document.getElementById("start-half").addEventListener("click", startHalf);
   document.getElementById("delete-game").addEventListener("click", deleteGame);
@@ -1472,6 +1619,7 @@
     if (document.visibilityState === "visible") {
       holdScreenAwake();
       if (game) render();
+      scheduleVoiceRestart();
     }
   });
 

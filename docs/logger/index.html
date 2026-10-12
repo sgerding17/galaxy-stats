@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon-192.png">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="stylesheet" href="app.css?v=ea4fc552da">
+  <link rel="stylesheet" href="app.css?v=29767d535a">
 </head>
 <body>
 
@@ -143,26 +143,10 @@
   <div class="panel-body">
     <div id="voice-status" class="status idle"></div>
     <button type="button" class="primary" id="voice-toggle">Start listening</button>
+    <div id="voice-heard" class="status idle" role="status" aria-live="polite"></div>
 
-    <label class="check-row">
-      <input type="checkbox" id="voice-auto" checked>
-      <span>Auto-log final speech</span>
-    </label>
-
-    <label>Event lines
-      <input type="text" id="voice-input" placeholder="FGA3 B5 R3 FGM3"
-             autocapitalize="off" autocorrect="off" spellcheck="false">
-    </label>
-    <div id="voice-parse" class="status idle"></div>
-    <button type="button" class="primary" id="voice-add" disabled>Add line</button>
-
-    <h3>Examples</h3>
-    <div class="voice-examples">
-      <code>FGA21</code>
-      <code>FGA3 B5 R3 FGM3</code>
-      <code>i g twenty one twenty two five two twenty five</code>
-      <code>o j fourteen arrow g</code>
-    </div>
+    <h3>Dictated events</h3>
+    <div id="voice-events" class="voice-events"></div>
   </div>
 </section>
 
@@ -246,9 +230,9 @@
   </div>
 </section>
 
-<script src="seed.js?v=ea4fc552da"></script>
-<script src="logstats.js?v=ea4fc552da"></script>
-<script src="voice.js?v=ea4fc552da"></script>
-<script src="app.js?v=ea4fc552da"></script>
+<script src="seed.js?v=29767d535a"></script>
+<script src="logstats.js?v=29767d535a"></script>
+<script src="voice.js?v=29767d535a"></script>
+<script src="app.js?v=29767d535a"></script>
 </body>
 </html>

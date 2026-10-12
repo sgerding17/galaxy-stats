@@ -56,12 +56,12 @@ complete.
 rules as `scripts/stats.py`. Advanced ratings (on/off, points off turnovers,
 second-chance points) are left to the site build.
 
-**Voice.** **Voice** opens a literal dictation path for the same DSL lines:
-`f g a twenty one`, `three f g m o`, `o j fourteen arrow g`. The browser's
-speech recognizer supplies text, then `voice.js` accepts only one complete DSL
-line and the normal logger validation still decides whether that line fits the
-current game state. Unsupported browsers can use the same field as a typed-line
-entry box.
+**Voice.** **Voice** listens continuously for literal DSL events such as
+`FGA21`, `R3`, or a burst like `FGAO B3 R3 FGM3`. Each recognized event is
+logged immediately and appears in a newest-first list. **Edit** and **Delete**
+let you correct dictated events; every correction is checked against the whole
+game log before it is saved. If the browser pauses speech recognition, the app
+reconnects while listening remains on.
 
 ## Sharing it live
 

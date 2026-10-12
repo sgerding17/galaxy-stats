@@ -37,6 +37,13 @@ const sequence = VoiceDsl.parseUtterance("FGAO B3 R3 FGM3 A21", { players: roste
 assert.equal(sequence.ok, true, sequence.error);
 assert.deepEqual(sequence.lines, ["fga o", "b 3", "r 3", "fgm 3", "a 21"]);
 
+assert.equal(VoiceDsl.parseLine("R3", { players: roster }).line, "r 3");
+assert.throws(
+  () => VoiceDsl.parseLine("R3 FGM3", { players: roster }),
+  /Extra words:/,
+  "the event editor accepts exactly one DSL line",
+);
+
 for (const spoken of ["fga ninety nine", "r potato", "fga 21 extra"]) {
   const parsed = VoiceDsl.parseUtterance(spoken, { players: roster });
   assert.equal(parsed.ok, false, spoken);
