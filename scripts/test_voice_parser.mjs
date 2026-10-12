@@ -12,11 +12,13 @@ const cases = [
   ["three f g m o", "3fgm o"],
   ["i g twenty one twenty two five two twenty five", "ig 21 22 5 2 25"],
   ["o j fourteen arrow g", "oj 14 -> g"],
+  ["o j fourteen ball g", "oj 14 -> g"],
   ["d j five to o", "dj 5 -> o"],
   ["see fourteen thirty", "c 1430"],
   ["c one four three zero", "c 1430"],
   ["c nine zero zero", "c 0900"],
   ["t o", "t o"],
+  ["tee oh twenty one", "to 21"],
   ["two two", "to 2"],
   ["r galaxy", "r g"],
   ["p a e", "pae"],
@@ -48,7 +50,10 @@ assert.equal(clockAtTwoOhFive.ok, true, clockAtTwoOhFive.error);
 assert.equal(clockAtTwoOhFive.line, "c 0205");
 
 const grammarPhrases = VoiceDsl.grammarPhrases({ players: roster });
-for (const phrase of ["[unk]", "turnover five", "s twenty two", "f g a fourteen", "are oh", "five s"]) {
+for (const phrase of [
+  "[unk]", "turnover five", "tee oh twenty one", "s twenty two",
+  "f g a fourteen", "are oh", "o jay fourteen ball gee", "five s"
+]) {
   assert.equal(grammarPhrases.includes(phrase), true, `grammar includes ${phrase}`);
 }
 assert.equal(grammarPhrases.some((phrase) => /\d/.test(phrase)), false, "grammar uses spoken numbers");

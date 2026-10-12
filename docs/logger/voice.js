@@ -132,12 +132,14 @@
     addCommands(["a", "ay"], players);
     addCommands(["s", "ess"], players);
     addCommands(["b", "be", "bee"], players);
-    addCommands(["to", "two", "turnover"], players);
+    addCommands(["to", "two", "turnover", "tee oh"], players);
 
-    // Do not admit the spoken word "arrow": it is acoustically too close to
-    // the common rebound call "R O". Say the literal destination as "to G"
-    // or "to O" for the rare jump-ball forms.
-    var arrowTargets = ["to g", "to gee", "to o", "to oh"];
+    // "Arrow" is acoustically too close to the common rebound call "R O".
+    // Use the distinct spoken cue "ball G/O" for possession after a jump.
+    var arrowTargets = [
+      "ball g", "ball gee", "ball o", "ball oh",
+      "to g", "to gee", "to o", "to oh"
+    ];
     addCommands(["j", "jay"], [""], arrowTargets);
     addCommands(["o j", "o jay", "oh j", "oh jay"], players, arrowTargets);
     addCommands(["d j", "d jay", "dee j", "dee jay"], players, arrowTargets);
@@ -275,10 +277,9 @@
       }
       if (!ok) continue;
       var event = parts.join("");
-      // `t o` is the common literal way to say opening tip to the opponent, not
-      // a turnover token. Turnover is accepted as "to", "too", "two", or
-      // "turnover", but not as two separate letters.
-      if (event === "to" && length > 1) continue;
+      // Bare `t o` is opening tip to the opponent. With a player number after
+      // it, the same literal letters mean a turnover: `t o 21` -> `to 21`.
+      if (event === "to" && length > 1 && !parseNumber(tokens, index + length)) continue;
       if (has(EVENTS, event)) return { event: event, index: index + length };
     }
 
@@ -387,6 +388,8 @@
     if (index >= tokens.length) return { team: "", index: index };
     var cursor = index;
     if (tokens[cursor] === "arrow") {
+      cursor += 1;
+    } else if (tokens[cursor] === "ball") {
       cursor += 1;
     } else if (tokens[cursor] === "to" || tokens[cursor] === "too") {
       cursor += 1;
