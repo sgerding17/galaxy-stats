@@ -75,13 +75,14 @@
   var wakeLock = null;
   var live = loadLive();
   var liveState = { sending: false, timer: null, sent: "", sentAt: 0, triedAt: 0, error: "" };
+  var voice = { recognition: null, listening: false, parsed: null, interim: false, error: "" };
 
   var el = {};
   ["app", "chips", "events", "tape", "prompt", "toast", "clock", "clock-time", "clock-state",
    "score-gal", "score-opp", "opp-name", "team-gal", "team-opp", "status-half", "status-ball",
    "status-arrow", "box-score", "export-text", "export-name", "export-status", "saved-games",
    "resume-block", "setup-lineup", "setup-lineup-hint", "subs-on", "subs-off", "subs-hint",
-   "roster-edit"].forEach(function (id) {
+   "roster-edit", "voice-status", "voice-toggle", "voice-input", "voice-parse", "voice-add"].forEach(function (id) {
     el[id] = document.getElementById(id);
   });
 
@@ -530,6 +531,7 @@
   }
 
   function closePanels() {
+    stopVoiceListening();
     var panels = document.querySelectorAll(".panel");
     for (var i = 0; i < panels.length; i++) panels[i].hidden = true;
   }
@@ -858,6 +860,204 @@
     navigator.share({ title: fileName(), text: logText() }).catch(function () { /* cancelled */ });
   }
 
+  /* -------------------------------------------------------------- voice entry */
+
+  function recognitionClass() {
+    return window.SpeechRecognition || window.webkitSpeechRecognition || null;
+  }
+
+  function voiceAvailable() {
+    return !!(recognitionClass() && window.VoiceDsl);
+  }
+
+  function openVoice() {
+    renderVoicePanel();
+    openPanel("panel-voice");
+  }
+
+  function ensureRecognition() {
+    if (voice.recognition) return true;
+    var SpeechRecognition = recognitionClass();
+    if (!SpeechRecognition) return false;
+
+    var recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "en-US";
+
+    recognition.onresult = function (event) {
+      var finalText = "";
+      var interimText = "";
+      for (var i = event.resultIndex; i < event.results.length; i++) {
+        var text = event.results[i][0].transcript.trim();
+        if (event.results[i].isFinal) finalText += (finalText ? " " : "") + text;
+        else interimText += (interimText ? " " : "") + text;
+      }
+      var heard = finalText || interimText;
+      if (!heard) return;
+      el["voice-input"].value = heard;
+      parseVoiceInput(!finalText);
+    };
+
+    recognition.onerror = function (event) {
+      voice.error = event.error ? "Voice error: " + event.error + "." : "Voice recognition stopped.";
+      voice.listening = false;
+      renderVoicePanel();
+    };
+
+    recognition.onend = function () {
+      voice.listening = false;
+      renderVoicePanel();
+    };
+
+    voice.recognition = recognition;
+    return true;
+  }
+
+  function startVoiceListening() {
+    if (!ensureRecognition()) {
+      voice.error = "Voice recognition is not available in this browser.";
+      renderVoicePanel();
+      return;
+    }
+    try {
+      voice.error = "";
+      voice.recognition.start();
+      voice.listening = true;
+      renderVoicePanel();
+    } catch (error) {
+      voice.error = "Voice recognition is already starting.";
+      renderVoicePanel();
+    }
+  }
+
+  function stopVoiceListening() {
+    if (!voice.recognition || !voice.listening) return;
+    try { voice.recognition.stop(); } catch (error) { /* already stopped */ }
+    voice.listening = false;
+  }
+
+  function parseVoiceInput(interim) {
+    var text = el["voice-input"].value.trim();
+    voice.interim = !!interim;
+    voice.parsed = null;
+
+    if (!text) {
+      el["voice-parse"].className = "status idle";
+      el["voice-parse"].textContent = "Waiting for a line.";
+      el["voice-add"].disabled = true;
+      return;
+    }
+
+    if (!game) {
+      el["voice-parse"].className = "status idle";
+      el["voice-parse"].textContent = "Start or resume a game first.";
+      el["voice-add"].disabled = true;
+      return;
+    }
+
+    if (!window.VoiceDsl) {
+      el["voice-parse"].className = "status bad";
+      el["voice-parse"].textContent = "The voice parser did not load.";
+      el["voice-add"].disabled = true;
+      return;
+    }
+
+    var parsed = window.VoiceDsl.parseUtterance(text, { players: Object.keys(game.roster) });
+    if (parsed.ok) {
+      voice.parsed = parsed;
+      el["voice-parse"].className = "status";
+      el["voice-parse"].textContent = (voice.interim ? "Hearing: " : "Ready: ") + parsed.line;
+      el["voice-add"].disabled = voice.interim;
+    } else {
+      el["voice-parse"].className = "status bad";
+      el["voice-parse"].textContent = parsed.error;
+      el["voice-add"].disabled = true;
+    }
+  }
+
+  function renderVoicePanel() {
+    if (!el["voice-status"]) return;
+
+    if (!window.VoiceDsl) {
+      el["voice-status"].className = "status bad";
+      el["voice-status"].textContent = "The voice parser did not load.";
+    } else if (!recognitionClass()) {
+      el["voice-status"].className = "status idle";
+      el["voice-status"].textContent = "This browser cannot listen. Typed entry still works.";
+    } else if (voice.error) {
+      el["voice-status"].className = "status bad";
+      el["voice-status"].textContent = voice.error;
+    } else if (voice.listening) {
+      el["voice-status"].className = "status";
+      el["voice-status"].textContent = "Listening.";
+    } else {
+      el["voice-status"].className = "status idle";
+      el["voice-status"].textContent = "Ready.";
+    }
+
+    el["voice-toggle"].disabled = !voiceAvailable();
+    el["voice-toggle"].textContent = voice.listening ? "Stop listening" : "Start listening";
+    parseVoiceInput(voice.interim);
+  }
+
+  function afterVoiceLine(line) {
+    var parts = line.split(" ");
+    selected = null;
+    armed = null;
+    suggested = null;
+    if (parts[0] === "fga" || parts[0] === "3fga" || parts[0] === "b") {
+      armed = "r";
+    } else if (parts[0] === "fta") {
+      suggested = "r";
+    } else if ((parts[0] === "fgm" || parts[0] === "3fgm") && parts[1] !== "o") {
+      suggested = "a";
+    }
+  }
+
+  function appendVoiceLine(line) {
+    var eventType = line.split(" ")[0];
+    if (gameOver() && eventType !== "c") {
+      toast("This game is over. Start a new one to keep logging.");
+      return false;
+    }
+    if (betweenHalves() && eventType !== "c") {
+      toast("Tap Game → Start the 2nd half first.");
+      return false;
+    }
+
+    var items = [];
+    var checkpoint = null;
+    if (eventType === "ig") checkpoint = dueCheckpoint(true);
+    else if (eventType !== "c" && eventType !== "t" && eventType !== "pae") checkpoint = dueCheckpoint(false);
+    if (checkpoint) items.push(checkpoint);
+    items.push({ line: line });
+    if (!appendLines(items)) return false;
+
+    if (eventType === "c") {
+      game.clockBase = tokenToSeconds(line.split(" ")[1]);
+      game.clockStartedAt = null;
+      persist();
+    }
+    afterVoiceLine(line);
+    buzz();
+    render();
+    renderVoicePanel();
+    toast("Logged “" + line + "”", true);
+    return true;
+  }
+
+  function addVoiceLine() {
+    parseVoiceInput(false);
+    if (!voice.parsed || !voice.parsed.ok) return;
+    if (appendVoiceLine(voice.parsed.line)) {
+      el["voice-input"].value = "";
+      voice.parsed = null;
+      voice.interim = false;
+      renderVoicePanel();
+    }
+  }
+
   /* --------------------------------------------------------- live sharing */
 
   /* The relay URL and the write key live only in this phone's storage: the key
@@ -1117,6 +1317,7 @@
       if (action === "undo") undo();
       else if (action === "subs") openSubs();
       else if (action === "stats") { renderBoxScore(); openPanel("panel-stats"); }
+      else if (action === "voice") openVoice();
       else if (action === "menu") renderMenu();
     });
   });
@@ -1140,6 +1341,18 @@
   document.getElementById("open-export").addEventListener("click", renderExport);
   document.getElementById("export-copy").addEventListener("click", copyLog);
   document.getElementById("export-download").addEventListener("click", downloadLog);
+  document.getElementById("voice-toggle").addEventListener("click", function () {
+    if (voice.listening) {
+      stopVoiceListening();
+      renderVoicePanel();
+    } else {
+      startVoiceListening();
+    }
+  });
+  document.getElementById("voice-input").addEventListener("input", function () {
+    parseVoiceInput(false);
+  });
+  document.getElementById("voice-add").addEventListener("click", addVoiceLine);
   document.getElementById("end-half").addEventListener("click", endHalf);
   document.getElementById("start-half").addEventListener("click", startHalf);
   document.getElementById("delete-game").addEventListener("click", deleteGame);

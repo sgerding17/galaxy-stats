@@ -56,6 +56,13 @@ complete.
 rules as `scripts/stats.py`. Advanced ratings (on/off, points off turnovers,
 second-chance points) are left to the site build.
 
+**Voice.** **Voice** opens a literal dictation path for the same DSL lines:
+`f g a twenty one`, `three f g m o`, `o j fourteen arrow g`. The browser's
+speech recognizer supplies text, then `voice.js` accepts only one complete DSL
+line and the normal logger validation still decides whether that line fits the
+current game state. Unsupported browsers can use the same field as a typed-line
+entry box.
+
 ## Sharing it live
 
 **Game → Share live** posts the running game to the relay in [`worker/`](../../worker/README.md)
@@ -108,6 +115,7 @@ index.html      markup and panels
 app.css         styling
 app.js          state, tap handling, rendering, export
 logstats.js     the stat engine -- a port of scripts/stats.py
+voice.js        literal speech/typed-line parser for the DSL
 seed.js         GENERATED: roster, past venues and opponents
 icon-*.png      GENERATED: home-screen icons
 sw.js           offline cache; GENERATED stamps (cache name, asset versions)

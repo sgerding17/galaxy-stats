@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon-192.png">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="stylesheet" href="app.css?v=ba3ee2781d">
+  <link rel="stylesheet" href="app.css?v=a39abef643">
 </head>
 <body>
 
@@ -50,6 +50,7 @@
     <button type="button" data-action="undo" class="tool tool-undo">Undo</button>
     <button type="button" data-action="subs" class="tool">Subs</button>
     <button type="button" data-action="stats" class="tool">Stats</button>
+    <button type="button" data-action="voice" class="tool">Voice</button>
     <button type="button" data-action="menu" class="tool">Game</button>
   </nav>
 </main>
@@ -133,6 +134,33 @@
   </div>
 </section>
 
+<!-- Voice entry -->
+<section class="panel" id="panel-voice" hidden>
+  <header class="panel-head">
+    <h2>Voice</h2>
+    <button type="button" class="panel-close" data-close>Done</button>
+  </header>
+  <div class="panel-body">
+    <div id="voice-status" class="status idle"></div>
+    <button type="button" class="primary" id="voice-toggle">Start listening</button>
+
+    <label>Event line
+      <input type="text" id="voice-input" placeholder="fga 21"
+             autocapitalize="off" autocorrect="off" spellcheck="false">
+    </label>
+    <div id="voice-parse" class="status idle"></div>
+    <button type="button" class="primary" id="voice-add" disabled>Add line</button>
+
+    <h3>Examples</h3>
+    <div class="voice-examples">
+      <code>f g a twenty one</code>
+      <code>three f g m o</code>
+      <code>i g twenty one twenty two five two twenty five</code>
+      <code>o j fourteen arrow g</code>
+    </div>
+  </div>
+</section>
+
 <!-- Game menu -->
 <section class="panel" id="panel-menu" hidden>
   <header class="panel-head">
@@ -213,8 +241,9 @@
   </div>
 </section>
 
-<script src="seed.js?v=ba3ee2781d"></script>
-<script src="logstats.js?v=ba3ee2781d"></script>
-<script src="app.js?v=ba3ee2781d"></script>
+<script src="seed.js?v=a39abef643"></script>
+<script src="logstats.js?v=a39abef643"></script>
+<script src="voice.js?v=a39abef643"></script>
+<script src="app.js?v=a39abef643"></script>
 </body>
 </html>

@@ -12,6 +12,7 @@ window.GALAXY_SEED = {
     "25": "Yosy"
   },
   "venues": [
+    "SBYB_League_Play",
     "SBYB_Exhibition",
     "Tigers_Gold_Fifth_Place",
     "Tigers_Gold_Losers_Bracket",
@@ -23,7 +24,6 @@ window.GALAXY_SEED = {
     "WLA_White_Round_Robin",
     "JAO_League_Play",
     "CBO_Exhibition",
-    "SBYB_League_Play",
     "VFW_Silver_Friendship_Game",
     "VFW_Silver_Losers_Bracket",
     "VFW_Silver_Quarterfinals",
@@ -35,20 +35,20 @@ window.GALAXY_SEED = {
     "FOR_Silver_Pool_Play"
   ],
   "opponents": [
+    "PB_Musubis",
+    "Cheetahs",
+    "Royals",
     "Dolphins",
     "Sakura",
     "Mighty_Musubis",
     "Shooting_Stars",
     "Supreme",
-    "Royals",
     "Firecrackers",
     "Warlords",
     "Sparks",
     "Red_Phoenix",
-    "Cheetahs",
     "Storm",
-    "WLA_4",
-    "PB_Musubis"
+    "WLA_4"
   ],
-  "build": "ba3ee2781d"
+  "build": "a39abef643"
 };

@@ -281,7 +281,7 @@ button {
 
 .toolbar {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 6px;
   padding: 0 8px 8px 8px;
 }
@@ -537,6 +537,22 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
 .status.idle { background: var(--panel-2); border-color: var(--line); color: var(--muted); }
 .status .hint { margin: 6px 0 0; word-break: break-all; }
 #live-toggle { margin-bottom: 12px; }
+
+.voice-examples {
+  display: grid;
+  gap: 7px;
+}
+
+.voice-examples code {
+  display: block;
+  padding: 9px 10px;
+  border-radius: 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.82rem;
+  white-space: normal;
+}
 
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
