@@ -22,7 +22,10 @@
   var VOICE_DUPLICATE_MS = 4000;
   var VOICE_HISTORY_LINES = 20;
   var VOSK_SCRIPT = "vendor/vosk.js";
-  var VOSK_MODEL = "models/vosk-model-small-en-us-0.15.tar.gz";
+  // Vosk resolves a relative model URL against the origin instead of this
+  // app's directory, which turns "models/..." into a broken /models request
+  // when the logger is hosted below /galaxy-stats/logger/.
+  var VOSK_MODEL = new URL("models/vosk-model-small-en-us-0.15.tar.gz", document.baseURI).href;
   // The free KV tier allows 1,000 writes a day, so updates are rationed: at most
   // one every ten seconds, and only when something a viewer would notice changed.
   var LIVE_INTERVAL = 10000;
@@ -100,6 +103,8 @@
     grammarLoadId: 0,
     grammarStartId: 0,
     grammarLoading: false,
+    grammarLoadSlow: false,
+    grammarLoadTimer: null,
     grammarRecognizer: null,
     grammarStream: null,
     grammarContext: null,
@@ -1055,12 +1060,41 @@
     return voice.voskScriptPromise;
   }
 
+  function clearGrammarLoadTimer() {
+    if (voice.grammarLoadTimer) clearTimeout(voice.grammarLoadTimer);
+    voice.grammarLoadTimer = null;
+    voice.grammarLoadSlow = false;
+  }
+
+  function watchGrammarLoad(loadId) {
+    clearGrammarLoadTimer();
+    voice.grammarLoadTimer = setTimeout(function () {
+      voice.grammarLoadTimer = null;
+      if (loadId !== voice.grammarLoadId || !voice.grammarLoading) return;
+      voice.grammarLoadSlow = true;
+      renderVoicePanel();
+    }, 45000);
+  }
+
+  function cacheGrammarModel() {
+    if (!window.caches) return;
+    caches.open("galaxy-logger-model-vosk-small-en-us-0.15").then(function (cache) {
+      return cache.match(VOSK_MODEL).then(function (cached) {
+        if (cached) return null;
+        return cache.add(new Request(VOSK_MODEL, { cache: "force-cache" }));
+      });
+    }).catch(function () {
+      // Recognition still works online if this device cannot spare the storage.
+    });
+  }
+
   function ensureGrammarModel() {
     if (voice.grammarModel) return Promise.resolve(voice.grammarModel);
     if (voice.grammarModelPromise) return voice.grammarModelPromise;
 
     voice.grammarLoading = true;
     var loadId = ++voice.grammarLoadId;
+    watchGrammarLoad(loadId);
     renderVoicePanel();
     voice.grammarModelPromise = loadVoskScript().then(function () {
       if (loadId !== voice.grammarLoadId) return null;
@@ -1073,12 +1107,15 @@
       }
       voice.grammarModel = model;
       voice.grammarLoading = false;
+      clearGrammarLoadTimer();
       voice.grammarModelPromise = null;
       renderVoicePanel();
+      cacheGrammarModel();
       return model;
     }).catch(function (error) {
       if (loadId !== voice.grammarLoadId) return null;
       voice.grammarLoading = false;
+      clearGrammarLoadTimer();
       voice.grammarModelPromise = null;
       voice.error = "Grammar model failed to load. Connect once and try again.";
       voice.requested = false;
@@ -1229,6 +1266,7 @@
     voice.grammarModel = null;
     voice.grammarModelPromise = null;
     voice.grammarLoading = false;
+    clearGrammarLoadTimer();
   }
 
   function setVoiceEngine(engine) {
@@ -1329,8 +1367,10 @@
       el["voice-status"].className = "status bad";
       el["voice-status"].textContent = voice.error;
     } else if (voice.grammarLoading) {
-      el["voice-status"].className = "status idle";
-      el["voice-status"].textContent = "Loading grammar model (39 MB the first time).";
+      el["voice-status"].className = voice.grammarLoadSlow ? "status bad" : "status idle";
+      el["voice-status"].textContent = voice.grammarLoadSlow ?
+        "Grammar model load stalled. Browser mode is available now." :
+        "Loading grammar model (39 MB the first time).";
     } else if (voice.listening) {
       el["voice-status"].className = "status";
       el["voice-status"].textContent = voice.engine === "grammar" ?
@@ -1351,7 +1391,7 @@
 
     document.querySelectorAll("#voice-engine .toggle").forEach(function (button) {
       button.classList.toggle("on", button.dataset.voiceEngine === voice.engine);
-      button.disabled = voice.requested;
+      button.disabled = voice.requested && !voice.grammarLoading;
     });
     el["voice-toggle"].disabled = !voiceAvailable();
     el["voice-toggle"].textContent = voice.requested ? "Stop listening" : "Start listening";

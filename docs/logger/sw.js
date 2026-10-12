@@ -12,7 +12,7 @@
    files, so it rolls whenever the app changes and never when it does not.
    Do not edit that line by hand. */
 
-var CACHE = "galaxy-logger-1ed6907828";
+var CACHE = "galaxy-logger-0a22ac1eff";
 var MODEL_CACHE = "galaxy-logger-model-vosk-small-en-us-0.15";
 var MODEL_FILE = "/models/vosk-model-small-en-us-0.15.tar.gz";
 var NETWORK_TIMEOUT = 2500;
@@ -26,11 +26,11 @@ var NETWORK_TIMEOUT = 2500;
 var SHELL = [
   "./",
   "index.html",
-  "app.css?v=1ed6907828",
-  "app.js?v=1ed6907828",
-  "logstats.js?v=1ed6907828",
-  "voice.js?v=1ed6907828",
-  "seed.js?v=1ed6907828",
+  "app.css?v=0a22ac1eff",
+  "app.js?v=0a22ac1eff",
+  "logstats.js?v=0a22ac1eff",
+  "voice.js?v=0a22ac1eff",
+  "seed.js?v=0a22ac1eff",
   "manifest.webmanifest",
   "icon-192.png",
   "icon-512.png"
@@ -61,22 +61,21 @@ self.addEventListener("fetch", function (event) {
   var url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.endsWith(MODEL_FILE)) {
-    event.respondWith(modelAnswer(event, request));
+    event.respondWith(modelAnswer(request));
     return;
   }
   event.respondWith(answer(event, request));
 });
 
-function modelAnswer(event, request) {
+function modelAnswer(request) {
   return caches.open(MODEL_CACHE).then(function (cache) {
     return cache.match(request).then(function (cached) {
       if (cached) return cached;
-      return fetch(new Request(request, { cache: "no-cache" })).then(function (response) {
-        if (!response || !response.ok) return response;
-        var copy = response.clone();
-        event.waitUntil(cache.put(request, copy));
-        return response;
-      });
+      // Do not tee this 39 MB response into Cache Storage while Vosk is reading
+      // it. Some Android browsers stall or exhaust memory when both consumers
+      // unpack the stream at once. The app saves an offline copy after Vosk is
+      // ready, when it can normally reuse the browser's HTTP cache.
+      return fetch(new Request(request, { cache: "default" }));
     });
   });
 }
