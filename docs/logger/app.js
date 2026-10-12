@@ -75,14 +75,21 @@
   var wakeLock = null;
   var live = loadLive();
   var liveState = { sending: false, timer: null, sent: "", sentAt: 0, triedAt: 0, error: "" };
-  var voice = { recognition: null, listening: false, parsed: null, interim: false, error: "" };
+  var voice = {
+    recognition: null,
+    listening: false,
+    parsed: null,
+    interim: false,
+    error: "",
+    autoLog: true
+  };
 
   var el = {};
   ["app", "chips", "events", "tape", "prompt", "toast", "clock", "clock-time", "clock-state",
    "score-gal", "score-opp", "opp-name", "team-gal", "team-opp", "status-half", "status-ball",
    "status-arrow", "box-score", "export-text", "export-name", "export-status", "saved-games",
    "resume-block", "setup-lineup", "setup-lineup-hint", "subs-on", "subs-off", "subs-hint",
-   "roster-edit", "voice-status", "voice-toggle", "voice-input", "voice-parse", "voice-add"].forEach(function (id) {
+   "roster-edit", "voice-status", "voice-toggle", "voice-auto", "voice-input", "voice-parse", "voice-add"].forEach(function (id) {
     el[id] = document.getElementById(id);
   });
 
@@ -897,6 +904,7 @@
       if (!heard) return;
       el["voice-input"].value = heard;
       parseVoiceInput(!finalText);
+      if (finalText && voice.autoLog && voice.parsed && voice.parsed.ok) addVoiceLines();
     };
 
     recognition.onerror = function (event) {
@@ -944,7 +952,8 @@
 
     if (!text) {
       el["voice-parse"].className = "status idle";
-      el["voice-parse"].textContent = "Waiting for a line.";
+      el["voice-parse"].textContent = "Waiting for an event.";
+      el["voice-add"].textContent = "Add line";
       el["voice-add"].disabled = true;
       return;
     }
@@ -966,8 +975,10 @@
     var parsed = window.VoiceDsl.parseUtterance(text, { players: Object.keys(game.roster) });
     if (parsed.ok) {
       voice.parsed = parsed;
+      var parsedLines = parsed.lines || [parsed.line];
       el["voice-parse"].className = "status";
-      el["voice-parse"].textContent = (voice.interim ? "Hearing: " : "Ready: ") + parsed.line;
+      el["voice-parse"].textContent = (voice.interim ? "Hearing: " : "Ready: ") + parsedLines.join(" | ");
+      el["voice-add"].textContent = parsedLines.length === 1 ? "Add line" : "Add " + parsedLines.length + " lines";
       el["voice-add"].disabled = voice.interim;
     } else {
       el["voice-parse"].className = "status bad";
@@ -998,6 +1009,7 @@
 
     el["voice-toggle"].disabled = !voiceAvailable();
     el["voice-toggle"].textContent = voice.listening ? "Stop listening" : "Start listening";
+    el["voice-auto"].checked = voice.autoLog;
     parseVoiceInput(voice.interim);
   }
 
@@ -1015,42 +1027,58 @@
     }
   }
 
-  function appendVoiceLine(line) {
-    var eventType = line.split(" ")[0];
-    if (gameOver() && eventType !== "c") {
-      toast("This game is over. Start a new one to keep logging.");
-      return false;
-    }
-    if (betweenHalves() && eventType !== "c") {
-      toast("Tap Game → Start the 2nd half first.");
-      return false;
+  function appendVoiceLines(voiceLines) {
+    var items = [];
+    var checkpointAdded = false;
+    var lastClock = null;
+
+    for (var i = 0; i < voiceLines.length; i++) {
+      var line = voiceLines[i];
+      var eventType = line.split(" ")[0];
+      if (gameOver() && eventType !== "c") {
+        toast("This game is over. Start a new one to keep logging.");
+        return false;
+      }
+      if (betweenHalves() && eventType !== "c") {
+        toast("Tap Game → Start the 2nd half first.");
+        return false;
+      }
+
+      var checkpoint = null;
+      if (!checkpointAdded && eventType === "ig") checkpoint = dueCheckpoint(true);
+      else if (!checkpointAdded && eventType !== "c" && eventType !== "t" && eventType !== "pae") {
+        checkpoint = dueCheckpoint(false);
+      }
+      if (checkpoint) {
+        items.push(checkpoint);
+        checkpointAdded = true;
+      }
+      items.push({ line: line });
+      if (eventType === "c") {
+        checkpointAdded = true;
+        lastClock = line.split(" ")[1];
+      }
     }
 
-    var items = [];
-    var checkpoint = null;
-    if (eventType === "ig") checkpoint = dueCheckpoint(true);
-    else if (eventType !== "c" && eventType !== "t" && eventType !== "pae") checkpoint = dueCheckpoint(false);
-    if (checkpoint) items.push(checkpoint);
-    items.push({ line: line });
     if (!appendLines(items)) return false;
 
-    if (eventType === "c") {
-      game.clockBase = tokenToSeconds(line.split(" ")[1]);
+    if (lastClock) {
+      game.clockBase = tokenToSeconds(lastClock);
       game.clockStartedAt = null;
       persist();
     }
-    afterVoiceLine(line);
+    afterVoiceLine(voiceLines[voiceLines.length - 1]);
     buzz();
     render();
-    renderVoicePanel();
-    toast("Logged “" + line + "”", true);
+    toast(voiceLines.length === 1 ? "Logged " + voiceLines[0] + "." : "Logged " + voiceLines.length + " events.", true);
     return true;
   }
 
-  function addVoiceLine() {
+  function addVoiceLines() {
     parseVoiceInput(false);
     if (!voice.parsed || !voice.parsed.ok) return;
-    if (appendVoiceLine(voice.parsed.line)) {
+    var parsedLines = voice.parsed.lines || [voice.parsed.line];
+    if (appendVoiceLines(parsedLines)) {
       el["voice-input"].value = "";
       voice.parsed = null;
       voice.interim = false;
@@ -1352,7 +1380,10 @@
   document.getElementById("voice-input").addEventListener("input", function () {
     parseVoiceInput(false);
   });
-  document.getElementById("voice-add").addEventListener("click", addVoiceLine);
+  document.getElementById("voice-auto").addEventListener("change", function () {
+    voice.autoLog = this.checked;
+  });
+  document.getElementById("voice-add").addEventListener("click", addVoiceLines);
   document.getElementById("end-half").addEventListener("click", endHalf);
   document.getElementById("start-half").addEventListener("click", startHalf);
   document.getElementById("delete-game").addEventListener("click", deleteGame);

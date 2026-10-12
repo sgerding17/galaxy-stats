@@ -2,7 +2,7 @@
  * Literal voice entry for the Galaxy game-log DSL.
  *
  * Speech recognition still hears ordinary words, but this parser only accepts
- * utterances that can be reduced to one valid DSL line. Anything extra or
+ * utterances that can be reduced to valid DSL lines. Anything extra or
  * ambiguous is rejected before the logger's normal stat-engine validation runs.
  */
 (function (root, factory) {
@@ -15,6 +15,7 @@
     "3fgm", "3fga", "fgm", "fga", "ftm", "fta",
     "pae", "ig", "oj", "dj", "to", "c", "t", "j", "r", "a", "s", "b"
   ];
+  var EVENTS_LONG_FIRST = EVENTS.slice().sort(function (a, b) { return b.length - a.length; });
   var COUNTED = ["3fgm", "3fga", "fgm", "fga", "ftm", "fta", "r", "a", "s", "b", "to"];
   var GALAXY_ONLY = ["a", "s", "b", "to", "oj", "dj"];
   var SHOOTING = ["3fgm", "3fga", "fgm", "fga", "ftm", "fta"];
@@ -106,7 +107,31 @@
       tokens.shift();
     }
     if (tokens[0] === "new" && tokens[1] === "line") tokens.splice(0, 2);
-    return tokens;
+    var expanded = [];
+    tokens.forEach(function (token) {
+      expanded = expanded.concat(expandCompactToken(token));
+    });
+    return expanded;
+  }
+
+  function expandCompactToken(token) {
+    if (!token) return [];
+    if (CODE[token] != null || SINGLE_EVENT_WORDS[token] || SMALL[token] != null ||
+        TEENS[token] != null || TENS[token] != null || /^\d{1,4}$/.test(token)) {
+      return [token];
+    }
+
+    for (var i = 0; i < EVENTS_LONG_FIRST.length; i++) {
+      var event = EVENTS_LONG_FIRST[i];
+      if (token.indexOf(event) !== 0 || token.length === event.length) continue;
+      var rest = token.slice(event.length);
+      if ((event === "c" && /^\d{3,4}$/.test(rest)) ||
+          /^\d{1,2}$/.test(rest) || /^[go]$/.test(rest)) {
+        return [event, rest];
+      }
+    }
+
+    return [token];
   }
 
   function codeToken(token) {
@@ -248,6 +273,8 @@
     } else if (tokens[cursor] === "dash" && tokens[cursor + 1] === "greater" && tokens[cursor + 2] === "than") {
       cursor += 3;
     } else {
+      var bareTeam = parseTeam(tokens, cursor);
+      if (bareTeam) return { team: bareTeam.id, index: bareTeam.index };
       return { team: "", index: index };
     }
 
@@ -262,11 +289,8 @@
     }
   }
 
-  function parseLine(text, options) {
-    var tokens = tokensFor(text);
-    if (!tokens.length) throw parseError("Say one event line.");
-
-    var first = parseEvent(tokens, 0);
+  function parseLineAt(tokens, index, options) {
+    var first = parseEvent(tokens, index);
     var event = first.event;
     var cursor = first.index;
     var line;
@@ -320,13 +344,44 @@
       throw parseError("Unknown event token: " + event);
     }
 
-    expectEnd(tokens, cursor);
-    return { ok: true, line: line, event: event, tokens: tokens };
+    return { line: line, event: event, index: cursor };
+  }
+
+  function parseLines(text, options) {
+    var tokens = tokensFor(text);
+    if (!tokens.length) throw parseError("Say one event line.");
+
+    var lines = [];
+    var events = [];
+    var cursor = 0;
+    while (cursor < tokens.length) {
+      var parsed = parseLineAt(tokens, cursor, options || {});
+      lines.push(parsed.line);
+      events.push(parsed.event);
+      cursor = parsed.index;
+    }
+
+    return { ok: true, line: lines[0], lines: lines, event: events[0], events: events, tokens: tokens };
+  }
+
+  function parseLine(text, options) {
+    var tokens = tokensFor(text);
+    if (!tokens.length) throw parseError("Say one event line.");
+    var parsed = parseLineAt(tokens, 0, options || {});
+    expectEnd(tokens, parsed.index);
+    return {
+      ok: true,
+      line: parsed.line,
+      lines: [parsed.line],
+      event: parsed.event,
+      events: [parsed.event],
+      tokens: tokens
+    };
   }
 
   function parseUtterance(text, options) {
     try {
-      return parseLine(text, options || {});
+      return parseLines(text, options || {});
     } catch (error) {
       return {
         ok: false,
@@ -338,6 +393,7 @@
 
   return {
     parseUtterance: parseUtterance,
+    parseLine: parseLine,
     _tokensForTest: tokensFor
   };
 });

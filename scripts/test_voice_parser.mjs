@@ -20,6 +20,11 @@ const cases = [
   ["two two", "to 2"],
   ["r galaxy", "r g"],
   ["p a e", "pae"],
+  ["TG", "t g"],
+  ["R3", "r 3"],
+  ["FGA21", "fga 21"],
+  ["3FGA21", "3fga 21"],
+  ["C0900", "c 0900"],
 ];
 
 for (const [spoken, line] of cases) {
@@ -27,6 +32,10 @@ for (const [spoken, line] of cases) {
   assert.equal(parsed.ok, true, spoken + ": " + parsed.error);
   assert.equal(parsed.line, line, spoken);
 }
+
+const sequence = VoiceDsl.parseUtterance("FGAO B3 R3 FGM3 A21", { players: roster });
+assert.equal(sequence.ok, true, sequence.error);
+assert.deepEqual(sequence.lines, ["fga o", "b 3", "r 3", "fgm 3", "a 21"]);
 
 for (const spoken of ["fga ninety nine", "r potato", "fga 21 extra"]) {
   const parsed = VoiceDsl.parseUtterance(spoken, { players: roster });
