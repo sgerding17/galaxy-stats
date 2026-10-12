@@ -18,6 +18,8 @@
   var LIVE_KEY = "galaxy-logger/live/v1";
   var HALF_SECONDS = 20 * 60;
   var CHECKPOINT_SECONDS = 60;
+  var VOICE_DUPLICATE_MS = 4000;
+  var VOICE_HISTORY_LINES = 20;
   // The free KV tier allows 1,000 writes a day, so updates are rationed: at most
   // one every ten seconds, and only when something a viewer would notice changed.
   var LIVE_INTERVAL = 10000;
@@ -85,7 +87,9 @@
     rawMode: "idle",
     message: "Parser: waiting for an event.",
     messageBad: false,
-    editingIndex: null
+    editingIndex: null,
+    recentLines: [],
+    lastFinalAt: 0
   };
 
   var el = {};
@@ -1011,8 +1015,27 @@
     }
 
     var parsedLines = parsed.lines || [parsed.line];
-    if (appendVoiceLines(parsedLines)) {
-      voice.message = "Parser logged: " + parsedLines.join(" | ");
+    var now = Date.now();
+    var recentLines = now - voice.lastFinalAt <= VOICE_DUPLICATE_MS ? voice.recentLines : [];
+    var newLines = window.VoiceDsl.withoutOverlap(recentLines, parsedLines);
+    var repeatedCount = parsedLines.length - newLines.length;
+
+    if (!newLines.length) {
+      voice.lastFinalAt = now;
+      voice.message = "Parser ignored a repeated recognition.";
+      voice.messageBad = false;
+      renderVoicePanel();
+      return;
+    }
+
+    if (appendVoiceLines(newLines)) {
+      voice.recentLines = recentLines.concat(newLines).slice(-VOICE_HISTORY_LINES);
+      voice.lastFinalAt = now;
+      voice.message = "Parser logged: " + newLines.join(" | ");
+      if (repeatedCount) {
+        voice.message += " (ignored " + repeatedCount + " repeated event" +
+          (repeatedCount === 1 ? "" : "s") + ")";
+      }
       voice.messageBad = false;
       renderVoicePanel();
     } else {

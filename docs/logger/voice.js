@@ -82,6 +82,21 @@
 
   function has(list, value) { return list.indexOf(value) !== -1; }
 
+  function withoutOverlap(previous, lines) {
+    var maxOverlap = Math.min(previous.length, lines.length);
+    for (var size = maxOverlap; size > 0; size--) {
+      var same = true;
+      for (var i = 0; i < size; i++) {
+        if (previous[previous.length - size + i] !== lines[i]) {
+          same = false;
+          break;
+        }
+      }
+      if (same) return lines.slice(size);
+    }
+    return lines.slice();
+  }
+
   function parseError(message) {
     var error = new Error(message);
     error.name = "VoiceDslError";
@@ -139,9 +154,22 @@
     return null;
   }
 
+  function collapsedTurnoverTarget(token) {
+    if (!/^2\d{1,2}$/.test(token || "")) return null;
+    return String(parseInt(token.slice(1), 10));
+  }
+
   function parseEvent(tokens, index) {
     var word = SINGLE_EVENT_WORDS[tokens[index]];
     if (word) return { event: word, index: index + 1 };
+
+    // Android speech recognition sometimes collapses "to five" into "205".
+    // Interpret that only where a new event is required, so clock values such
+    // as "c 205" keep their normal meaning.
+    var turnoverTarget = collapsedTurnoverTarget(tokens[index]);
+    if (turnoverTarget != null) {
+      return { event: "to", index: index + 1, target: turnoverTarget };
+    }
 
     for (var length = 4; length >= 1; length--) {
       var parts = [];
@@ -333,7 +361,15 @@
       line = event + " " + jumper.id + (arrow.team ? " -> " + arrow.team : "");
 
     } else if (has(COUNTED, event)) {
-      var target = parseTarget(tokens, cursor, event, options || {});
+      var target;
+      if (first.target != null) {
+        if (!validPlayer(first.target, options || {})) {
+          throw parseError("Player #" + first.target + " is not in this roster.");
+        }
+        target = { id: first.target, index: cursor };
+      } else {
+        target = parseTarget(tokens, cursor, event, options || {});
+      }
       cursor = target.index;
       if (has(GALAXY_ONLY, event) && target.id === "o") {
         throw parseError(event + " needs a Galaxy player number.");
@@ -394,6 +430,7 @@
   return {
     parseUtterance: parseUtterance,
     parseLine: parseLine,
+    withoutOverlap: withoutOverlap,
     _tokensForTest: tokensFor
   };
 });

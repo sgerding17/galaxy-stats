@@ -64,6 +64,8 @@ game log before it is saved. If the browser pauses speech recognition, the app
 reconnects while listening remains on. The **Recognizer** row shows the exact
 browser transcript before `voice.js` parses it, and flashes when that transcript
 becomes final; the **Parser** row shows the resulting DSL line or rejection.
+Repeated or overlapping final transcripts received within four seconds are
+deduplicated before they reach the game log.
 
 ## Sharing it live
 

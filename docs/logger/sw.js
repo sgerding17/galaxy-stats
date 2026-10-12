@@ -12,7 +12,7 @@
    files, so it rolls whenever the app changes and never when it does not.
    Do not edit that line by hand. */
 
-var CACHE = "galaxy-logger-f62dae7b40";
+var CACHE = "galaxy-logger-d8092224b1";
 var NETWORK_TIMEOUT = 2500;
 
 /* The versioned entries carry the same version query index.html asks for.
@@ -24,11 +24,11 @@ var NETWORK_TIMEOUT = 2500;
 var SHELL = [
   "./",
   "index.html",
-  "app.css?v=f62dae7b40",
-  "app.js?v=f62dae7b40",
-  "logstats.js?v=f62dae7b40",
-  "voice.js?v=f62dae7b40",
-  "seed.js?v=f62dae7b40",
+  "app.css?v=d8092224b1",
+  "app.js?v=d8092224b1",
+  "logstats.js?v=d8092224b1",
+  "voice.js?v=d8092224b1",
+  "seed.js?v=d8092224b1",
   "manifest.webmanifest",
   "icon-192.png",
   "icon-512.png"

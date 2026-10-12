@@ -25,6 +25,8 @@ const cases = [
   ["FGA21", "fga 21"],
   ["3FGA21", "3fga 21"],
   ["C0900", "c 0900"],
+  ["205", "to 5"],
+  ["214", "to 14"],
 ];
 
 for (const [spoken, line] of cases) {
@@ -36,6 +38,27 @@ for (const [spoken, line] of cases) {
 const sequence = VoiceDsl.parseUtterance("FGAO B3 R3 FGM3 A21", { players: roster });
 assert.equal(sequence.ok, true, sequence.error);
 assert.deepEqual(sequence.lines, ["fga o", "b 3", "r 3", "fgm 3", "a 21"]);
+
+const androidSequence = VoiceDsl.parseUtterance("205 s22 fga-14 Ro", { players: roster });
+assert.equal(androidSequence.ok, true, androidSequence.error);
+assert.deepEqual(androidSequence.lines, ["to 5", "s 22", "fga 14", "r o"]);
+
+const clockAtTwoOhFive = VoiceDsl.parseUtterance("c 205", { players: roster });
+assert.equal(clockAtTwoOhFive.ok, true, clockAtTwoOhFive.error);
+assert.equal(clockAtTwoOhFive.line, "c 0205");
+
+assert.deepEqual(VoiceDsl.withoutOverlap(["fga 14"], ["fga 14"]), []);
+assert.deepEqual(
+  VoiceDsl.withoutOverlap(["fga 14", "b 3"], ["b 3", "r 3"]),
+  ["r 3"],
+);
+assert.deepEqual(
+  VoiceDsl.withoutOverlap(
+    ["fga 14", "b 3", "r 3"],
+    ["fga 14", "b 3", "r 3", "fgm 3"],
+  ),
+  ["fgm 3"],
+);
 
 assert.equal(VoiceDsl.parseLine("R3", { players: roster }).line, "r 3");
 assert.throws(
