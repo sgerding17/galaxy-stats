@@ -223,6 +223,7 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
     sequences = [
         "f g a fourteen b three r three f g m three ay twenty one",
         "tee oh twenty five ess twenty two",
+        "t o twenty two f g a fourteen",
         "j ball gee f g m five",
         "j o jay fourteen dee jay five",
         "see fourteen thirty f g a fourteen",
@@ -266,6 +267,25 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
         }
         if next_words != {"g", "gee", "galaxy", "o", "oh"}:
             raise RuntimeError(f"{initial!r} has illegal continuations: {sorted(next_words)}")
+
+        for opponent in ("o", "oh"):
+            opponent_label = symbols.find(opponent)
+            opponent_state = next(
+                arc.nextstate
+                for arc in kaldifst.ArcIterator(graph, state)
+                if arc.ilabel == opponent_label
+            )
+            if not math.isfinite(graph.final(opponent_state).value):
+                raise RuntimeError(f"{initial} {opponent} is not a complete opening-tip command")
+            number_words = {
+                symbols.find(arc.ilabel)
+                for arc in kaldifst.ArcIterator(graph, opponent_state)
+            }
+            if "twenty" not in number_words or "five" not in number_words:
+                raise RuntimeError(
+                    f"{initial} {opponent} cannot continue as a turnover: "
+                    f"{sorted(number_words)}"
+                )
 
 
 def extract_model(archive: Path, destination: Path) -> Path:

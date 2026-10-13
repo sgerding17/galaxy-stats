@@ -157,7 +157,10 @@
     addCommands(["a", "ay"], players);
     addCommands(["s", "ess"], players);
     addCommands(["b", "be", "bee"], players);
-    addCommands(["to", "two", "turnover", "tee oh"], players);
+    // T/O and tee/oh have the same pronunciations in Vosk's lexicon. Keep all
+    // tokenizations legal so `T O 22` does not dead-end after the opening-tip
+    // prefix and force the decoder onto an unrelated command sequence.
+    addCommands(["to", "two", "turnover", "t o", "t oh", "tee o", "tee oh"], players);
 
     addCommands(["j", "jay"], [""]);
     addCommands(["j", "jay"], [""], arrowTargets);

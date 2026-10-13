@@ -12,7 +12,7 @@
    files, so it rolls whenever the app changes and never when it does not.
    Do not edit that line by hand. */
 
-var CACHE = "galaxy-logger-59e2b1c688";
+var CACHE = "galaxy-logger-24e49dff5c";
 var MODEL_CACHE = "galaxy-logger-model-galaxy-grammar-v1";
 var MODEL_FILE = "/models/vosk-model-small-en-us-0.15.tar.gz";
 var NETWORK_TIMEOUT = 2500;
@@ -26,11 +26,11 @@ var NETWORK_TIMEOUT = 2500;
 var SHELL = [
   "./",
   "index.html",
-  "app.css?v=59e2b1c688",
-  "app.js?v=59e2b1c688",
-  "logstats.js?v=59e2b1c688",
-  "voice.js?v=59e2b1c688",
-  "seed.js?v=59e2b1c688",
+  "app.css?v=24e49dff5c",
+  "app.js?v=24e49dff5c",
+  "logstats.js?v=24e49dff5c",
+  "voice.js?v=24e49dff5c",
+  "seed.js?v=24e49dff5c",
   "manifest.webmanifest",
   "icon-192.png",
   "icon-512.png"
