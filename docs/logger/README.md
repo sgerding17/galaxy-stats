@@ -63,6 +63,9 @@ logged immediately and appears in a newest-first list. **Edit** and **Delete**
 let you correct dictated events; every correction is checked against the whole
 game log before it is saved.
 
+For a clock event, say the time after C: “see fourteen thirty” writes `c 1430`.
+Digit-by-digit forms such as “see one four three zero” also work.
+
 **Grammar** is the default recognition engine. On first use it downloads a 27 MB
 Vosk model, then keeps it cached separately from app updates for offline use.
 Its finite-state graph contains only legal DSL event spellings and loops after

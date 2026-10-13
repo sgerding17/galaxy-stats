@@ -52,7 +52,8 @@ assert.equal(clockAtTwoOhFive.line, "c 0205");
 const grammarPhrases = VoiceDsl.grammarPhrases({ players: roster });
 for (const phrase of [
   "[unk]", "turnover five", "tee oh twenty one", "s twenty two",
-  "f g a fourteen", "are oh", "o jay fourteen ball gee"
+  "f g a fourteen", "are oh", "o jay fourteen ball gee",
+  "see fourteen thirty", "see one four three zero", "see nine zero zero"
 ]) {
   assert.equal(grammarPhrases.includes(phrase), true, `grammar includes ${phrase}`);
 }

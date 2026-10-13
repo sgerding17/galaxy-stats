@@ -162,6 +162,7 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
         "f g a fourteen b three r three f g m three ay twenty one",
         "tee oh twenty five ess twenty two",
         "j ball gee f g m five",
+        "see fourteen thirty f g a fourteen",
     ]
     for sequence in sequences:
         if not accepts(graph, sequence):

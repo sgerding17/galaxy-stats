@@ -121,6 +121,21 @@
       });
     }
 
+    function addClockCommands() {
+      var prefixes = ["c", "see", "clock"];
+      for (var minutes = 0; minutes <= 20; minutes++) {
+        for (var seconds = 0; seconds <= 59; seconds++) {
+          var time = pad(minutes) + pad(seconds);
+          var digits = time.split("").map(function (digit) {
+            return NUMBER_NAMES[parseInt(digit, 10)];
+          }).join(" ");
+          addCommands(prefixes, [spokenNumber(minutes) + " " + spokenNumber(seconds)]);
+          addCommands(prefixes, [digits]);
+          if (minutes < 10) addCommands(prefixes, [digits.slice(digits.indexOf(" ") + 1)]);
+        }
+      }
+    }
+
     var shotTargets = players.concat(opponent);
     addCommands(["f g m"], shotTargets);
     addCommands(["f g a"], shotTargets);
@@ -148,6 +163,7 @@
     add("pea a e");
     add("pea ay e");
     addCommands(["t", "tee"], galaxy.concat(opponent));
+    addClockCommands();
 
     return phrases;
   }
