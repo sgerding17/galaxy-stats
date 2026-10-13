@@ -132,7 +132,10 @@
     addCommands(["a", "ay"], players);
     addCommands(["s", "ess"], players);
     addCommands(["b", "be", "bee"], players);
-    addCommands(["to", "two", "turnover", "tee oh"], players);
+    addCommands([
+      "to", "two", "turnover", "tee oh",
+      "t a", "t ay", "tee a", "tee ay"
+    ], players);
 
     // "Arrow" is acoustically too close to the common rebound call "R O".
     // Use the distinct spoken cue "ball G/O" for possession after a jump.
@@ -258,6 +261,14 @@
   function parseEvent(tokens, index) {
     var word = SINGLE_EVENT_WORDS[tokens[index]];
     if (word) return { event: word, index: index + 1 };
+
+    // The letter O in literal `T O` is often decoded as the similar-sounding
+    // letter A. `T A` is not another valid event prefix, so it is a safe
+    // turnover alias when a player number follows it.
+    if (codeToken(tokens[index]) === "t" && codeToken(tokens[index + 1]) === "a" &&
+        parseNumber(tokens, index + 2)) {
+      return { event: "to", index: index + 2 };
+    }
 
     // Android speech recognition sometimes collapses "to five" into "205".
     // Interpret that only where a new event is required, so clock values such
