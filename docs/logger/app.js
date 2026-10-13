@@ -105,6 +105,7 @@
     grammarLoading: false,
     grammarLoadSlow: false,
     grammarLoadTimer: null,
+    grammarReset: false,
     grammarRecognizer: null,
     grammarStream: null,
     grammarContext: null,
@@ -984,6 +985,7 @@
   function startVoiceListening() {
     voice.requested = true;
     voice.error = "";
+    voice.grammarReset = false;
     if (voice.engine === "grammar") {
       startGrammarListening();
       renderVoicePanel();
@@ -1022,7 +1024,11 @@
       voice.restartTimer = null;
     }
     if (voice.engine === "grammar") {
-      stopGrammarAudio(true);
+      stopGrammarAudio();
+      discardGrammarModel();
+      voice.grammarReset = true;
+      voice.rawText = "Recognizer: buffer cleared.";
+      voice.rawMode = "idle";
       return;
     }
     if (voice.recognition && voice.listening) {
@@ -1088,6 +1094,27 @@
     });
   }
 
+  function terminateGrammarWorker(model) {
+    if (!model) return;
+    // Vosk's public terminate() is queued behind all pending audio and asks
+    // every recognizer for a final result. Native Worker termination is the
+    // only way to abandon a decoder that is already wedged on a long phrase.
+    if (model.worker && typeof model.worker.terminate === "function") {
+      model.worker.terminate();
+      return;
+    }
+    model.terminate();
+  }
+
+  function discardGrammarModel() {
+    voice.grammarLoadId += 1;
+    terminateGrammarWorker(voice.grammarModel);
+    voice.grammarModel = null;
+    voice.grammarModelPromise = null;
+    voice.grammarLoading = false;
+    clearGrammarLoadTimer();
+  }
+
   function ensureGrammarModel() {
     if (voice.grammarModel) return Promise.resolve(voice.grammarModel);
     if (voice.grammarModelPromise) return voice.grammarModelPromise;
@@ -1102,7 +1129,7 @@
     }).then(function (model) {
       if (!model) return null;
       if (loadId !== voice.grammarLoadId) {
-        model.terminate();
+        terminateGrammarWorker(model);
         return null;
       }
       voice.grammarModel = model;
@@ -1222,9 +1249,8 @@
     renderVoicePanel();
   }
 
-  function stopGrammarAudio(flush) {
+  function stopGrammarAudio() {
     voice.grammarStartId += 1;
-    var recognizer = voice.grammarRecognizer;
     if (voice.grammarProcessor) {
       voice.grammarProcessor.onaudioprocess = null;
       try { voice.grammarProcessor.disconnect(); } catch (error) { /* already disconnected */ }
@@ -1247,26 +1273,12 @@
     voice.grammarProcessor = null;
     voice.grammarGain = null;
     voice.listening = false;
-
-    if (recognizer) {
-      if (flush) {
-        recognizer.retrieveFinalResult();
-        setTimeout(function () { recognizer.remove(); }, 750);
-      } else {
-        recognizer.remove();
-      }
-    }
   }
 
   function releaseGrammarModel() {
     voice.requested = false;
-    stopGrammarAudio(false);
-    voice.grammarLoadId += 1;
-    if (voice.grammarModel) voice.grammarModel.terminate();
-    voice.grammarModel = null;
-    voice.grammarModelPromise = null;
-    voice.grammarLoading = false;
-    clearGrammarLoadTimer();
+    stopGrammarAudio();
+    discardGrammarModel();
   }
 
   function setVoiceEngine(engine) {
@@ -1274,6 +1286,7 @@
     stopVoiceListening();
     if (voice.engine === "grammar") releaseGrammarModel();
     voice.engine = engine;
+    voice.grammarReset = false;
     voice.error = "";
     voice.rawText = "Recognizer: waiting for speech.";
     voice.rawMode = "idle";
@@ -1381,6 +1394,9 @@
     } else if (voice.engine === "grammar" && voice.grammarModel) {
       el["voice-status"].className = "status idle";
       el["voice-status"].textContent = "Grammar model ready offline.";
+    } else if (voice.engine === "grammar" && voice.grammarReset) {
+      el["voice-status"].className = "status idle";
+      el["voice-status"].textContent = "Grammar buffer cleared. Ready for a fresh start.";
     } else if (voice.engine === "grammar") {
       el["voice-status"].className = "status idle";
       el["voice-status"].textContent = "Grammar model needs a one-time 39 MB download.";
