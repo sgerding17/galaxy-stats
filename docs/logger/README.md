@@ -65,6 +65,8 @@ game log before it is saved.
 
 For a clock event, say the time after C: “see fourteen thirty” writes `c 1430`.
 Digit-by-digit forms such as “see one four three zero” also work.
+For a lineup, say “eye gee” followed by five jersey numbers; for example,
+“eye gee one two three five fourteen” writes `ig 1 2 3 5 14`.
 
 **Grammar** is the default recognition engine. On first use it downloads a 27 MB
 Vosk model, then keeps it cached separately from app updates for offline use.
@@ -142,9 +144,10 @@ sw.js           offline cache; GENERATED stamps (cache name, asset versions)
 ```
 
 The model's strict command graph is generated from `voice.js`. Rebuild it after
-changing the spoken grammar (the Python packages are development-only). The
-compressed stock `Gr.fst` under `scripts/voice-model/` retains the full source
-vocabulary while the model sent to phones contains only the compact DSL graph.
+changing the spoken grammar or roster (the Python packages are development-only).
+The compressed stock `Gr.fst` under `scripts/voice-model/` retains the full
+source vocabulary while the model sent to phones contains only the compact DSL
+graph.
 
 ```sh
 python3 -m pip install vosk kaldifst

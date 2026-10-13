@@ -11,6 +11,7 @@ const cases = [
   ["f g a twenty one", "fga 21"],
   ["three f g m o", "3fgm o"],
   ["i g twenty one twenty two five two twenty five", "ig 21 22 5 2 25"],
+  ["eye gee one two three five fourteen", "ig 1 2 3 5 14"],
   ["o j fourteen arrow g", "oj 14 -> g"],
   ["o j fourteen ball g", "oj 14 -> g"],
   ["d j five to o", "dj 5 -> o"],

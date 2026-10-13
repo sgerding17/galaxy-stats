@@ -534,6 +534,7 @@
     parseLine: parseLine,
     grammarCommands: grammarCommands,
     grammarPhrases: grammarPhrases,
+    spokenNumber: spokenNumber,
     recognizedSegments: recognizedSegments,
     trimEdgeUnknowns: trimEdgeUnknowns,
     withoutOverlap: withoutOverlap,

@@ -19,6 +19,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import runpy
 import shutil
 import subprocess
 import sys
@@ -32,13 +33,20 @@ ROOT = Path(__file__).resolve().parent.parent
 MODEL_ARCHIVE = ROOT / "docs/logger/models/vosk-model-small-en-us-0.15.tar.gz"
 STOCK_GRAPH = ROOT / "scripts/voice-model/Gr.stock.fst.gz"
 PLAYER_NUMBERS = [str(number) for number in range(100)]
+ROSTER_NUMBERS = sorted(
+    runpy.run_path(ROOT / "scripts/stats.py")["players"], key=int
+)
 
 
-def spoken_commands() -> list[str]:
+def spoken_grammar() -> tuple[list[str], dict[str, str]]:
     script = (
         "const d=require('./docs/logger/voice.js');"
         f"const players={json.dumps(PLAYER_NUMBERS)};"
-        "process.stdout.write(JSON.stringify(d.grammarCommands({players})));"
+        f"const lineup={json.dumps(ROSTER_NUMBERS)};"
+        "process.stdout.write(JSON.stringify({"
+        "commands:d.grammarCommands({players}),"
+        "lineupPlayers:Object.fromEntries(lineup.map(n=>[n,d.spokenNumber(n)]))"
+        "}));"
     )
     result = subprocess.run(
         ["node", "-e", script],
@@ -47,10 +55,11 @@ def spoken_commands() -> list[str]:
         capture_output=True,
         text=True,
     )
-    commands = json.loads(result.stdout)
+    grammar = json.loads(result.stdout)
+    commands = grammar["commands"]
     if not commands or any(not command.strip() for command in commands):
         raise RuntimeError("voice.js returned an empty grammar command")
-    return commands
+    return commands, grammar["lineupPlayers"]
 
 
 def add_word_symbols(symbols: kaldifst.SymbolTable, words: dict[str, int]) -> None:
@@ -94,9 +103,16 @@ recognizer = vosk.KaldiRecognizer(model, 16000)
     subprocess.run([sys.executable, "-c", script, str(model_dir)], check=True)
 
 
-def compile_graph(model_dir: Path, commands: list[str]) -> kaldifst.StdVectorFst:
+def compile_graph(
+    model_dir: Path, commands: list[str], lineup_players: dict[str, str]
+) -> kaldifst.StdVectorFst:
     phrases = ["[unk]", *commands]
-    vocabulary = sorted({word for phrase in phrases for word in phrase.split()})
+    lineup_prefixes = ["i g", "i gee", "eye g", "eye gee"]
+    vocabulary = sorted({
+        word
+        for phrase in [*phrases, *lineup_prefixes, *lineup_players.values()]
+        for word in phrase.split()
+    })
     word_ids = model_word_ids(model_dir, vocabulary)
     missing = [word for word, word_id in word_ids.items() if word_id < 0]
     if missing:
@@ -109,18 +125,64 @@ def compile_graph(model_dir: Path, commands: list[str]) -> kaldifst.StdVectorFst
 
     edges: dict[tuple[int, int], int] = {}
     terminals: set[int] = set()
+
+    def next_state(state: int, word: str) -> int:
+        label = word_ids[word]
+        edge = (state, label)
+        target = edges.get(edge)
+        if target is None:
+            target = graph.add_state()
+            graph.add_arc(state, kaldifst.StdArc(label, label, 0.0, target))
+            edges[edge] = target
+        return target
+
+    def add_words(state: int, words: list[str]) -> int:
+        for word in words:
+            state = next_state(state, word)
+        return state
+
+    def connect_words(state: int, words: list[str], target: int) -> None:
+        for word in words[:-1]:
+            state = next_state(state, word)
+        label = word_ids[words[-1]]
+        edge = (state, label)
+        existing = edges.get(edge)
+        if existing is not None and existing != target:
+            raise RuntimeError("lineup grammar has an ambiguous player number")
+        if existing is None:
+            graph.add_arc(state, kaldifst.StdArc(label, label, 0.0, target))
+            edges[edge] = target
+
     for phrase in phrases:
-        state = root
-        for word in phrase.split():
-            label = word_ids[word]
-            edge = (state, label)
-            next_state = edges.get(edge)
-            if next_state is None:
-                next_state = graph.add_state()
-                graph.add_arc(state, kaldifst.StdArc(label, label, 0.0, next_state))
-                edges[edge] = next_state
-            state = next_state
-        terminals.add(state)
+        terminals.add(add_words(root, phrase.split()))
+
+    if len(lineup_players) < 5:
+        raise RuntimeError("voice lineup grammar needs at least five roster players")
+    lineup_root = graph.add_state()
+    for prefix in lineup_prefixes:
+        prefix_state = add_words(root, prefix.split())
+        graph.add_arc(prefix_state, kaldifst.StdArc(0, 0, 0.0, lineup_root))
+
+    # A state is the set of players already heard. This accepts every ordering
+    # of five distinct roster players without expanding all permutations into
+    # separate phrase strings.
+    lineup_states: dict[frozenset[str], int] = {frozenset(): lineup_root}
+    for size in range(5):
+        for selected, state in list(lineup_states.items()):
+            if len(selected) != size:
+                continue
+            for player, spoken in lineup_players.items():
+                if player in selected:
+                    continue
+                next_selected = selected | {player}
+                target = lineup_states.get(next_selected)
+                if target is None:
+                    target = graph.add_state()
+                    lineup_states[next_selected] = target
+                connect_words(state, spoken.split(), target)
+    terminals.update(
+        state for selected, state in lineup_states.items() if len(selected) == 5
+    )
 
     # Epsilon returns preserve prefix commands such as opening-tip "T O" while
     # also permitting the longer turnover "T O twenty one". Determinization
@@ -163,6 +225,7 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
         "tee oh twenty five ess twenty two",
         "j ball gee f g m five",
         "see fourteen thirty f g a fourteen",
+        "eye gee one two three five fourteen f g a fourteen",
     ]
     for sequence in sequences:
         if not accepts(graph, sequence):
@@ -176,6 +239,9 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
         "ess galaxy",
         "tee",
         "f g a",
+        "eye gee one one two three four",
+        "eye gee one two three four",
+        "eye gee one two three four five fourteen",
     ]
     for phrase in illegal:
         if accepts(graph, phrase):
@@ -236,13 +302,13 @@ def write_archive(model_dir: Path, destination: Path) -> None:
 
 
 def main() -> None:
-    commands = spoken_commands()
+    commands, lineup_players = spoken_grammar()
     with tempfile.TemporaryDirectory(prefix="galaxy-voice-model-") as temporary:
         temporary_path = Path(temporary)
         model_dir = extract_model(MODEL_ARCHIVE, temporary_path)
         restore_stock_graph(model_dir)
 
-        graph = compile_graph(model_dir, commands)
+        graph = compile_graph(model_dir, commands, lineup_players)
         validate_graph_language(graph, commands)
         graph.write(str(model_dir / "graph/Gr.fst"))
 
@@ -255,7 +321,8 @@ def main() -> None:
         shutil.move(staged, MODEL_ARCHIVE)
 
     print(
-        f"Wrote {MODEL_ARCHIVE} with {len(commands)} commands, "
+        f"Wrote {MODEL_ARCHIVE} with "
+        f"{len(commands) + 4 * math.perm(len(lineup_players), 5)} commands, "
         f"{graph.num_states} states, sha256 {digest}"
     )
 
