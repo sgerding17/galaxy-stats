@@ -102,6 +102,12 @@
     var players = (options && options.players || []).map(spokenNumber).filter(Boolean);
     var opponent = ["o", "oh"];
     var galaxy = ["g", "gee", "galaxy"];
+    // "Arrow" is acoustically too close to the common rebound call "R O".
+    // Use the distinct spoken cue "ball G/O" for possession after a jump.
+    var arrowTargets = [
+      "ball g", "ball gee", "ball o", "ball oh",
+      "to g", "to gee", "to o", "to oh"
+    ];
 
     function add(phrase) {
       phrase = String(phrase || "").trim();
@@ -124,14 +130,18 @@
     function addClockCommands() {
       var prefixes = ["c", "see", "clock"];
       for (var minutes = 0; minutes <= 20; minutes++) {
-        for (var seconds = 0; seconds <= 59; seconds++) {
+        var lastSecond = minutes === 20 ? 0 : 59;
+        for (var seconds = 0; seconds <= lastSecond; seconds++) {
           var time = pad(minutes) + pad(seconds);
           var digits = time.split("").map(function (digit) {
             return NUMBER_NAMES[parseInt(digit, 10)];
           }).join(" ");
-          addCommands(prefixes, [spokenNumber(minutes) + " " + spokenNumber(seconds)]);
-          addCommands(prefixes, [digits]);
-          if (minutes < 10) addCommands(prefixes, [digits.slice(digits.indexOf(" ") + 1)]);
+          var clockPhrases = [spokenNumber(minutes) + " " + spokenNumber(seconds), digits];
+          if (minutes < 10) clockPhrases.push(digits.slice(digits.indexOf(" ") + 1));
+          clockPhrases.forEach(function (phrase) {
+            addCommands(prefixes, [phrase]);
+            addCommands(prefixes, [phrase], arrowTargets);
+          });
         }
       }
     }
@@ -149,14 +159,11 @@
     addCommands(["b", "be", "bee"], players);
     addCommands(["to", "two", "turnover", "tee oh"], players);
 
-    // "Arrow" is acoustically too close to the common rebound call "R O".
-    // Use the distinct spoken cue "ball G/O" for possession after a jump.
-    var arrowTargets = [
-      "ball g", "ball gee", "ball o", "ball oh",
-      "to g", "to gee", "to o", "to oh"
-    ];
+    addCommands(["j", "jay"], [""]);
     addCommands(["j", "jay"], [""], arrowTargets);
+    addCommands(["o j", "o jay", "oh j", "oh jay"], players);
     addCommands(["o j", "o jay", "oh j", "oh jay"], players, arrowTargets);
+    addCommands(["d j", "d jay", "dee j", "dee jay"], players);
     addCommands(["d j", "d jay", "dee j", "dee jay"], players, arrowTargets);
     add("p a e");
     add("p ay e");
@@ -333,7 +340,21 @@
       cursor = digit.index;
     }
     if (digits.length === 4) {
-      return checkedClock(String(10 * digits[0] + digits[1]), String(10 * digits[2] + digits[3]), cursor);
+      var fourDigitClock = validClock(
+        String(10 * digits[0] + digits[1]),
+        String(10 * digits[2] + digits[3]),
+        cursor
+      );
+      if (fourDigitClock) return fourDigitClock;
+      // The fourth digit may actually begin the next event, as in
+      // `c nine zero zero three f g a five`.
+      var threeDigitClock = validClock(
+        String(digits[0]),
+        String(10 * digits[1] + digits[2]),
+        index + 3
+      );
+      if (threeDigitClock) return threeDigitClock;
+      throw parseError("Clock time must be between 00:00 and 20:00.");
     }
     if (digits.length === 3) {
       return checkedClock(String(digits[0]), String(10 * digits[1] + digits[2]), cursor);
@@ -347,10 +368,17 @@
   }
 
   function checkedClock(minutesText, secondsText, index) {
+    var clock = validClock(minutesText, secondsText, index);
+    if (!clock) throw parseError("Clock time must be between 00:00 and 20:00.");
+    return clock;
+  }
+
+  function validClock(minutesText, secondsText, index) {
     var minutes = parseInt(minutesText, 10);
     var seconds = parseInt(secondsText, 10);
-    if (minutes < 0 || minutes > 20 || seconds < 0 || seconds > 59) {
-      throw parseError("Clock time must be between 00:00 and 20:00.");
+    if (minutes < 0 || minutes > 20 || seconds < 0 || seconds > 59 ||
+        (minutes === 20 && seconds !== 0)) {
+      return null;
     }
     return { token: pad(minutes) + pad(seconds), index: index };
   }
@@ -396,7 +424,8 @@
       cursor += 1;
     } else if (tokens[cursor] === "ball") {
       cursor += 1;
-    } else if (tokens[cursor] === "to" || tokens[cursor] === "too") {
+    } else if ((tokens[cursor] === "to" || tokens[cursor] === "too") &&
+               parseTeam(tokens, cursor + 1)) {
       cursor += 1;
     } else if (tokens[cursor] === "goes" && (tokens[cursor + 1] === "to" || tokens[cursor + 1] === "too")) {
       cursor += 2;
@@ -404,7 +433,11 @@
       cursor += 3;
     } else {
       var bareTeam = parseTeam(tokens, cursor);
-      if (bareTeam) return { team: bareTeam.id, index: bareTeam.index };
+      // A bare opponent token followed by J starts the next `oj` event rather
+      // than awarding this event's arrow to the opponent.
+      if (bareTeam && !(bareTeam.id === "o" && codeToken(tokens[bareTeam.index]) === "j")) {
+        return { team: bareTeam.id, index: bareTeam.index };
+      }
       return { team: "", index: index };
     }
 
@@ -538,6 +571,7 @@
     recognizedSegments: recognizedSegments,
     trimEdgeUnknowns: trimEdgeUnknowns,
     withoutOverlap: withoutOverlap,
+    _eventsForTest: EVENTS.slice(),
     _tokensForTest: tokensFor
   };
 });

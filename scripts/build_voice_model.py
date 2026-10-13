@@ -224,7 +224,9 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
         "f g a fourteen b three r three f g m three ay twenty one",
         "tee oh twenty five ess twenty two",
         "j ball gee f g m five",
+        "j o jay fourteen dee jay five",
         "see fourteen thirty f g a fourteen",
+        "see twenty zero ball gee eye gee one two three five fourteen",
         "eye gee one two three five fourteen f g a fourteen",
     ]
     for sequence in sequences:
@@ -239,6 +241,8 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
         "ess galaxy",
         "tee",
         "f g a",
+        "see twenty one",
+        "see twenty zero one",
         "eye gee one one two three four",
         "eye gee one two three four",
         "eye gee one two three four five fourteen",

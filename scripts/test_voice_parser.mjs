@@ -15,7 +15,11 @@ const cases = [
   ["o j fourteen arrow g", "oj 14 -> g"],
   ["o j fourteen ball g", "oj 14 -> g"],
   ["d j five to o", "dj 5 -> o"],
+  ["j", "j"],
+  ["o j fourteen", "oj 14"],
+  ["d j five", "dj 5"],
   ["see fourteen thirty", "c 1430"],
+  ["see twenty zero ball g", "c 2000 -> g"],
   ["c one four three zero", "c 1430"],
   ["c nine zero zero", "c 0900"],
   ["t o", "t o"],
@@ -51,14 +55,49 @@ assert.equal(clockAtTwoOhFive.ok, true, clockAtTwoOhFive.error);
 assert.equal(clockAtTwoOhFive.line, "c 0205");
 
 const grammarPhrases = VoiceDsl.grammarPhrases({ players: roster });
-for (const phrase of [
-  "[unk]", "turnover five", "tee oh twenty one", "s twenty two",
-  "f g a fourteen", "are oh", "o jay fourteen ball gee",
-  "see fourteen thirty", "see one four three zero", "see nine zero zero"
-]) {
+const strictGrammarCases = [
+  ["f g m five", "fgm 5"],
+  ["f g a fourteen", "fga 14"],
+  ["three f g m oh", "3fgm o"],
+  ["three f g a twenty one", "3fga 21"],
+  ["f t m twenty two", "ftm 22"],
+  ["f t a oh", "fta o"],
+  ["are galaxy", "r g"],
+  ["ay fourteen", "a 14"],
+  ["ess twenty two", "s 22"],
+  ["bee three", "b 3"],
+  ["tee oh twenty one", "to 21"],
+  ["j", "j"],
+  ["j ball gee", "j -> g"],
+  ["o jay fourteen", "oj 14"],
+  ["o jay fourteen ball gee", "oj 14 -> g"],
+  ["dee jay five", "dj 5"],
+  ["dee jay five ball oh", "dj 5 -> o"],
+  ["p ay e", "pae"],
+  ["tee gee", "t g"],
+  ["see fourteen thirty", "c 1430"],
+  ["see twenty zero ball gee", "c 2000 -> g"],
+];
+
+assert.equal(grammarPhrases.includes("[unk]"), true, "grammar includes [unk]");
+for (const [phrase, line] of strictGrammarCases) {
+  assert.equal(grammarPhrases.includes(phrase), true, `grammar includes ${phrase}`);
+  const parsed = VoiceDsl.parseUtterance(phrase, { players: roster });
+  assert.equal(parsed.ok, true, `${phrase}: ${parsed.error}`);
+  assert.equal(parsed.line, line, phrase);
+}
+const coveredEvents = new Set(strictGrammarCases.map(([, line]) => line.split(" ")[0]));
+coveredEvents.add("ig"); // Lineups use the model builder's compact roster-state graph.
+assert.deepEqual(
+  [...coveredEvents].sort(),
+  [...VoiceDsl._eventsForTest].sort(),
+  "strict grammar coverage includes every DSL event token",
+);
+for (const phrase of ["see one four three zero", "see nine zero zero"]) {
   assert.equal(grammarPhrases.includes(phrase), true, `grammar includes ${phrase}`);
 }
 assert.equal(grammarPhrases.includes("tee ay twenty five"), false, "grammar rejects T A");
+assert.equal(grammarPhrases.includes("see twenty one"), false, "grammar rejects clocks after 20:00");
 assert.equal(grammarPhrases.includes("five s"), false, "commands do not encode boundary bigrams");
 assert.equal(grammarPhrases.some((phrase) => /\d/.test(phrase)), false, "grammar uses spoken numbers");
 assert.equal(VoiceDsl.trimEdgeUnknowns("[unk] f g a fourteen [unk]"), "f g a fourteen");
@@ -74,6 +113,16 @@ const grammarSequence = VoiceDsl.parseUtterance(
 );
 assert.equal(grammarSequence.ok, true, grammarSequence.error);
 assert.deepEqual(grammarSequence.lines, ["to 5", "s 22", "fga 14", "r o"]);
+
+const boundarySequence = VoiceDsl.parseUtterance(
+  "j o jay fourteen dee jay five see fourteen thirty tee oh five " +
+    "see nine zero zero three f g a fourteen",
+  { players: roster },
+);
+assert.equal(boundarySequence.ok, true, boundarySequence.error);
+assert.deepEqual(boundarySequence.lines, [
+  "j", "oj 14", "dj 5", "c 1430", "to 5", "c 0900", "3fga 14",
+]);
 
 const voskSequence = VoiceDsl.parseUtterance(
   "f g a oh bee three r three f g m three a twenty one",
@@ -102,7 +151,7 @@ assert.throws(
   "the event editor accepts exactly one DSL line",
 );
 
-for (const spoken of ["fga ninety nine", "r potato", "fga 21 extra"]) {
+for (const spoken of ["fga ninety nine", "r potato", "fga 21 extra", "c 2001"]) {
   const parsed = VoiceDsl.parseUtterance(spoken, { players: roster });
   assert.equal(parsed.ok, false, spoken);
 }

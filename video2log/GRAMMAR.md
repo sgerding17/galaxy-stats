@@ -20,11 +20,14 @@ spaces, no blank lines. This spec matches the parser in `scripts/stats.py`.
 
 ## Events
 
-### `c MMSS` — clock checkpoint
+### `c MMSS [-> TEAM]` — clock checkpoint
 
 The current game clock, e.g. `c 1430` for 14:30. The clock must never increase
 within a half. Emit a checkpoint at every substitution and roughly every one to
 two game minutes. The half boundary is `c 0000` followed later by `c 2000`.
+Historical logs may preserve the possession arrow at a half boundary as
+`c 0000 -> g` or `c 2000 -> o`; the stats parser accepts that annotation but
+uses only the clock value.
 
 ### `ig N N N N N` — in-game lineup
 
@@ -97,7 +100,9 @@ Possession-arrow situations:
 | `j -> g`      | held ball not attributable to a single Galaxy player                 |
 
 The team after `->` is whoever the possession arrow awarded the ball to. If
-unsure which Galaxy player was involved, use the `j` form.
+unsure which Galaxy player was involved, use the `j` form. The arrow suffix is
+optional in older logs (`oj P`, `dj P`, or bare `j`); when omitted, the parser
+uses its current possession-arrow state.
 
 ### `pae` — possession arrow exception
 
