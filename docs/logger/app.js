@@ -25,7 +25,9 @@
   // Vosk resolves a relative model URL against the origin instead of this
   // app's directory, which turns "models/..." into a broken /models request
   // when the logger is hosted below /galaxy-stats/logger/.
-  var VOSK_MODEL = new URL("models/vosk-model-small-en-us-0.15.tar.gz", document.baseURI).href;
+  var voskModelUrl = new URL("models/vosk-model-small-en-us-0.15.tar.gz", document.baseURI);
+  voskModelUrl.searchParams.set("grammar", SEED.build || "development");
+  var VOSK_MODEL = voskModelUrl.href;
   // The free KV tier allows 1,000 writes a day, so updates are rationed: at most
   // one every ten seconds, and only when something a viewer would notice changed.
   var LIVE_INTERVAL = 10000;
@@ -1198,8 +1200,7 @@
     var context;
     try { context = new AudioContext({ sampleRate: 16000 }); }
     catch (error) { context = new AudioContext(); }
-    var grammar = window.VoiceDsl.grammarPhrases({ players: Object.keys(game.roster) });
-    var recognizer = new model.KaldiRecognizer(context.sampleRate, JSON.stringify(grammar));
+    var recognizer = new model.KaldiRecognizer(context.sampleRate);
     recognizer.setWords(true);
 
     recognizer.on("partialresult", function (message) {
@@ -1383,7 +1384,7 @@
       el["voice-status"].className = voice.grammarLoadSlow ? "status bad" : "status idle";
       el["voice-status"].textContent = voice.grammarLoadSlow ?
         "Grammar model load stalled. Browser mode is available now." :
-        "Loading grammar model (39 MB the first time).";
+        "Loading grammar model (27 MB the first time).";
     } else if (voice.listening) {
       el["voice-status"].className = "status";
       el["voice-status"].textContent = voice.engine === "grammar" ?
@@ -1399,7 +1400,7 @@
       el["voice-status"].textContent = "Grammar buffer cleared. Ready for a fresh start.";
     } else if (voice.engine === "grammar") {
       el["voice-status"].className = "status idle";
-      el["voice-status"].textContent = "Grammar model needs a one-time 39 MB download.";
+      el["voice-status"].textContent = "Grammar model needs a one-time 27 MB download.";
     } else {
       el["voice-status"].className = "status idle";
       el["voice-status"].textContent = "Browser recognizer ready.";

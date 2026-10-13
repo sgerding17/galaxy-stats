@@ -63,12 +63,13 @@ logged immediately and appears in a newest-first list. **Edit** and **Delete**
 let you correct dictated events; every correction is checked against the whole
 game log before it is saved.
 
-**Grammar** is the default recognition engine. On first use it downloads a 39 MB
+**Grammar** is the default recognition engine. On first use it downloads a 27 MB
 Vosk model, then keeps it cached separately from app updates for offline use.
-Its generated phrase graph contains the current roster, DSL event spellings,
-and transitions between rapid events. **Browser** retains the phone's built-in
-speech service as a fallback; if that service pauses, the app reconnects while
-listening remains on.
+Its finite-state graph contains only legal DSL event spellings and loops after
+each complete event, so rapid sequences remain valid but impossible transitions
+such as `T A 25` never enter the decoder. **Browser** retains the phone's
+built-in speech service as a fallback; if that service pauses, the app
+reconnects while listening remains on.
 
 The **Recognizer** row shows the exact engine transcript before `voice.js`
 parses it, and flashes when that transcript becomes final; the **Parser** row
@@ -135,6 +136,16 @@ THIRD_PARTY_NOTICES.md  speech runtime/model attribution
 seed.js         GENERATED: roster, past venues and opponents
 icon-*.png      GENERATED: home-screen icons
 sw.js           offline cache; GENERATED stamps (cache name, asset versions)
+```
+
+The model's strict command graph is generated from `voice.js`. Rebuild it after
+changing the spoken grammar (the Python packages are development-only). The
+compressed stock `Gr.fst` under `scripts/voice-model/` retains the full source
+vocabulary while the model sent to phones contains only the compact DSL graph.
+
+```sh
+python3 -m pip install vosk kaldifst
+python3 scripts/build_voice_model.py
 ```
 
 The live page is separate, in [`docs/live/`](../live/), and shares `logstats.js`

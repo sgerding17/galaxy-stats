@@ -64,7 +64,7 @@ def read_game_history():
 # instead, which is the part a phone would notice.
 HASHED_FILES = ["index.html", "app.css", "app.js", "logstats.js", "voice.js",
                 "manifest.webmanifest", "icon-192.png", "icon-512.png",
-                "vendor/vosk.js"]
+                "vendor/vosk.js", "models/vosk-model-small-en-us-0.15.tar.gz"]
 
 
 VERSION_QUERY = re.compile(r"\?v=[A-Za-z0-9]*")

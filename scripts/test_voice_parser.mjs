@@ -19,8 +19,6 @@ const cases = [
   ["c nine zero zero", "c 0900"],
   ["t o", "t o"],
   ["tee oh twenty one", "to 21"],
-  ["t a twenty five", "to 25"],
-  ["tee ay twenty five", "to 25"],
   ["two two", "to 2"],
   ["r galaxy", "r g"],
   ["p a e", "pae"],
@@ -53,11 +51,13 @@ assert.equal(clockAtTwoOhFive.line, "c 0205");
 
 const grammarPhrases = VoiceDsl.grammarPhrases({ players: roster });
 for (const phrase of [
-  "[unk]", "turnover five", "tee oh twenty one", "tee ay twenty five", "s twenty two",
-  "f g a fourteen", "are oh", "o jay fourteen ball gee", "five s"
+  "[unk]", "turnover five", "tee oh twenty one", "s twenty two",
+  "f g a fourteen", "are oh", "o jay fourteen ball gee"
 ]) {
   assert.equal(grammarPhrases.includes(phrase), true, `grammar includes ${phrase}`);
 }
+assert.equal(grammarPhrases.includes("tee ay twenty five"), false, "grammar rejects T A");
+assert.equal(grammarPhrases.includes("five s"), false, "commands do not encode boundary bigrams");
 assert.equal(grammarPhrases.some((phrase) => /\d/.test(phrase)), false, "grammar uses spoken numbers");
 assert.equal(VoiceDsl.trimEdgeUnknowns("[unk] f g a fourteen [unk]"), "f g a fourteen");
 assert.equal(VoiceDsl.trimEdgeUnknowns("[unk] [unk]"), "");
@@ -103,6 +103,11 @@ assert.throws(
 for (const spoken of ["fga ninety nine", "r potato", "fga 21 extra"]) {
   const parsed = VoiceDsl.parseUtterance(spoken, { players: roster });
   assert.equal(parsed.ok, false, spoken);
+}
+
+for (const spoken of ["t a twenty five", "tee ay twenty five"]) {
+  const parsed = VoiceDsl.parseUtterance(spoken, { players: roster });
+  assert.equal(parsed.ok, false, `${spoken} is not legal DSL`);
 }
 
 console.log(`${cases.length} voice parser cases: all match`);
