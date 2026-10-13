@@ -78,7 +78,6 @@ const strictGrammarCases = [
   ["dee jay five", "dj 5"],
   ["dee jay five ball oh", "dj 5 -> o"],
   ["p ay e", "pae"],
-  ["tee gee", "t g"],
   ["see fourteen thirty", "c 1430"],
   ["see twenty zero ball gee", "c 2000 -> g"],
 ];
@@ -94,13 +93,15 @@ const coveredEvents = new Set(strictGrammarCases.map(([, line]) => line.split(" 
 coveredEvents.add("ig"); // Lineups use the model builder's compact roster-state graph.
 assert.deepEqual(
   [...coveredEvents].sort(),
-  [...VoiceDsl._eventsForTest].sort(),
-  "strict grammar coverage includes every DSL event token",
+  VoiceDsl._eventsForTest.filter((event) => event !== "t").sort(),
+  "strict grammar coverage includes every dictated DSL event token",
 );
 for (const phrase of ["see one four three zero", "see nine zero zero"]) {
   assert.equal(grammarPhrases.includes(phrase), true, `grammar includes ${phrase}`);
 }
 assert.equal(grammarPhrases.includes("tee ay twenty five"), false, "grammar rejects T A");
+assert.equal(grammarPhrases.includes("t o"), false, "opening tip is handled by game creation");
+assert.equal(grammarPhrases.includes("tee gee"), false, "opening tip is not dictated");
 assert.equal(grammarPhrases.includes("see twenty one"), false, "grammar rejects clocks after 20:00");
 assert.equal(grammarPhrases.includes("five s"), false, "commands do not encode boundary bigrams");
 assert.equal(grammarPhrases.some((phrase) => /\d/.test(phrase)), false, "grammar uses spoken numbers");

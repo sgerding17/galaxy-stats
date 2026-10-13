@@ -172,7 +172,6 @@
     add("p ay e");
     add("pea a e");
     add("pea ay e");
-    addCommands(["t", "tee"], galaxy.concat(opponent));
     addClockCommands();
 
     return phrases;

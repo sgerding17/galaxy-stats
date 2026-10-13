@@ -184,9 +184,8 @@ def compile_graph(
         state for selected, state in lineup_states.items() if len(selected) == 5
     )
 
-    # Epsilon returns preserve prefix commands such as opening-tip "T O" while
-    # also permitting the longer turnover "T O twenty one". Determinization
-    # resolves those returns into an exact, epsilon-free command loop.
+    # Epsilon returns join complete commands into a continuous language.
+    # Determinization resolves those returns into an exact, epsilon-free loop.
     for state in terminals:
         graph.add_arc(state, kaldifst.StdArc(0, 0, 0.0, root))
 
@@ -241,6 +240,10 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
         "ay oh",
         "ess galaxy",
         "tee",
+        "t g",
+        "tee gee",
+        "t o",
+        "tee oh",
         "f g a",
         "see twenty one",
         "see twenty zero one",
@@ -265,7 +268,7 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
             symbols.find(arc.ilabel)
             for arc in kaldifst.ArcIterator(graph, state)
         }
-        if next_words != {"g", "gee", "galaxy", "o", "oh"}:
+        if next_words != {"o", "oh"}:
             raise RuntimeError(f"{initial!r} has illegal continuations: {sorted(next_words)}")
 
         for opponent in ("o", "oh"):
@@ -275,8 +278,8 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
                 for arc in kaldifst.ArcIterator(graph, state)
                 if arc.ilabel == opponent_label
             )
-            if not math.isfinite(graph.final(opponent_state).value):
-                raise RuntimeError(f"{initial} {opponent} is not a complete opening-tip command")
+            if math.isfinite(graph.final(opponent_state).value):
+                raise RuntimeError(f"{initial} {opponent} incorrectly accepts an opening-tip command")
             number_words = {
                 symbols.find(arc.ilabel)
                 for arc in kaldifst.ArcIterator(graph, opponent_state)
