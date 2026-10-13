@@ -9,7 +9,14 @@ const roster = ["1", "2", "3", "4", "5", "14", "21", "22", "25"];
 const cases = [
   ["fga twenty one", "fga 21"],
   ["f g a twenty one", "fga 21"],
+  ["eff gee ay twenty two", "fga 22"],
+  ["f goal ay twenty two", "fga 22"],
+  ["eff gee em twenty two", "fgm 22"],
+  ["eff tee ay twenty two", "fta 22"],
+  ["f throw ay twenty two", "fta 22"],
+  ["eff tee em twenty two", "ftm 22"],
   ["three f g m o", "3fgm o"],
+  ["three eff gee ay twenty two", "3fga 22"],
   ["i g twenty one twenty two five two twenty five", "ig 21 22 5 2 25"],
   ["eye gee one two three five fourteen", "ig 1 2 3 5 14"],
   ["o j fourteen arrow g", "oj 14 -> g"],
@@ -61,6 +68,7 @@ const grammarPhrases = VoiceDsl.grammarPhrases({ players: roster });
 const strictGrammarCases = [
   ["f g m five", "fgm 5"],
   ["f g a fourteen", "fga 14"],
+  ["eff gee ay twenty two", "fga 22"],
   ["three f g m oh", "3fgm o"],
   ["three f g a twenty one", "3fga 21"],
   ["f t m twenty two", "ftm 22"],
@@ -100,6 +108,18 @@ for (const phrase of ["see one four three zero", "see nine zero zero"]) {
   assert.equal(grammarPhrases.includes(phrase), true, `grammar includes ${phrase}`);
 }
 assert.equal(grammarPhrases.includes("tee ay twenty five"), false, "grammar rejects T A");
+for (const phrase of [
+  "eff gee em twenty two",
+  "eff gee ay twenty two",
+  "f goal ay twenty two",
+  "three eff gee em twenty two",
+  "three eff gee ay twenty two",
+  "eff tee em twenty two",
+  "eff tee ay twenty two",
+  "f throw ay twenty two",
+]) {
+  assert.equal(grammarPhrases.includes(phrase), true, `grammar includes ${phrase}`);
+}
 assert.equal(grammarPhrases.includes("t o"), false, "opening tip is handled by game creation");
 assert.equal(grammarPhrases.includes("tee gee"), false, "opening tip is not dictated");
 assert.equal(grammarPhrases.includes("see twenty one"), false, "grammar rejects clocks after 20:00");

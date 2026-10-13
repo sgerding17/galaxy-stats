@@ -28,7 +28,7 @@
     d: "d", dee: "d",
     e: "e",
     f: "f", eff: "f",
-    g: "g", gee: "g",
+    g: "g", gee: "g", goal: "g",
     i: "i", eye: "i",
     j: "j", jay: "j",
     m: "m", em: "m",
@@ -36,7 +36,7 @@
     p: "p", pea: "p", pee: "p",
     r: "r", are: "r",
     s: "s", ess: "s",
-    t: "t", tee: "t",
+    t: "t", tee: "t", throw: "t",
     fga: "fga", fgm: "fgm", fta: "fta", ftm: "ftm",
     "3fga": "3fga", "3fgm": "3fgm",
     ig: "ig", oj: "oj", dj: "dj", pae: "pae"
@@ -127,6 +127,20 @@
       });
     }
 
+    function codePhrases(wordGroups) {
+      var results = [""];
+      wordGroups.forEach(function (words) {
+        var expanded = [];
+        results.forEach(function (prefix) {
+          words.forEach(function (word) {
+            expanded.push((prefix + " " + word).trim());
+          });
+        });
+        results = expanded;
+      });
+      return results;
+    }
+
     function addClockCommands() {
       var prefixes = ["c", "see", "clock"];
       for (var minutes = 0; minutes <= 20; minutes++) {
@@ -147,12 +161,17 @@
     }
 
     var shotTargets = players.concat(opponent);
-    addCommands(["f g m"], shotTargets);
-    addCommands(["f g a"], shotTargets);
-    addCommands(["three f g m"], shotTargets);
-    addCommands(["three f g a"], shotTargets);
-    addCommands(["f t m"], shotTargets);
-    addCommands(["f t a"], shotTargets);
+    var fWords = ["f", "eff"];
+    var gWords = ["g", "gee", "goal"];
+    var tWords = ["t", "tee", "throw"];
+    var mWords = ["m", "em"];
+    var aWords = ["a", "ay"];
+    addCommands(codePhrases([fWords, gWords, mWords]), shotTargets);
+    addCommands(codePhrases([fWords, gWords, aWords]), shotTargets);
+    addCommands(codePhrases([["three"], fWords, gWords, mWords]), shotTargets);
+    addCommands(codePhrases([["three"], fWords, gWords, aWords]), shotTargets);
+    addCommands(codePhrases([fWords, tWords, mWords]), shotTargets);
+    addCommands(codePhrases([fWords, tWords, aWords]), shotTargets);
     addCommands(["r", "are"], players.concat(opponent, galaxy));
     addCommands(["a", "ay"], players);
     addCommands(["s", "ess"], players);

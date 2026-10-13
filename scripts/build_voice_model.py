@@ -36,6 +36,10 @@ PLAYER_NUMBERS = [str(number) for number in range(100)]
 ROSTER_NUMBERS = sorted(
     runpy.run_path(ROOT / "scripts/stats.py")["players"], key=int
 )
+# Two-point field-goal events outnumber free throws by about 4.8:1 in the game
+# logs. Use that real domain prior only to break close G/T acoustic decisions;
+# a clearly heard T still wins on acoustic evidence.
+FREE_THROW_PRIOR_COST = math.log(4.8)
 
 
 def spoken_grammar() -> tuple[list[str], dict[str, str]]:
@@ -124,7 +128,7 @@ def compile_graph(
     graph.set_final(root, 0.0)
 
     edges: dict[tuple[int, int], int] = {}
-    terminals: set[int] = set()
+    terminals: dict[int, float] = {}
 
     def next_state(state: int, word: str) -> int:
         label = word_ids[word]
@@ -153,8 +157,20 @@ def compile_graph(
             graph.add_arc(state, kaldifst.StdArc(label, label, 0.0, target))
             edges[edge] = target
 
+    def command_cost(phrase: str) -> float:
+        words = phrase.split()
+        if (
+            len(words) >= 3
+            and words[0] in {"f", "eff"}
+            and words[1] in {"t", "tee", "throw"}
+        ):
+            return FREE_THROW_PRIOR_COST
+        return 0.0
+
     for phrase in phrases:
-        terminals.add(add_words(root, phrase.split()))
+        terminal = add_words(root, phrase.split())
+        cost = command_cost(phrase)
+        terminals[terminal] = min(terminals.get(terminal, math.inf), cost)
 
     if len(lineup_players) < 5:
         raise RuntimeError("voice lineup grammar needs at least five roster players")
@@ -180,14 +196,14 @@ def compile_graph(
                     target = graph.add_state()
                     lineup_states[next_selected] = target
                 connect_words(state, spoken.split(), target)
-    terminals.update(
-        state for selected, state in lineup_states.items() if len(selected) == 5
-    )
+    for selected, state in lineup_states.items():
+        if len(selected) == 5:
+            terminals[state] = 0.0
 
     # Epsilon returns join complete commands into a continuous language.
     # Determinization resolves those returns into an exact, epsilon-free loop.
-    for state in terminals:
-        graph.add_arc(state, kaldifst.StdArc(0, 0, 0.0, root))
+    for state, cost in terminals.items():
+        graph.add_arc(state, kaldifst.StdArc(0, 0, cost, root))
 
     symbols = kaldifst.SymbolTable("words")
     add_word_symbols(symbols, word_ids)
@@ -214,6 +230,20 @@ def accepts(graph: kaldifst.StdVectorFst, phrase: str) -> bool:
     return math.isfinite(graph.final(state).value)
 
 
+def path_cost(graph: kaldifst.StdVectorFst, phrase: str) -> float:
+    symbols = graph.input_symbols
+    state = graph.start
+    cost = 0.0
+    for word in phrase.split():
+        label = symbols.find(word)
+        matches = [arc for arc in kaldifst.ArcIterator(graph, state) if arc.ilabel == label]
+        if len(matches) != 1:
+            return math.inf
+        cost += matches[0].weight.value
+        state = matches[0].nextstate
+    return cost + graph.final(state).value
+
+
 def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -> None:
     rejected = [command for command in commands if not accepts(graph, command)]
     if rejected:
@@ -221,6 +251,9 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
 
     sequences = [
         "f g a fourteen b three r three f g m three ay twenty one",
+        "eff gee ay twenty two eff gee em five",
+        "eff tee ay twenty two eff tee em twenty two",
+        "three eff gee ay fourteen three eff gee em five",
         "tee oh twenty five ess twenty two",
         "t o twenty two f g a fourteen",
         "j ball gee f g m five",
@@ -254,6 +287,16 @@ def validate_graph_language(graph: kaldifst.StdVectorFst, commands: list[str]) -
     for phrase in illegal:
         if accepts(graph, phrase):
             raise RuntimeError("compiled graph accepts illegal phrase: " + phrase)
+
+    field_goal_cost = path_cost(graph, "f g a twenty two")
+    free_throw_cost = path_cost(graph, "f t a twenty two")
+    if not math.isclose(
+        free_throw_cost - field_goal_cost, FREE_THROW_PRIOR_COST, abs_tol=1e-4
+    ):
+        raise RuntimeError(
+            "compiled graph lost the field-goal/free-throw prior: "
+            f"field goal={field_goal_cost}, free throw={free_throw_cost}"
+        )
 
     symbols = graph.input_symbols
     for initial in ("t", "tee"):
