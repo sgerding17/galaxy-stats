@@ -32,6 +32,60 @@ def print_stats(row, s):
     i = 1 if row =="header" else 2
     print("".join([f"{c[i]:{c[0]}}" for c in columns]))
 
+COUNTING_STATS = ("sec", "pf", "pa", "opos", "dpos")
+
+def quantize1(x): return round(x * 10) / 10
+
+def combine(*terms):
+    # Each term is (sign, stats); returns the signed sum of the counting stats.
+    combined = {stat: sum(sign * s[stat] for (sign, s) in terms) for stat in COUNTING_STATS}
+    combined["min"] = round(combined["sec"] / 60)
+    combined["pos"] = combined["opos"] + combined["dpos"]
+    ortg = 100 * combined["pf"] / combined["opos"] if combined["opos"] else 0
+    drtg = 100 * combined["pa"] / combined["dpos"] if combined["dpos"] else 0
+    combined["nrtg"] = quantize1(ortg - drtg)
+    return combined
+
+def split_onoff(cum_stats, player, star):
+    # Splits a player's on/off by whether the star is on the court.
+    both = cum_stats["c|" + "|".join(sorted([player, star], key=int)) + "|"]
+    on_with = combine((1, both))
+    on_without = combine((1, cum_stats[player]), (-1, both))
+    off_with = combine((1, cum_stats[star]), (-1, both))
+    off_without = combine((1, cum_stats[f"!{player}"]), (-1, cum_stats[star]), (1, both))
+    return {
+        "w_min": on_with["min"], "w_pos": on_with["pos"],
+        "w_on": on_with["nrtg"], "w_off": off_with["nrtg"],
+        "w_onoff": quantize1(on_with["nrtg"] - off_with["nrtg"]),
+        "wo_min": on_without["min"], "wo_pos": on_without["pos"],
+        "wo_on": on_without["nrtg"], "wo_off": off_without["nrtg"],
+        "wo_onoff": quantize1(on_without["nrtg"] - off_without["nrtg"]),
+        }
+
+def print_star_split(row, s, star_name):
+    columns = [
+        ( "<12",  "PLAYER",                    f"{row}",             ),
+        ( ">1",   "|",                         "|",                  ),
+        ( ">6",   "MIN",                       f"{s['w_min']}",      ),
+        ( ">6",   "POS",                       f"{s['w_pos']}",      ),
+        ( ">8",   "ON",                        f"{s['w_on']:+}",     ),
+        ( ">8",   "OFF",                       f"{s['w_off']:+}",    ),
+        ( ">8",   "ON/OFF",                    f"{s['w_onoff']:+}",  ),
+        ( ">2",   "|",                         "|",                  ),
+        ( ">6",   "MIN",                       f"{s['wo_min']}",     ),
+        ( ">6",   "POS",                       f"{s['wo_pos']}",     ),
+        ( ">8",   "ON",                        f"{s['wo_on']:+}",    ),
+        ( ">8",   "OFF",                       f"{s['wo_off']:+}",   ),
+        ( ">8",   "ON/OFF",                    f"{s['wo_onoff']:+}", ),
+        ]
+
+    if row == "header":
+        w = f" WITH {star_name.upper()} "
+        wo = f" WITHOUT {star_name.upper()} "
+        print(f"{'':<12}|{w:-^36}{'':>1}|{wo:-^36}")
+    i = 1 if row == "header" else 2
+    print("".join([f"{c[i]:{c[0]}}" for c in columns]))
+
 all_stats = []
 assert len(sys.argv) >= 2
 game_logs = sys.argv[1:]
@@ -53,6 +107,15 @@ for cardinality in range(1, 6):
         if cum_stats[combo]["pos"] < 80: continue
         print_stats(combo_name(combo, cum_stats), cum_stats[combo])
     print()
+
+# On/off for each player, split by whether the star is on the court. ON and OFF
+# are the team's net rating with the player on and off the court, respectively.
+STAR = "22"
+split_stats = {p: split_onoff(cum_stats, p, STAR) for p in players if p != STAR}
+print_star_split("header", defaultdict(lambda: 0), players[STAR])
+for player in sorted(split_stats, key=lambda p:cum_stats[p]["onoff"], reverse=True):
+    print_star_split(players[player], split_stats[player], players[STAR])
+print()
 
 window_size = 10
 date_stats = defaultdict()
