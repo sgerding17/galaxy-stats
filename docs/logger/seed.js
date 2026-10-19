@@ -13,6 +13,8 @@ window.GALAXY_SEED = {
   },
   "venues": [
     "SBYB_League_Play",
+    "VFW_Silver_Championship",
+    "VFW_Silver_Pool_Play",
     "SBYB_Exhibition",
     "Tigers_Gold_Fifth_Place",
     "Tigers_Gold_Losers_Bracket",
@@ -35,20 +37,20 @@ window.GALAXY_SEED = {
     "FOR_Silver_Pool_Play"
   ],
   "opponents": [
+    "Mighty_Musubis",
+    "Red_Phoenix",
+    "Dolphins",
+    "Royals",
     "PB_Musubis",
     "Cheetahs",
-    "Royals",
-    "Dolphins",
     "Sakura",
-    "Mighty_Musubis",
     "Shooting_Stars",
     "Supreme",
     "Firecrackers",
     "Warlords",
     "Sparks",
-    "Red_Phoenix",
     "Storm",
     "WLA_4"
   ],
-  "build": "142b4095aa"
+  "build": "f4f97cd45f"
 };
