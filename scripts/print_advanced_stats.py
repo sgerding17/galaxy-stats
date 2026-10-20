@@ -38,12 +38,14 @@ def quantize1(x): return round(x * 10) / 10
 
 def combine(*terms):
     # Each term is (sign, stats); returns the signed sum of the counting stats.
+    # Ratings are None when there are no possessions to compute them from.
     combined = {stat: sum(sign * s[stat] for (sign, s) in terms) for stat in COUNTING_STATS}
     combined["min"] = round(combined["sec"] / 60)
     combined["pos"] = combined["opos"] + combined["dpos"]
-    ortg = 100 * combined["pf"] / combined["opos"] if combined["opos"] else 0
-    drtg = 100 * combined["pa"] / combined["dpos"] if combined["dpos"] else 0
-    combined["nrtg"] = quantize1(ortg - drtg)
+    combined["ortg"] = quantize1(100 * combined["pf"] / combined["opos"]) if combined["opos"] else None
+    combined["drtg"] = quantize1(100 * combined["pa"] / combined["dpos"]) if combined["dpos"] else None
+    combined["nrtg"] = (quantize1(combined["ortg"] - combined["drtg"])
+                        if None not in (combined["ortg"], combined["drtg"]) else None)
     return combined
 
 def split_onoff(cum_stats, player, star):
@@ -53,36 +55,32 @@ def split_onoff(cum_stats, player, star):
     on_without = combine((1, cum_stats[player]), (-1, both))
     off_with = combine((1, cum_stats[star]), (-1, both))
     off_without = combine((1, cum_stats[f"!{player}"]), (-1, cum_stats[star]), (1, both))
+    def onoff(on, off):
+        return quantize1(on["nrtg"] - off["nrtg"]) if None not in (on["nrtg"], off["nrtg"]) else None
     return {
-        "w_min": on_with["min"], "w_pos": on_with["pos"],
-        "w_on": on_with["nrtg"], "w_off": off_with["nrtg"],
-        "w_onoff": quantize1(on_with["nrtg"] - off_with["nrtg"]),
-        "wo_min": on_without["min"], "wo_pos": on_without["pos"],
-        "wo_on": on_without["nrtg"], "wo_off": off_without["nrtg"],
-        "wo_onoff": quantize1(on_without["nrtg"] - off_without["nrtg"]),
+        "with": {"on": on_with, "off": off_with, "onoff": onoff(on_with, off_with)},
+        "without": {"on": on_without, "off": off_without, "onoff": onoff(on_without, off_without)},
         }
 
-def print_star_split(row, s, star_name):
+def print_star_split(row, s):
+    def rtg(x, sign=""): return "-" if x is None else f"{x:{sign}}"
     columns = [
-        ( "<12",  "PLAYER",                    f"{row}",             ),
-        ( ">1",   "|",                         "|",                  ),
-        ( ">6",   "MIN",                       f"{s['w_min']}",      ),
-        ( ">6",   "POS",                       f"{s['w_pos']}",      ),
-        ( ">8",   "ON",                        f"{s['w_on']:+}",     ),
-        ( ">8",   "OFF",                       f"{s['w_off']:+}",    ),
-        ( ">8",   "ON/OFF",                    f"{s['w_onoff']:+}",  ),
-        ( ">2",   "|",                         "|",                  ),
-        ( ">6",   "MIN",                       f"{s['wo_min']}",     ),
-        ( ">6",   "POS",                       f"{s['wo_pos']}",     ),
-        ( ">8",   "ON",                        f"{s['wo_on']:+}",    ),
-        ( ">8",   "OFF",                       f"{s['wo_off']:+}",   ),
-        ( ">8",   "ON/OFF",                    f"{s['wo_onoff']:+}", ),
+        ( "<12",  "PLAYER",  f"{row}",                         ),
+        ( ">1",   "|",       "|",                              ),
+        ( ">6",   "MIN",     f"{s['on']['min']}",              ),
+        ( ">6",   "POS",     f"{s['on']['pos']}",              ),
+        ( ">2",   "|",       "|",                              ),
+        ( ">6",   "ORTG",    rtg(s["on"]["ortg"]),             ),
+        ( ">6",   "DRTG",    rtg(s["on"]["drtg"]),             ),
+        ( ">8",   "NETRTG",  rtg(s["on"]["nrtg"], "+"),        ),
+        ( ">2",   "|",       "|",                              ),
+        ( ">6",   "ORTG",    rtg(s["off"]["ortg"]),            ),
+        ( ">6",   "DRTG",    rtg(s["off"]["drtg"]),            ),
+        ( ">8",   "NETRTG",  rtg(s["off"]["nrtg"], "+"),       ),
+        ( ">2",   "|",       "|",                              ),
+        ( ">8",   "ON/OFF",  rtg(s["onoff"], "+"),             ),
         ]
 
-    if row == "header":
-        w = f" WITH {star_name.upper()} "
-        wo = f" WITHOUT {star_name.upper()} "
-        print(f"{'':<12}|{w:-^36}{'':>1}|{wo:-^36}")
     i = 1 if row == "header" else 2
     print("".join([f"{c[i]:{c[0]}}" for c in columns]))
 
@@ -108,14 +106,18 @@ for cardinality in range(1, 6):
         print_stats(combo_name(combo, cum_stats), cum_stats[combo])
     print()
 
-# On/off for each player, split by whether the star is on the court. ON and OFF
-# are the team's net rating with the player on and off the court, respectively.
+# On/off for each player, split by whether the star is on the court. The ON and
+# OFF ratings are the team's with the player on and off the court, respectively.
+# A "-" means there were no possessions to compute a rating from.
 STAR = "22"
 split_stats = {p: split_onoff(cum_stats, p, STAR) for p in players if p != STAR}
-print_star_split("header", defaultdict(lambda: 0), players[STAR])
-for player in sorted(split_stats, key=lambda p:cum_stats[p]["onoff"], reverse=True):
-    print_star_split(players[player], split_stats[player], players[STAR])
-print()
+for star_status in ("with", "without"):
+    title = f"{star_status.upper()} {players[STAR].upper()}"
+    print(f"{title:<26}|{' ON ':-^20} |{' OFF ':-^20} |")
+    print_star_split("header", {"on": defaultdict(int), "off": defaultdict(int), "onoff": 0})
+    for player in sorted(split_stats, key=lambda p:cum_stats[p]["onoff"], reverse=True):
+        print_star_split(players[player], split_stats[player][star_status])
+    print()
 
 window_size = 10
 date_stats = defaultdict()
